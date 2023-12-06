@@ -156,7 +156,7 @@ public class UserAppController {
 	    }
 	   
 	   @ResponseBody
-	    @PostMapping(value={"/addNewProduct"})
+	    @PostMapping(value={"/addWalletWithdrawal"})
 	    public InvestmentCategoryVO addWalletWithdrawal(@RequestBody InvestmentCategoryVO investmentCategoryVO,  HttpServletRequest request) {
 	    	if(!investmentService.checkSession(request)) {
 	    		investmentCategoryVO.setResponse("success");
