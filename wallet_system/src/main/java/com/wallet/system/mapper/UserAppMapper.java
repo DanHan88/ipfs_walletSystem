@@ -21,6 +21,9 @@ public interface UserAppMapper {
 	public List<TokenPaidDetailVO> getTokenPaidDetailListByUser(UserInfoVO userInfoVO);
 	public void addWalletWithdrawal(WalletWithdrawalVO walletWithdrawalVO);
 	
+	public List<WalletWithdrawalVO> selectWalletWithdrawalByUser(UserInfoVO userInfoVO);
+	
+	
 	
 }
 

@@ -31,8 +31,13 @@ public class UserAppService {
         return this.userAppMapper.getTokenPaidDetailListByUser(userInfoVO);
     }
     
-    public void addWalletWithdrawal(WalletWithdrawalVO walletWithdrawalVO) {
-        userAppMapper.addWalletWithdrawal(walletWithdrawalVO);
+    public String addWalletWithdrawal(WalletWithdrawalVO walletWithdrawalVO) {
+        userAppMapper.addWalletWithdrawal(walletWithdrawalVO); 
+        return "success";
+    }
+    
+    public List<WalletWithdrawalVO> selectWalletWithdrawal(UserInfoVO userInfoVO) {
+        return userAppMapper.selectWalletWithdrawalByUser(userInfoVO); 
     }
     
     

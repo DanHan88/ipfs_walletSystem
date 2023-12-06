@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	
+    <div  th:fragment="MainContent">
+		  
+		  <span class="container-fluid" id="dataTableContainer" style="display: none;">
+                    <div class="card shadow mb-4">
+						
+                        <div class="card-body">
+                            <div class="table-responsive" >
+                                <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>신청일</th>
+											<th>승인날짜</th>
+											<th>지갑</th>
+											<th>FIL</th>
+											<th>상태</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr th:each="walletWithdrawal : ${walletWithdrawalList}">
+											<td th:text="${#dates.format(walletWithdrawal.request_date, 'yyyy-MM-dd')}" ></td>
+                                            <td th:text="${#dates.format(walletWithdrawal.complete_date, 'yyyy-MM-dd')}"></td>
+                                            <td th:text="${walletWithdrawal.wallet_address}"></td>
+                                            <td th:text="${walletWithdrawal.fil_amount}"></td>
+                                            <td th:text="${walletWithdrawal.status}" th:style="${walletWithdrawal.status == '신청' ? 'color: blue;' : (walletWithdrawal.status == '승인완료' ? 'color: green;' : 'color: red;')}"></td>
+										</tr>
+                                    </tbody>
+                                </table>    
+                                 
+							</div>
+                            </div> 
+                    </div>
+      </div>
+</html>

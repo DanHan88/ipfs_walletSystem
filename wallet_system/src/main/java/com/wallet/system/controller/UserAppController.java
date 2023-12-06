@@ -26,6 +26,7 @@ import com.wallet.system.vo.InvestmentVO;
 import com.wallet.system.vo.LoginVO;
 import com.wallet.system.vo.TokenPaidDetailVO;
 import com.wallet.system.vo.UserInfoVO;
+import com.wallet.system.vo.WalletWithdrawalVO;
 
 @Controller
 public class UserAppController {
@@ -119,9 +120,12 @@ public class UserAppController {
 	        }
 	        HttpSession session = request.getSession();
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
+	        List<WalletWithdrawalVO> walletWithdrawalList = userAppService.selectWalletWithdrawal(loginVO.getUserInfoVO());
+	        
+	        mav.addObject("walletWithdrawalList", walletWithdrawalList);
 	        mav.addObject("sb", sb);
 	        mav.addObject("loginVO", loginVO);
-	        mav.setViewName("views/userAppMain");
+	        mav.setViewName("views/userApp_fundRequest");
 	        return mav;
 	    }
 	   @GetMapping(value={"/userAppUserInfo"})
@@ -157,12 +161,12 @@ public class UserAppController {
 	   
 	   @ResponseBody
 	    @PostMapping(value={"/addWalletWithdrawal"})
-	    public InvestmentCategoryVO addWalletWithdrawal(@RequestBody InvestmentCategoryVO investmentCategoryVO,  HttpServletRequest request) {
+	    public String addWalletWithdrawal(@RequestBody WalletWithdrawalVO walletWithdrawalVO,  HttpServletRequest request) {
 	    	if(!investmentService.checkSession(request)) {
-	    		investmentCategoryVO.setResponse("success");
-	    		return investmentCategoryVO;
+	    		return "success";
 	    	}
-	        return investmentService.addNewProductCategory(investmentCategoryVO);
+	    	userAppService.addWalletWithdrawal(walletWithdrawalVO);
+	        return "success";
 	    }
 	
 	

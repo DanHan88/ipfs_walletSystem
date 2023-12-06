@@ -37,6 +37,21 @@
 		insert  into Wallet_Withdrawals (user_id,fil_amount,status,wallet_address,request_date)
 			VALUES(#{user_id},#{fil_amount},'신청',#{wallet_address},NOW())
 	</insert>
+	<select id="selectWalletWithdrawalByUser" parameterType="com.wallet.system.vo.UserInfoVO" resultType="com.wallet.system.vo.WalletWithdrawalVO">
+		select 
+			wallet_withdrawals_id,
+			user_id,
+			fil_amount,
+			status,
+			message,
+			wallet_address,
+			request_date,
+			complete_date
+		from Wallet_Withdrawals   
+		where user_id = #{user_id}
+	</select>
+	
+	
 	
 	
 	

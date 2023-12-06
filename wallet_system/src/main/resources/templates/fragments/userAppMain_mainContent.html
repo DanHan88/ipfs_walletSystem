@@ -2,10 +2,89 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	
       <div  th:fragment="MainContent">
+		  <div class="modal fade" id="payout_request_modal" tabindex="-1" role="dialog">
+				  <div class="modal-dialog modal-lg" style="overflow:auto; height:800px;">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h6 class="modal-title">송금 신청하시겠습니까?</h6>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="card">
+								<div class="card-header">
+									<button id="payout_confirm_button" type="button" class="btn btn-primary btn-sm float-right" style="margin-top: 0px;">신청하기</button>			
+								</div>	
+								<div class="card-body">
+									<div class="row">
+									<div class="col-xl-4 col-md-4 mb-4">
+			                            <div class="card border-left-primary shadow h-100 py-2">
+			                                <div class="card-body">
+			                                    <div class="row no-gutters align-items-center">
+			                                        <div class="col mr-2">
+			                                            <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">
+			                                                송금 요청 지갑</div>
+			                                            <div class="h5 mb-0 font-weight-bold text-gray-800">f12312124</div>
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        </div>
+			                        <div class="col-xl-4 col-md-4 mb-4">
+			                            <div class="card border-left-primary shadow h-100 py-2">
+			                                <div class="card-body">
+			                                    <div class="row no-gutters align-items-center">
+			                                        <div class="col mr-2">
+			                                            <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">
+			                                                송금요청 FIL</div>
+			                                            <div class="h5 mb-0 font-weight-bold text-gray-800">100TB</div>
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        </div>
+			                        <div class="col-xl-4 col-md-4 mb-4">
+			                            <div class="card border-left-primary shadow h-100 py-2">
+			                                <div class="card-body">
+			                                    <div class="row no-gutters align-items-center">
+			                                        <div class="col mr-2">
+			                                            <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">
+			                                                총사용 FIL</div>
+			                                            <div class="h5 mb-0 font-weight-bold text-gray-800">100TB</div>
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        </div>
+			                        </div>
+								</div>							
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+						</div>						
+					</div>
+				</div>
+				  </div>
+		  <div class="modal fade" id="alert_modal" tabindex="-1" role="dialog">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header bg-success" id="alert_header">
+				        <h5 class="modal-title text-white " id="alert_title">제품 등록 성공</h5>
+				        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
+				      </div>
+				    </div>
+				  </div>
+			</div>
                 <div class="row">
-
                         <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-lg-3 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -23,7 +102,7 @@
                         </div>
 
                         <!-- Earnings (Annual) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-lg-3 col-md-6 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -41,7 +120,7 @@
                         </div>   
                     </div>
                     <div class="row">
-						<div class="col-xl-3 col-md-6 mb-4">
+						<div class="col-lg-3 col-md-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -57,7 +136,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-lg-3 col-md-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -75,22 +154,22 @@
                         </div>
 					</div>
                     <div class="row">
-						<div class="col-md-12 col-lg-6 col-xl-5 input-group mb-3">	
-								  <input type="number" id="payout_fil_amount" class="form-control">
+						<div class="col-md-12 col-lg-6 col-xl-6 input-group mb-3">	
+								  <input type="text" id="payout_fil_address" class="form-control">
 								  <div class="input-group-append"> 
-								  <button class="btn btn-secondary" type="button" id="button-addon2">지급신청 주소</button>
+								  <button class="btn btn-secondary pl-4 pr-4" type="button" id="button-addon2">지급신청 주소</button>
 								  </div>
 						</div>
 					</div>  
 					 <div class="row">
-								<div class="col-md-12 col-lg-6 col-xl-5 input-group mb-3">
+								<div class="col-md-12 col-lg-6 col-xl-6 input-group mb-3">
 								  <input type="number" id="payout_fil_amount" class="form-control">
 								  <div class="input-group-append"> 
 								  <button class="btn btn-secondary" type="button" id="button-addon2">FIL</button>
 								  </div>
 								  <div class="input-group-append">
 								  
-								  <button class="btn btn-primary" id="payout_fil_token"><span class="text">송금신청 <i class="fa fa-chevron-right"></i></span></button>
+								  <button class="btn btn-primary" id="payout_fil_request" th:value="${loginVO.userInfoVO.user_id}"><span class="text">송금신청 <i class="fa fa-chevron-right"></i></span></button>
 								</div>
 								</div>
 					</div>  
