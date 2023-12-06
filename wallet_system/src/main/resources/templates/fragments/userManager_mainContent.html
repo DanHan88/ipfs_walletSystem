@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	
+      <div  th:fragment="MainContent">
+		   <div class="modal fade" id="diable_user_modal" tabindex="-1" role="dialog">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="disable_user_email">임의 탈퇴</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        <p>정말로 임의 탈퇴 하시겠습니까?</p>
+				        <p>임의탈퇴 사유 (필수)</p>
+				        <textarea id="join_deactivate_memo" class="form-control" rows="3"></textarea>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-danger">탈퇴</button>
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+				      </div>
+				    </div>
+				  </div>
+			</div>
+			<div class="modal fade" id="detail_user_modal" tabindex="-1" role="dialog">
+				 <div class="modal-dialog modal-lg" >
+					<div class="modal-content">
+						<div class="modal-header">
+							<h6 class="modal-title"></script>회원 관리</h6>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="row mb-3">
+								<div class="col-md-12 mb-3">
+									<div class="float-right">
+										<b>가입일시</b>
+										<span id="join_date_p"></span>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="card">
+										<img id="profilePicture" alt="Profile Picture">
+									</div>								
+								</div>
+								<div class="col-md-3">
+									<div class="card">
+										<div class="card-header"><b>회원명</b><br><span id="user_name_span"></span></div>
+									</div>								
+								</div>
+								<div class="col-md-3">
+									<div class="card">
+										<div class="card-header"><b>이메일</b><br><span id="user_email_span"></span></div>
+									</div>								
+								</div>
+								<div class="col-md-3">
+									<div class="card">
+										<div id="user_phone_div" class="card-header"><b>휴대폰번호</b><br><span id="user_phone_span"></span></div>
+									</div>								
+								</div>																														
+							</div>
+							<div class="row">
+								<div class="col-md-12">								
+									<ul class="nav nav-tabs" id="myTab" role="tablist">
+										<li class="nav-item" id="a_li"><a class="nav-link active" data-toggle="tab" href="#tab_a" role="tab" aria-controls="tab_a" aria-expanded="true">회원 정보</a></li>
+										<li class="nav-item" id="a3_li"><a class="nav-link" data-toggle="tab" href="#tab_a3" role="tab" aria-controls="tab_a3" aria-expanded="false">투자내역</a></li>									
+										<li class="nav-item" id="f_li"><a class="nav-link" data-toggle="tab" href="#tab_f" role="tab" aria-controls="tab_f" aria-expanded="false">메모</a></li>										
+									</ul>
+									<div class="tab-content p-5" >
+										<div class="tab-pane active" id="tab_a" role="tabpanel" aria-expanded="true">
+											<form id="uploadForm" method="post" enctype="multipart/form-data">
+											<div class="form-group row">
+												<label class="col-md-2 form-control-label" style="margin-top:5px;"><b>회원명</b></label>
+												<div class="col-md-4">
+													<input id="user_name" class="form-control" type="text">
+												</div>
+												<label class="col-md-2 form-control-label" style="margin-top:5px;"><b>이메일</b></label>
+												<div class="col-md-4">
+													<input id="user_email" class="form-control" type="text">
+												</div>								
+											</div>
+											<div class="form-group row">
+												<label class="col-md-2 form-control-label" style="margin-top:5px;"><b>상태</b></label>
+												<div class="col-md-4 mt-1 mb-1">
+													<label>
+													    <input type="radio"  name="user_status" value="정상">
+													   	정상
+													 </label>
+													 <label>
+													    <input type="radio"   name="user_status" value="중지">
+													    중지
+													 </label>
+												</div>												
+												<label class="col-md-2 form-control-label" style="margin-top:5px;"><b>휴대폰번호</b></label>
+												<div class="col-md-4">
+													<input id="user_phone" class="form-control" type="text">
+												</div>								
+											</div>
+											<div id="wallet_address_div" class="form-group row">
+												<label class="col-md-2 form-control-label" style="margin-top:5px;"><b id="wallet_address_b">FIL 토큰 보유량</b></label>
+												<div class="col-md-4 mt-1">
+													<b id="wallet_address_balance_b">0 FIL</b>
+												</div>
+												<label class="col-md-2 form-control-label" style="margin-top:5px;"><b>회원사진</b></label>
+												<div class="col-md-4">
+													   <input type="file" id='fileInput'  name="file" accept="image/*">
+												</div>		
+											</div>
+											<div id="user_address_div" class="form-group row" style="display: none;">
+												<label class="col-md-2 form-control-label" style="margin-top:5px;"><b id="user_address_b"></b></label>
+												<div class="col-md-10">
+													<div class="input-group">
+														<input id="user_address" class="form-control" type="text" disabled="">
+														<span class="input-group-btn"><button type="button" class="btn btn-secondary"><i class="fa fa-copy"></i></button></span>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<button id="user_edit_1_btn" type="button" class="btn btn-primary float-right" >회원 정보 수정</button>
+												</div>
+											</div>
+											</form>
+										</div>
+										<div class="tab-pane" id="tab_a3" role="tabpanel" aria-expanded="false">
+											<div class="row">
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<div class="card">
+														<div class="card-header">
+															<button id="add_user_investment_button" type="button" class="btn btn-primary btn-sm float-right" style="margin-top: 0px;">투자 등록</button>				
+														</div>								
+														<div class="card-block table-responsive">
+															<table id="investment_user_table" class="table table-hover table-bordered table-sm">
+																<colgroup><col width="20%">
+																<col width="30%">
+																<col width="15%">
+																<col width="15%">
+																<col width="25%">					
+																</colgroup><thead>
+																	<tr>
+																		<th>구매일</th>
+																		<th>상품명</th>
+																		<th>타입</th>
+																		<th>투자내역</th>
+																		<th></th>
+																	</tr>
+																</thead>									
+																<tbody></tbody>
+															</table>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>										
+										<div class="tab-pane" id="tab_f" role="tabpanel" aria-expanded="false">
+											<div class="form-group row">
+												<div class="col-md-10">
+													<textarea id="user_memo" class="form-control" rows="3"></textarea>
+													<small class="text-danger"><b>* 메모/변경 내역은 최종 관리자 및 다른 대리점 계정도 확인가능하니, 신중히 작성해주세요.</b></small>
+												</div>	
+												<div class="col-md-2">
+													<button type="button" id="reg_memo_button" class="btn btn-primary float-right">메모등록</button>
+												</div>																								
+											</div>
+											<div class="form-group row">
+												<div class="table-responsive">
+													<div class="table-responsive">
+                                <table class="table table-bordered " id="dataTable_memo" width="100%" cellspacing="0">
+									<colgroup><col width="20%">
+																<col width="60%">
+																<col width="20%">				
+									</colgroup>
+                                    <thead>
+                                        <tr>
+											<th scope="col">일시</th>
+										    <th scope="col">내용</th>
+										    <th scope="col">관리자</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr></tr>
+                                    </tbody>
+                                </table>         
+							</div>	
+												</div>
+											</div>
+										</div>																				
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="add_user_modal" tabindex="-1" role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h6 class="modal-title">회원 등록</h6>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">							
+							<div class="form-group row">
+								<label class="col-md-3 form-control-label" style="margin-top:5px;"><b>회원명</b></label>
+								<div class="col-md-9">
+									<input id="name_add" class="form-control" type="text">
+								</div>								
+							</div>
+							<div class="form-group row">
+								<label class="col-md-3 form-control-label" style="margin-top:5px;"><b>이메일</b></label>
+								<div class="col-md-9">
+									<input id="email_add" class="form-control" type="text">
+								</div>								
+							</div>
+							<div class="form-group row">
+								<label class="col-md-3 form-control-label" style="margin-top:5px;"><b>휴대폰번호</b></label>
+								<div class="col-md-9">
+									<div class="input-group">
+										<span class="input-group-addon mt-2 mr-2">010</span>
+										<input id="tel_add" class="form-control" type="text">
+									</div>
+								</div>								
+							</div>							
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+							<button type="button" id="add_new_user_button" class="btn btn-primary">등록</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="modal fade" id="diable_user_modal" tabindex="-1" role="dialog">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="disable_user_email">유저 사진 관리</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div>
+					        <img id="profilePicture2" alt="Responsive image" class="img-thumbnail">
+					  </div>
+				      <div class="modal-footer">
+				         <form method="post" enctype="multipart/form-data">
+					        <input type="file" name="file" accept="image/*">
+					        <button type="submit">Upload</button>
+					    </form>
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+				      </div>
+				    </div>
+				  </div>
+			</div>
+			
+			
+			<div class="modal fade" id="add_user_investment" tabindex="-1" role="dialog">
+			<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h6 class="modal-title">상품 내역 추가</h6>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="form-group row">
+								<label class="col-md-4 form-control-label" style="margin-top:5px;"><b>구매일</b></label>
+								<div class="col-md-8">
+      								<input type="text" class="form-control" id="datepicker_add" placeholder="Select date">
+								</div>									
+							</div>
+							<div class="form-group row">
+								<label class="col-md-4 form-control-label" style="margin-top:5px;"><b>상품명</b></label>
+								<div class="col-md-8">
+									    <select class="form-control" id="selectBox_product" name="selectedItem">
+									           <option th:each="category : ${listInvestmentCategory}" th:value="${category.investment_category_index}" th:text="${category.investment_category_name}"></option>
+							            </select>
+								</div>									
+							</div>
+							<div class="form-group row">
+								<label class="col-md-4 form-control-label" style="margin-top:5px;"><b>투자내역</b></label>
+								<div class="col-md-8">
+									<input id="node_tib" class="form-control" type="number" pattern="[0-9]*" inputmode="numeric">
+								</div>
+							</div>																																	
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+							<button id="user_investment_add" type="button" class="btn btn-primary">등록</button>
+						</div>
+					</div>
+				</div>
+				</div>
+				<div class="modal fade" id="update_user_investment" tabindex="-1" role="dialog">
+			<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h6 class="modal-title">상품 내역 수정</h6>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="form-group row">
+								<label class="col-md-4 form-control-label" style="margin-top:5px;"><b>구매일</b></label>
+								<div class="col-md-8">
+      								<input type="text" class="form-control" id="datepicker_update" placeholder="Select date">
+								</div>									
+							</div>
+							<div class="form-group row">
+								<label class="col-md-4 form-control-label" style="margin-top:5px;"><b>상품명</b></label>
+								<div class="col-md-8">
+									    <select class="form-control" id="selectBox_product_update" name="selectedItem">
+									           <option th:each="category : ${listInvestmentCategory}" th:value="${category.investment_category_index}" th:text="${category.investment_category_name}"></option>
+							            </select>
+								</div>									
+							</div>
+							<div class="form-group row">
+								<label class="col-md-4 form-control-label" style="margin-top:5px;"><b>투자내역</b></label>
+								<div class="col-md-8">
+									<input id="node_tib_update" class="form-control" type="number" pattern="[0-9]*" inputmode="numeric">
+								</div>
+							</div>																																	
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+							<button id="user_investment_update" type="button" class="btn btn-primary">수정</button>
+						</div>
+					</div>
+				</div>
+				</div>
+				<div class="modal fade" id="delete_user_investment" tabindex="-1" role="dialog">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="disable_user_email">투자정보 삭제</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        <p>투자정보를 삭제 하시겠습니까?</p>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" id="investment_delete" class="btn btn-danger">삭제</button>
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+				      </div>
+				    </div>
+				  </div>
+			</div>
+			<div class="modal fade" id="alert_modal_user" tabindex="-1" role="dialog">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header bg-success" id="alert_header_user">
+				        <h5 class="modal-title text-white " id="alert_title_user">제품 등록 성공</h5>
+				        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
+				      </div>
+				    </div>
+				  </div>
+			</div>
+			<div class="modal fade" id="session_alert_user" tabindex="-1" role="dialog">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header bg-warning">
+				        <h5 class="modal-title text-white">세션이 종료되었습니다. 다시 로그인 하십시오.</h5>
+				        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
+				      </div>
+				    </div>
+				  </div>
+			</div>
+			
+		  	<form action="/payout" method="post">
+                <span class="container-fluid" id="dataTableContainer" style="display: none;">
+                    <div class="card shadow mb-4">
+						
+                        <div class="card-body">
+							<button class="btn btn-primary mr-3" type="button" id="add_user_button">
+						    새유저 등록
+						  </button>
+							<div class="dropdown mb-4">
+						  <h1 th:text="${sb}"></h1>
+						</div>
+                           <div class="table-responsive">
+                                <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+											<th class="d-none d-xl-table-cell" scope="col-xl">가입일시</th>
+										    <th scope="col">회원명</th>
+										    <th class="d-none d-lg-table-cell" scope="col-xl">이메일</th>
+										    <th class="d-none d-xl-table-cell" scope="col-xl">휴대폰번호</th>
+										    <th class="d-none d-xl-table-cell" scope="col-xl">투자상품</th>
+										    <th class="d-none d-lg-table-cell" scope="col-lg">상태</th>
+										    <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+											<th class="d-none d-xl-table-cell">가입일시</th>
+                                            <th>회원명</th>
+                                            <th class="d-none d-lg-table-cell">이메일</th>
+                                            <th class="d-none d-xl-table-cell"> 휴대폰번호</th>
+                                            <th class="d-none d-xl-table-cell">투자상품</th>
+                                            <th class="d-none d-lg-table-cell">상태</th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <tr th:each="userInfo : ${userInfoList}" th:attr="data-picture=${userInfo.profile_picture_url}">
+                                            <td th:text="${#dates.format(userInfo.user_reg_date, 'yyyy-MM-dd HH:mm:ss')}" class="user_reg_date d-none d-xl-table-cell"></td>
+                                            <td th:text="${userInfo.user_name}" class="user_name "></td>
+                                            <td th:text="${userInfo.user_email}" class="user_email d-none d-lg-table-cell"></td>
+                                            <td th:text="${userInfo.user_phone}" class="user_phone d-none d-xl-table-cell"></td>
+                                            <td th:text="${userInfo.investment_count}" class ='d-none d-xl-table-cell'></td>
+                                            <td th:text="${userInfo.user_status}" class="user_status d-none d-lg-table-cell" th:style="${userInfo.user_status == '정상' ? 'color: green;' : 'color: red;'}"></td>
+                                            <td class="m-1 p-1"><button class="btn btn-secondary mr-2 mt-0 mb-0 detail_user" type="button" id="button-addon2"  th:attr="data-filAmount=${userInfo.fil_amount}" th:value="${userInfo.user_id}">상세</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>    
+                                 
+							</div>
+                            </div>
+                            
+                    </div>
+                </div>
+                </div>
+</html>

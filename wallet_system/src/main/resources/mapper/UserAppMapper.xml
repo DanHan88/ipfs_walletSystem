@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wallet.system.mapper.UserAppMapper">
+
+	<select id="getInvestmentListByUser" parameterType="com.wallet.system.vo.UserInfoVO" resultType="com.wallet.system.vo.InvestmentVO">
+		select 
+			A.investment_id,
+			C.user_email AS user_email,
+			C.user_name  AS user_name,
+			C.user_id AS user_id,
+			B.investment_category_name AS product_name,
+			B.cateogry_fil_per_tb AS cateogry_fil_per_tb,
+			B.investment_category_index AS investment_category_id,
+			A.purchase_date,
+			A.purchase_size
+		 from Investment_Info AS A
+		 INNER JOIN Investment_Category AS B ON A.investment_category_id = B.investment_category_index
+		 INNER JOIN User_Info AS C ON A.user_id  = C.user_id
+		 WHERE B.status ='사용' AND A.status='active' AND C.user_status='정상' AND A.user_id = #{user_id}
+	</select>
+	<select id="getTokenPaidDetailListByUser" parameterType="com.wallet.system.vo.UserInfoVO" resultType="com.wallet.system.vo.TokenPaidDetailVO">
+		select 
+			tpdi.paid_fil,
+			ic.investment_category_name, 
+			tpi.status,
+			tpi.paid_date
+		from TokenPaid_detail_info tpdi  
+		inner join Investment_Category ic 
+		ON tpdi.investment_category_index = ic.investment_category_index
+		inner join TokenPaid_Info tpi
+		ON tpdi.token_paid_id = tpdi.token_paid_id
+		where tpdi.user_id = #{user_id}
+	</select>
+	
+	<insert id="addWalletWithdrawal" parameterType="com.wallet.system.vo.WalletWithdrawalVO">
+		insert  into Wallet_Withdrawals (user_id,fil_amount,status,wallet_address,request_date)
+			VALUES(#{user_id},#{fil_amount},'신청',#{wallet_address},NOW())
+	</insert>
+	
+	
+	
+	
+	
+</mapper>

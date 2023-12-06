@@ -1,0 +1,359 @@
+/*
+ * Decompiled with CFR 0.151.
+ * 
+ * Could not load the following classes:
+ *  javax.servlet.http.HttpServletRequest
+ *  javax.servlet.http.HttpServletResponse
+ *  javax.servlet.http.HttpSession
+ *  org.springframework.beans.factory.annotation.Autowired
+ *  org.springframework.security.crypto.password.PasswordEncoder
+ *  org.springframework.stereotype.Controller
+ *  org.springframework.validation.BindingResult
+ *  org.springframework.web.bind.annotation.GetMapping
+ *  org.springframework.web.bind.annotation.ModelAttribute
+ *  org.springframework.web.bind.annotation.PostMapping
+ *  org.springframework.web.servlet.ModelAndView
+ *  org.springframework.web.servlet.mvc.support.RedirectAttributes
+ */
+package com.wallet.system.controller;
+
+import com.wallet.system.service.InvestmentService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.StringUtils;
+import com.wallet.system.vo.InvestmentCategoryVO;
+import com.wallet.system.vo.InvestmentVO;
+import com.wallet.system.vo.LoginVO;
+import com.wallet.system.vo.MemoVO;
+import com.wallet.system.vo.RequestFilVO;
+import com.wallet.system.vo.TokenPaidDetailVO;
+import com.wallet.system.vo.TokenPaidVO;
+import com.wallet.system.vo.UserInfoVO;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+@Controller
+public class InvestmentController {
+    @Autowired
+    private InvestmentService investmentService;
+    @Autowired
+    private PasswordEncoder pwEncoder;
+    
+    @Value("${upload.directory}")
+    private String uploadDirectory;
+   
+
+    @GetMapping(value={"/"})
+    public ModelAndView login(@ModelAttribute LoginVO loginVO, HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("views/login");
+        return mav;
+    }
+
+    @GetMapping(value={"/logoutUser"})
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.invalidate();
+        return "redirect:/";
+    }
+
+    @PostMapping(value={"/login.do"})
+    private String doLogin(LoginVO loginVO, BindingResult result, RedirectAttributes redirect, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        LoginVO lvo = this.investmentService.findAdminByAdminId(loginVO.getId());
+        HttpSession session = request.getSession();
+        String rawPw = "";
+        String encodePw = "";
+        if (lvo != null) {
+            rawPw = loginVO.getPassword();
+            if (this.pwEncoder.matches((CharSequence)rawPw, encodePw = lvo.getPassword())) {
+                lvo.setPassword("");
+                session.setAttribute("user", (Object)lvo);
+                return "redirect:/main";
+            }
+            redirect.addFlashAttribute("result", (Object)0);
+            return "redirect:/";
+        }
+        redirect.addFlashAttribute("result", (Object)0);
+        return "redirect:/";
+    }
+    @ResponseBody
+    @PostMapping(value={"/addNewProduct"})
+    public InvestmentCategoryVO addNewProduct(@RequestBody InvestmentCategoryVO investmentCategoryVO,  HttpServletRequest request) {
+    	if(!investmentService.checkSession(request)) {
+    		investmentCategoryVO.setResponse("success");
+    		return investmentCategoryVO;
+    	}
+        return investmentService.addNewProductCategory(investmentCategoryVO);
+    }
+    
+    @ResponseBody
+    @PostMapping(value={"/updateProduct"})
+    public InvestmentCategoryVO updateProduct(@RequestBody InvestmentCategoryVO investmentCategoryVO, HttpServletRequest request) {
+    	if(!investmentService.checkSession(request)) {
+    		investmentCategoryVO.setResponse("success");
+    		return investmentCategoryVO;
+    	}
+    	return investmentService.updateProductCategory(investmentCategoryVO);
+    }
+    @ResponseBody
+    @PostMapping(value={"/selectInvestmentListForUser"})
+    public List<InvestmentVO> selectInvestmentListForUser(@RequestBody int user_id) {
+    	return investmentService.selectInvestmentListForUser(user_id);
+    }
+    @ResponseBody
+    @PostMapping(value={"/addNewUser"})
+    public String addNewUser(@RequestBody UserInfoVO userInfoVO, HttpServletRequest request) {
+    	if(!investmentService.checkSession(request)) {
+    		return "failed:session_closed";
+    	}
+    	return investmentService.addNewUser(userInfoVO,request);
+    }   
+    @ResponseBody
+    @PostMapping(value={"/addNewInvestment"})
+    public String addNewInvestment(@RequestBody InvestmentVO investmentVO, HttpServletRequest request) {
+    	if(!investmentService.checkSession(request)) {
+    		return "failed:session_closed";
+    	}
+    	return investmentService.addNewInvestment(investmentVO,request);
+    }  
+    @ResponseBody
+    @PostMapping(value={"/modifyInvestment"})
+    public String modifyInvestment(@RequestBody InvestmentVO investmentVO, HttpServletRequest request) {
+    	if(!investmentService.checkSession(request)) {
+    		return "failed:session_closed";
+    	}
+    	return investmentService.modifyInvestment(investmentVO,request);
+    } 
+    @ResponseBody
+    @PostMapping(value={"/deleteInvestment"})
+    public String deleteInvestment(@RequestBody InvestmentVO investmentVO, HttpServletRequest request) {
+    	if(!investmentService.checkSession(request)) {
+    		return "failed:session_closed";
+    	}
+    	return investmentService.deleteInvestment(investmentVO,request);
+    } 
+    @ResponseBody
+    @PostMapping(value={"/selectUserMemo"})
+    public List<MemoVO> selectUserMemo(@RequestBody UserInfoVO userInfoVO) {
+    	return investmentService.selectUserMemo(userInfoVO);
+    } 
+    
+    @ResponseBody
+    @PostMapping(value={"/selectTokenDetailList"})
+    public List<TokenPaidDetailVO> selectTokenDetailList(@RequestBody TokenPaidVO tokenPaidVO) {
+    	return investmentService.selectTokenDetailList(tokenPaidVO);	
+    } 
+    
+    
+    @ResponseBody
+    @PostMapping(value = { "/updateUser" })
+    public String updateUser(MultipartHttpServletRequest request) {
+        if (!investmentService.checkSession(request)) {
+            return "failed:session_closed";
+        }
+        String user_email = request.getParameter("user_email");
+        String user_phone = request.getParameter("user_phone");
+        String user_name = request.getParameter("user_name");
+        String user_status = request.getParameter("user_status");
+        int user_id = Integer.parseInt(request.getParameter("user_id"));
+        MultipartFile file = request.getFile("file");
+        String filePathString ="";
+        if (file != null && !file.isEmpty()) {
+            try {
+                String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+                java.nio.file.Path uploadPath = java.nio.file.Paths.get(uploadDirectory);
+                if (!java.nio.file.Files.exists(uploadPath)) {
+                    java.nio.file.Files.createDirectories(uploadPath);
+                }
+
+                java.nio.file.Path filePath = uploadPath.resolve(user_id+fileName);
+                file.transferTo(filePath.toFile());
+                filePathString = "/profile/"+user_id+fileName;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else {
+        	filePathString="/profile/default_profile.jpg";
+        }
+
+        UserInfoVO userInfoVO = new UserInfoVO();
+        userInfoVO.setUser_email(user_email);
+        userInfoVO.setUser_phone(user_phone);
+        userInfoVO.setUser_name(user_name);
+        userInfoVO.setUser_status(user_status);
+        userInfoVO.setUser_id(user_id);
+        userInfoVO.setProfile_picture_url(filePathString);
+
+        return investmentService.updateUser(userInfoVO, request);
+    }
+    @ResponseBody
+    @PostMapping(value={"/regMemo"})
+    public String regMemo(@RequestBody MemoVO memoVO, HttpServletRequest request) {
+    	if(!investmentService.checkSession(request)) {
+    		return "failed:session_closed";
+    	}
+    	return investmentService.regMemo(memoVO,request);
+    }  
+    @ResponseBody
+    @PostMapping(value={"/payoutConfirm"})
+    public String payoutConfirm(@RequestBody List<InvestmentVO> listInvestment, HttpServletRequest request) {
+    	if(!investmentService.checkSession(request)) {
+    		return "failed:session_closed";
+    	}
+    	String cmd = "lotus wallet list";
+        String[] command = {"/bin/sh","-c",cmd};
+        String result = ""; 
+        try 
+        {
+        	ProcessBuilder processBuilder = new ProcessBuilder(command);
+        	
+        	Process process = processBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            
+            while ((line = reader.readLine()) != null) {
+            	result +=line+"\n";
+            }
+            int exitCode = process.waitFor(); 
+            if (exitCode != 0) {
+            	result = "Command failed";
+            }
+         } 
+        catch (Exception e) 
+        {     
+        	result = "ERROR";
+        }
+        return result; 
+    } 
+    
+    @ResponseBody
+    @PostMapping(value={"/addNewTokenPaid"})
+    public String addNewTokenPaid(@RequestBody List<InvestmentVO> listInvestment, HttpServletRequest request) {
+    	if(!investmentService.checkSession(request)) {
+    		return "failed:session_closed";
+    	}
+        return investmentService.addNewTokenPaidInfo(listInvestment ,request);
+    }
+    @ResponseBody
+    @PostMapping(value={"/updateTokenPaid"})
+    public String updateTokenPaid(@RequestBody TokenPaidVO tokenPaidVO, HttpServletRequest request) {
+    	if(!investmentService.checkSession(request)) {
+    		return "failed:session_closed";
+    	}
+        return investmentService.updateTokenPaid(tokenPaidVO);
+    }
+    
+    
+    
+    
+    @GetMapping(value={"/userManager"})
+    public ModelAndView userManager(HttpServletRequest request,String sb) {
+        ModelAndView mav = new ModelAndView();
+        
+        if(!investmentService.checkSession(request)) {
+        	mav.setViewName("redirect:/");
+            return mav;
+        }
+        HttpSession session = request.getSession();
+        LoginVO loginVO = (LoginVO)session.getAttribute("user");
+        List<UserInfoVO> userInfoList = this.investmentService.selectUserInfoList();
+        List<InvestmentCategoryVO> listInvestmentCategory = this.investmentService.getInvestmentCategoryList();
+        mav.addObject("sb", sb);
+        mav.addObject("listInvestmentCategory", listInvestmentCategory);
+        mav.addObject("userInfoList", userInfoList);
+        mav.addObject("loginVO", loginVO);
+        mav.setViewName("views/userManager");
+        return mav;
+    }
+    @GetMapping(value={"/fundRequest"})
+    public ModelAndView fundRequest(HttpServletRequest request,String sb) {
+        ModelAndView mav = new ModelAndView();
+        if(!investmentService.checkSession(request)) {
+        	mav.setViewName("redirect:/");
+            return mav;
+        }
+        HttpSession session = request.getSession();
+        LoginVO loginVO = (LoginVO)session.getAttribute("user");
+        List<RequestFilVO> requestFilList = this.investmentService.getRequestFilList();
+        for (int i=0;i<requestFilList.size();i++) {
+        	String str = requestFilList.get(i).getFil_address();
+        	if(str.length()>60) {
+        	requestFilList.get(i).setFil_address(truncateString(str,40));
+        	}
+        }
+        mav.addObject("sb", sb);
+        mav.addObject("requestFilList", requestFilList);
+        mav.addObject("loginVO", loginVO);
+        mav.addObject("loading",true);
+        mav.setViewName("views/fundRequest");
+        return mav;
+    }
+    @GetMapping(value={"/main"})
+    public ModelAndView main(HttpServletRequest request, String category,String sb) {
+        ModelAndView mav = new ModelAndView();
+        
+        if(!investmentService.checkSession(request)) {
+        	mav.setViewName("redirect:/");
+            return mav;
+        }
+        HttpSession session = request.getSession();
+        LoginVO loginVO = (LoginVO)session.getAttribute("user");
+        List<InvestmentCategoryVO> listInvestmentCategory = this.investmentService.getInvestmentCategoryList();
+        List<InvestmentVO> listInvestment = category == null || category.equals("0") ? this.investmentService.getInvestmentList() : this.investmentService.getInvestmentListByCategory(Integer.parseInt(category));
+        mav.addObject("sb", sb);
+        mav.addObject("listInvestment", listInvestment);
+        mav.addObject("listInvestmentCategory", listInvestmentCategory);
+        mav.addObject("loginVO", loginVO);
+        mav.setViewName("views/investmentManager");
+        return mav;
+    }
+    @GetMapping(value={"/payoutManager"})
+    public ModelAndView payoutManager(HttpServletRequest request, String category,String sb) {
+        ModelAndView mav = new ModelAndView();
+        if(!investmentService.checkSession(request)) {
+        	mav.setViewName("redirect:/");
+            return mav;
+        }
+        HttpSession session = request.getSession();
+        LoginVO loginVO = (LoginVO)session.getAttribute("user");
+        
+        List<TokenPaidVO> tokenPaidVOList = investmentService.selectTokenPaidVOList();
+        
+        
+        mav.addObject("sb", sb);
+        mav.addObject("tokenPaidVOList", tokenPaidVOList);
+        mav.addObject("loginVO", loginVO);
+        mav.setViewName("views/payoutManager");
+        return mav;
+    }
+    
+    public String truncateString(String input, int maxLength) {
+        if (input.length() <= maxLength) {
+            return input; 
+        } else {
+            return input.substring(0, maxLength) + "...";
+        }
+    }
+}
+

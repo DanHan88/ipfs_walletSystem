@@ -1,0 +1,15 @@
+.bg-sidebar-custom{
+  background: url("/img/sidebar_bg.png");
+  background-size: cover;
+}
+.bg-login-image-custom{
+  background: url("/img/login_img.png");
+ background-position: center;
+  background-size: cover;
+}
+
+i img {
+            width: 20px; /* Adjust the width as needed */
+            height: 20px; /* Adjust the height as needed */
+        }
+
