@@ -14,6 +14,7 @@ import com.wallet.system.vo.RequestFilVO;
 import com.wallet.system.vo.TokenPaidDetailVO;
 import com.wallet.system.vo.TokenPaidVO;
 import com.wallet.system.vo.UserInfoVO;
+import com.wallet.system.vo.WalletWithdrawalVO;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
@@ -38,7 +39,7 @@ public interface InvestmentMapper {
     
     public List<UserInfoVO> selectUserInfoList();
     
-    public List<RequestFilVO> selectRequestFilList();
+    public List<WalletWithdrawalVO> selectRequestFilList();
     
     public InvestmentCategoryVO verifyProductCategory(String product_name);
     
@@ -75,5 +76,7 @@ public interface InvestmentMapper {
     public UserInfoVO verifyUserInfoVO(UserInfoVO userInfoVO);
     
     public String getUserPassword(String user_email);
+    
+    public void updateStatus(WalletWithdrawalVO walletWithdrawalVO);
 }
 

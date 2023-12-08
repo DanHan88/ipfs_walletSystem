@@ -12,7 +12,7 @@ import com.wallet.system.vo.InvestmentCategoryVO;
 import com.wallet.system.vo.InvestmentVO;
 import com.wallet.system.vo.LoginVO;
 import com.wallet.system.vo.MemoVO;
-import com.wallet.system.vo.RequestFilVO;
+import com.wallet.system.vo.WalletWithdrawalVO;
 import com.wallet.system.vo.TokenPaidDetailVO;
 import com.wallet.system.vo.TokenPaidVO;
 import com.wallet.system.vo.UserInfoVO;
@@ -40,7 +40,7 @@ public class InvestmentService {
     public List<TokenPaidDetailVO> selectTokenDetailList(TokenPaidVO tokenPaidVO) {
         return investmentMapper.selectTokenDetailList(tokenPaidVO);
     }
-    public List<RequestFilVO> getRequestFilList() {
+    public List<WalletWithdrawalVO> getRequestFilList() {
         return this.investmentMapper.selectRequestFilList();
     }
 
@@ -201,6 +201,14 @@ public class InvestmentService {
     	investmentMapper.updateTokenPaidDetailInfo(tokenPaidVO);
     	return "success";
     }
+ 
+
+public String updateStatus(WalletWithdrawalVO walletWithdrawalVO) {
+	// TODO Auto-generated method stub
+		investmentMapper.updateStatus(walletWithdrawalVO);
+		
+	return "success";
+}
     
     
     

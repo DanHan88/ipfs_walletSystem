@@ -101,18 +101,32 @@
 		 from Memo
 		 WHERE user_id = #{user_id}
 	</select>
-	<select id="selectRequestFilList" resultType="com.wallet.system.vo.RequestFilVO">
-		select 
-			request_date,
-			user_email,
-			user_name,
-			fil_address,
-			request_amount,
-			gas_fee,
-			total_amount,
-			status,
-			memo
-		 from request_fil	
+	<select id="selectRequestFilList" resultType="com.wallet.system.vo.WalletWithdrawalVO">
+		SELECT
+		    ww.wallet_withdrawals_id,
+		    ww.user_id,
+		    ww.fil_amount,
+		    ww.status,
+		    ww.message,
+		    ww.wallet_address,
+		    ww.request_date,
+		    ww.complete_date,
+		    ww.fil_fee,
+		    ui.user_name,   
+		    ui.user_email 
+		FROM
+		    Wallet_Withdrawals ww
+		INNER JOIN
+		    User_Info ui ON ww.user_id = ui.user_id
+			
+	</select>
+	
+	<select id="updateStatus" resultType="com.wallet.system.vo.WalletWithdrawalVO">
+		update Wallet_Withdrawals
+		SET
+		status = #{status}
+		Where wallet_withdrawals_id = #{wallet_withdrawals_id}
+			
 	</select>
 	<insert id="addNewProductCategory" parameterType="com.wallet.system.vo.InvestmentCategoryVO">
 		insert  into Investment_Category (investment_category_name,cateogry_fil_per_tb, status)
@@ -238,4 +252,5 @@
 		 INNER JOIN Investment_Category AS B ON A.investment_category_id = B.investment_category_index
 		where user_id =	#{user_id} AND 	B.status='사용' AND A.status='active'
 	</select>
+	
 </mapper>

@@ -15,37 +15,44 @@
                                     <thead>
                                         <tr>
 											<th class="d-none d-lg-table-cell" scope="col-xl">요청일시</th>
-                                            <th scope="col">이메일/회원명</th>
+                                            <th scope="d-none d-xl-table-cell">이메일</th>
+                                            <th scope="col">회원명</th>
                                             <th class="d-none d-xl-table-cell" scope="col-xl">주소</th>
                                             <th  class="d-none d-lg-table-cell" scope="col">요청금액/차감금액(FIL)</th>
                                             <th scope="col-1">상태</th>
-                                            <th class="d-none d-xl-table-cell" scope="col-xl-1">메모</th>
-                                            <th scope="col" style="width:100px;"></th>
+                                            <th scope="col" style="width:100px;"</th>
+                                          
+                                           
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
 											<th class="d-none d-lg-table-cell">요청일시</th>
-                                            <th>이메일/회원명</th>
+                                            <th>이메일</th>
+                                            <th>회원명</th>
                                             <th class="d-none d-lg-table-cell">주소</th>
                                             <th  class="d-none d-lg-table-cell">요청금액/차감금액(FIL)</th>
                                             <th>상태</th>
-                                            <th class="d-none d-xl-table-cell">메모</th>
                                             <th style="width:100px;"></th>
+                                            
+                                            
                                         </tr>
                                     </tfoot>
-                                    <tbody>
-                                        <tr th:each="requestFil : ${requestFilList}">
-                                            <td th:text="${requestFil.request_date}" class="d-none d-lg-table-cell"></td>
-                                           	<td th:utext="${requestFil.user_email + '/' + requestFil.user_name}"></td>
-                                            <td th:text="${requestFil.fil_address}" class="d-none d-xl-table-cell"></td>
-                                            <td th:utext="${requestFil.request_amount + '/' + requestFil.total_amount}"  class="d-none d-lg-table-cell"></td>
-                                            <td th:text="${requestFil.status}" id="user_status" th:style="${requestFil.status == '승인' ? 'color: blue;' : (requestFil.status == '요청' ? 'color: black;' : 'color: red;')}"></td>
-                                            <td th:text="${requestFil.memo}" class="d-none d-xl-table-cell"></td>
-                                            <td class="m-1 p-1" style="width:100px;"><button class="btn btn-secondary mr-2 mt-0 mb-0 request-approve" type="button">승인</button><button class="btn btn-secondary request-decline" type="button">거절</button></td>
-                                        </tr>
-                              
-                                    </tbody>
+                                    <tbody> 
+									    <tr th:each="requestFil : ${requestFilList}">
+									        <td th:text="${requestFil.request_date}" class="d-none d-lg-table-cell"></td>
+									        <td th:utext="${requestFil.user_email}"></td>
+									        <td th:utext="${requestFil.user_name}"></td>
+									        <td th:text="${requestFil.wallet_address}" id="wallet_address" class="d-none d-xl-table-cell"></td>
+									        <td th:text="${requestFil.fil_amount}" class="d-none d-xl-table-cell"></td>
+									        <td th:text="${requestFil.status}" id="status" th:style="${requestFil.status == '승인' ? 'color: blue;' : (requestFil.status == '신청' ? 'color: red;' : 'color: black;')}"></td>
+        									<td class="m-1 p-1" style="width:100px;"><button class="btn btn-secondary mr-2 mt-0 mb-0 request-approve" type="button">승인</button><button class="btn btn-secondary request-decline" type="button">거절</button></td>
+      
+									        
+									      
+									        
+									    </tr>
+									</tbody>
                                 </table>    
                                  
 							</div>

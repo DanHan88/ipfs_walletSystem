@@ -28,6 +28,8 @@ import com.wallet.system.vo.RequestFilVO;
 import com.wallet.system.vo.TokenPaidDetailVO;
 import com.wallet.system.vo.TokenPaidVO;
 import com.wallet.system.vo.UserInfoVO;
+import com.wallet.system.vo.WalletWithdrawalVO;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -96,7 +98,17 @@ public class InvestmentController {
         redirect.addFlashAttribute("result", (Object)0);
         return "redirect:/";
     }
-    @ResponseBody
+    
+    @ResponseBody  
+    @PostMapping(value={"/approveFundRequest"})
+    public String approveFundRequest(@RequestBody WalletWithdrawalVO walletWithdrawalVO, HttpServletRequest request) {
+        if (!investmentService.checkSession(request)) {
+            return "failed:session_closed";
+        }
+
+        return investmentService.updateStatus(walletWithdrawalVO);
+    }
+    @ResponseBody  
     @PostMapping(value={"/addNewProduct"})
     public InvestmentCategoryVO addNewProduct(@RequestBody InvestmentCategoryVO investmentCategoryVO,  HttpServletRequest request) {
     	if(!investmentService.checkSession(request)) {
@@ -295,13 +307,7 @@ public class InvestmentController {
         }
         HttpSession session = request.getSession();
         LoginVO loginVO = (LoginVO)session.getAttribute("user");
-        List<RequestFilVO> requestFilList = this.investmentService.getRequestFilList();
-        for (int i=0;i<requestFilList.size();i++) {
-        	String str = requestFilList.get(i).getFil_address();
-        	if(str.length()>60) {
-        	requestFilList.get(i).setFil_address(truncateString(str,40));
-        	}
-        }
+        List<WalletWithdrawalVO> requestFilList = this.investmentService.getRequestFilList();
         mav.addObject("sb", sb);
         mav.addObject("requestFilList", requestFilList);
         mav.addObject("loginVO", loginVO);

@@ -20,7 +20,29 @@ public class WalletWithdrawalVO {
 	private Date request_date;
 	private Date complete_date;
 	private long wallet_withdrawals_id;
+	private String user_name;
+	private String user_email;
+	private float fil_fee;
 	
+	
+	public float getFil_fee() {
+		return fil_fee;
+	}
+	public void setFil_fee(float fil_fee) {
+		this.fil_fee = fil_fee;
+	}
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+	public String getUser_email() {
+		return user_email;
+	}
+	public void setUser_email(String user_email) {
+		this.user_email = user_email;
+	}
 	public int getUser_id() {
 		return user_id;
 	}
