@@ -4,6 +4,8 @@
     <div  th:fragment="MainContent">
 		  
 		  <span class="container-fluid" id="dataTableContainer" style="display: none;">
+              <div class="row">
+				<div class="col-xl-8">
                     <div class="card shadow mb-4">
 						
                         <div class="card-body">
@@ -20,7 +22,7 @@
                                     </thead>
                                     <tbody>
                                        <tr th:each="walletWithdrawal : ${walletWithdrawalList}">
-											<td th:text="${#dates.format(walletWithdrawal.request_date, 'yyyy-MM-dd')}" ></td>
+											<td th:text="${#dates.format(walletWithdrawal.request_date, 'yyyy-MM-dd hh:mm:ss')}" ></td>
                                             <td th:text="${#dates.format(walletWithdrawal.complete_date, 'yyyy-MM-dd')}"></td>
                                             <td th:text="${walletWithdrawal.wallet_address}"></td>
                                             <td th:text="${walletWithdrawal.fil_amount}"></td>
@@ -31,6 +33,8 @@
                                  
 							</div>
                             </div> 
+                    </div>
+                    </div>
                     </div>
       </div>
 </html>

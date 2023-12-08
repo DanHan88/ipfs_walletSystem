@@ -50,6 +50,29 @@
 		from Wallet_Withdrawals   
 		where user_id = #{user_id}
 	</select>
+	<update id="updateUserProfileImg" parameterType="com.wallet.system.vo.UserInfoVO">
+		UPDATE User_Info
+			SET
+		    profile_picture_url=#{profile_picture_url}
+			WHERE
+		    user_id = #{user_id}
+	</update>
+	<update id="updateUserPassword" parameterType="com.wallet.system.vo.UserInfoVO">
+		UPDATE User_Info
+			SET
+		    password = #{password}
+			WHERE
+		    user_id = #{user_id}
+	</update>
+	
+	<select id="selectUserPassword" parameterType="integer" resultType="string">
+		select 
+			password
+		 from User_Info
+		where user_id=#{user_id}
+	</select>
+	
+	
 	
 	
 	

@@ -1,5 +1,6 @@
 package com.wallet.system.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,14 +8,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -38,6 +43,10 @@ public class UserAppController {
 	 private PasswordEncoder pwEncoder;
 	 @Autowired
 	 private InvestmentMapper investmentMapper;
+	 @Value("${upload.directory}")
+	 private String uploadDirectory;
+	 
+	 
 
 	@GetMapping(value={"/UserApp"})
     public ModelAndView login(@ModelAttribute LoginVO loginVO, HttpServletRequest request) {
@@ -115,7 +124,7 @@ public class UserAppController {
 	        ModelAndView mav = new ModelAndView();
 	        
 	        if(!investmentService.checkSession(request)) {
-	        	mav.setViewName("redirect:/userApp_fundRequest");
+	        	mav.setViewName("redirect:/UserApp");
 	            return mav;
 	        }
 	        HttpSession session = request.getSession();
@@ -133,14 +142,14 @@ public class UserAppController {
 	        ModelAndView mav = new ModelAndView();
 	        
 	        if(!investmentService.checkSession(request)) {
-	        	mav.setViewName("redirect:/userApp_userInfo");
+	        	mav.setViewName("redirect:/UserApp");
 	            return mav;
 	        }
 	        HttpSession session = request.getSession();
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
 	        mav.addObject("sb", sb);
 	        mav.addObject("loginVO", loginVO);
-	        mav.setViewName("views/userAppMain");
+	        mav.setViewName("views/userApp_userInfo");
 	        return mav;
 	    }
 	   @GetMapping(value={"/UserAppMain"})
@@ -163,11 +172,56 @@ public class UserAppController {
 	    @PostMapping(value={"/addWalletWithdrawal"})
 	    public String addWalletWithdrawal(@RequestBody WalletWithdrawalVO walletWithdrawalVO,  HttpServletRequest request) {
 	    	if(!investmentService.checkSession(request)) {
-	    		return "success";
+	    		return "failed:session_closed";
 	    	}
 	    	userAppService.addWalletWithdrawal(walletWithdrawalVO);
 	        return "success";
 	    }
-	
+	   
+	   @ResponseBody
+	    @PostMapping(value = { "/updateUserProfileImg" })
+	    public String updateUserProfileImg(MultipartHttpServletRequest request) {
+	        if (!investmentService.checkSession(request)) {
+	            return "failed:session_closed";
+	        }
+	        int user_id = Integer.parseInt(request.getParameter("user_id"));
+	        MultipartFile file = request.getFile("file");
+	        String filePathString ="";
+	        if (file != null && !file.isEmpty()) {
+	        	try {
+	                String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+	                java.nio.file.Path uploadPath = java.nio.file.Paths.get(uploadDirectory);
+	                if (!java.nio.file.Files.exists(uploadPath)) {
+	                    java.nio.file.Files.createDirectories(uploadPath);
+	                }
+	                java.nio.file.Path filePath = uploadPath.resolve(user_id+fileName);
+	                file.transferTo(filePath.toFile());
+	                filePathString = "/profile/"+user_id+fileName;
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	        }else {
+	        	filePathString="/profile/default_profile.jpg";
+	        }
+	        UserInfoVO userInfoVO = new UserInfoVO();
+	        userInfoVO.setUser_id(user_id);
+	        userInfoVO.setProfile_picture_url(filePathString);
+	        return userAppService.updateUserProfileImg(userInfoVO, request);
+	    }
+	   @ResponseBody
+	    @PostMapping(value = { "/updateUserPassword" })
+	    public String updateUserPassword(@RequestBody UserInfoVO userInfoVO, HttpServletRequest request) {
+	        if (!investmentService.checkSession(request)) {
+	            return "failed:session_closed";
+	        }
+	        int user_id = userInfoVO.getUser_id();     		
+	        if(!this.pwEncoder.matches((CharSequence)userInfoVO.getOriginal_password(), userAppService.selectUserPassword(user_id))) {
+	        	return "failed:wrong_password";
+	        }
+	        userInfoVO.setPassword(pwEncoder.encode(userInfoVO.getPassword()));
+	        userInfoVO.setUser_id(user_id);
+	        return userAppService.updateUserPassword(userInfoVO, request);
+	    }
+	   
 	
 }

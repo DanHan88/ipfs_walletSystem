@@ -7,13 +7,17 @@
  */
 package com.wallet.system.service;
 
+import com.wallet.system.mapper.InvestmentMapper;
 import com.wallet.system.mapper.UserAppMapper;
 import com.wallet.system.vo.InvestmentVO;
+import com.wallet.system.vo.MemoVO;
 import com.wallet.system.vo.TokenPaidDetailVO;
 import com.wallet.system.vo.UserInfoVO;
 import com.wallet.system.vo.WalletWithdrawalVO;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +26,10 @@ import org.springframework.stereotype.Service;
 public class UserAppService {
     @Autowired
     UserAppMapper userAppMapper;
+    @Autowired
+    InvestmentMapper investmentMapper;
+    @Autowired
+    private InvestmentService investmentService;
 
     public List<InvestmentVO> getInvestmentListByUser(UserInfoVO userInfoVO) {
         return this.userAppMapper.getInvestmentListByUser(userInfoVO);
@@ -38,6 +46,23 @@ public class UserAppService {
     
     public List<WalletWithdrawalVO> selectWalletWithdrawal(UserInfoVO userInfoVO) {
         return userAppMapper.selectWalletWithdrawalByUser(userInfoVO); 
+    }
+    
+    public String updateUserProfileImg(UserInfoVO userInfoVO, HttpServletRequest request) {
+    	MemoVO memoVO = new MemoVO();
+    	memoVO.setUser_id(userInfoVO.getUser_id());
+    	userAppMapper.updateUserProfileImg(userInfoVO);
+    	return "success";
+    }
+    public String updateUserPassword(UserInfoVO userInfoVO, HttpServletRequest request) {
+    	MemoVO memoVO = new MemoVO();
+    	memoVO.setUser_id(userInfoVO.getUser_id());
+    	userAppMapper.updateUserPassword(userInfoVO);
+    	return "success";
+    }
+    
+    public String selectUserPassword(int user_id) {
+    	return userAppMapper.selectUserPassword(user_id);
     }
     
     

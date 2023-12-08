@@ -22,7 +22,9 @@ public interface UserAppMapper {
 	public void addWalletWithdrawal(WalletWithdrawalVO walletWithdrawalVO);
 	
 	public List<WalletWithdrawalVO> selectWalletWithdrawalByUser(UserInfoVO userInfoVO);
-	
+	public void updateUserProfileImg(UserInfoVO userInfoVO);
+	public void updateUserPassword(UserInfoVO userInfoVO);
+	public String selectUserPassword(int user_id);
 	
 	
 }

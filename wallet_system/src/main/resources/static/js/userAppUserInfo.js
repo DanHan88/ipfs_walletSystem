@@ -1,0 +1,111 @@
+$('#fileInput').on('change', function (e) {
+				            var file = e.target.files[0];
+				
+				            if (file) {
+				                var reader = new FileReader();
+				                reader.onload = function (e) {
+				                    $('#profilePicture').attr('src', e.target.result).show();
+				                };
+				                reader.readAsDataURL(file);
+				            } else {
+				                $('#profilePicture').hide();
+				            }
+				        });
+				        
+				            $('#update_user_password_btn').on('click', function() {  
+								$('#original_password').val('');   
+							    $('#user_password').val(''); 
+							   $('#user_password_repeat').val('');  
+							  $('#update_user_password_modal').modal('show');
+					    });
+					    $('#update_user_password_confirm').on('click', function() {  
+							   var original_password = $('#original_password').val();   
+							   var password = $('#user_password').val(); 
+							   var password_repeat = $('#user_password_repeat').val();
+							   if(password!=password_repeat) {
+								  if ($('#alert_header_user').hasClass("bg-success")) 
+										{
+								            $('#alert_header_user').removeClass("bg-success").addClass("bg-danger");
+							       		} 			
+							       		 $('#alert_title_user').text("새 비밀번호가 일치 하지 않습니다.");
+								            $('#alert_modal_user').modal('show');
+								   return;
+								}
+						       var user_id = $('#update_user_profile_img_btn').val();  
+								$.ajax({
+			                    type: "POST",
+			                    url: "/updateUserPassword",
+			                    contentType: "application/json",
+			                    data: JSON.stringify({
+									original_password:original_password,
+							        password: password,
+							        user_id: user_id
+							    }),
+			                    success: function (data) {
+									$('#detail_user_modal').modal('hide');
+									if(data=='success'){
+										if ($('#alert_header_user').hasClass("bg-danger")) 
+											{
+							            		$('#alert_header_user').removeClass("bg-danger").addClass("bg-success");
+							       		 	} 
+										$('#alert_title_user').text("회원 비밀번호 수정 완료");
+										$('#alert_modal_user').modal('show');
+			                        }
+			                        else if(data=='failed:session_closed'){
+										$('#session_alert_user').modal('show');
+									}
+			                        else{
+										if ($('#alert_header_user').hasClass("bg-success")) 
+										{
+								            $('#alert_header_user').removeClass("bg-success").addClass("bg-danger");
+							       		} 			
+							       		 $('#alert_title_user').text("회원 비밀번호 수정 실패:기존 비밀번호 불일치");
+							       		 $('#original_password').val('');   
+									    $('#user_password').val(''); 
+									   	$('#user_password_repeat').val('');  
+								        $('#alert_modal_user').modal('show');
+									}
+			                    }
+			                });
+					    });
+					    $('#update_user_profile_img_btn').on('click', function() {     
+						       var user_id = $('#update_user_profile_img_btn').val(); 
+						       var fileInput = $('#fileInput')[0];    
+						       var formData = new FormData();
+								formData.append('user_id', user_id); 
+								formData.append('file', fileInput.files[0]);
+					       $.ajax({
+								type: "POST",
+							    url: "/updateUserProfileImg",
+							    data: formData,
+							    contentType: false,
+							    processData: false,
+							    success: function (data) {
+									$('#detail_user_modal').modal('hide');
+									if(data=='success'){
+										if ($('#alert_header_user').hasClass("bg-danger")) 
+											{
+							            		$('#alert_header_user').removeClass("bg-danger").addClass("bg-success");
+							       		 	} 
+										$('#alert_title_user').text("회원 정보 수정 완료");
+										$('#alert_modal_user').modal('show');
+			                        }
+			                        else if(data='failed:session_closed'){
+										$('#session_alert_user').modal('show');
+									}
+			                        else{
+										if ($('#alert_header_user').hasClass("bg-success")) 
+										{
+								            $('#alert_header_user').removeClass("bg-success").addClass("bg-danger");
+							       		} 			
+							       		 $('#alert_title_user').text("제품정보 수정 실패 : 중복된 제품명 또는 같은 정보");
+								            $('#alert_modal_user').modal('show');
+									}
+			                    }
+			                });
+					    });
+					    
+					    
+					    $('#update_user_profile_img_btn').on('click', function() {    
+							$('#profile_picture_modal').modal('show');  
+					    });

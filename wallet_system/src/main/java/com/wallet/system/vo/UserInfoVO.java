@@ -26,7 +26,16 @@ public class UserInfoVO {
     private int investment_count;
     private String profile_picture_url;
     private String password;
+    private String original_password;
     
+    
+    
+	public String getOriginal_password() {
+		return original_password;
+	}
+	public void setOriginal_password(String original_password) {
+		this.original_password = original_password;
+	}
 	public String getPassword() {
 		return password;
 	}
