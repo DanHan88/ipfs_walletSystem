@@ -69,6 +69,7 @@
 			cateogry_fil_per_tb,
 			status
 		 from Investment_Category	
+		 where status = '사용'
 	</select>
 	<select id="findAdminByAdminId" parameterType="string" resultType="com.wallet.system.vo.LoginVO">
 		select 

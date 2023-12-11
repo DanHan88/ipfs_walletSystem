@@ -100,14 +100,20 @@ public class InvestmentController {
     }
     
     @ResponseBody  
-    @PostMapping(value={"/approveFundRequest"})
-    public String approveFundRequest(@RequestBody WalletWithdrawalVO walletWithdrawalVO, HttpServletRequest request) {
+    @PostMapping(value={"/updateFundRequest"})
+    public String updateFundRequest(@RequestBody WalletWithdrawalVO walletWithdrawalVO, HttpServletRequest request) {
         if (!investmentService.checkSession(request)) {
             return "failed:session_closed";
         }
+        
+        if ("승인".equals(walletWithdrawalVO.is_request_state())) {
+            return investmentService.approveFundRequest(walletWithdrawalVO);
+        } else if ("거절".equals(walletWithdrawalVO.is_request_state())) {
+            return investmentService.declineFundRequest(walletWithdrawalVO);
+        }
 
-        return investmentService.updateStatus(walletWithdrawalVO);
-    }
+        return "failed:invalid_request_state";
+    	}
     @ResponseBody  
     @PostMapping(value={"/addNewProduct"})
     public InvestmentCategoryVO addNewProduct(@RequestBody InvestmentCategoryVO investmentCategoryVO,  HttpServletRequest request) {

@@ -12,19 +12,22 @@ $(document).ready(function() {
 		var clickedButton = $(this);
         // 해당 행에서 '이메일/회원명' 열의 데이터를 가져옴
        
-        var wallet_address = $(this).closest('tr').find('[id^="wallet_address"]').text().trim();
-        var userStatus = $(this).closest('tr').find('#status').text().trim();            
+        var wallet_withdrawals_id = $(this).closest('tr').find('[data-wallet-withdrawals-id]').data('wallet-withdrawals-id');
+        var userStatus = $(this).closest('tr').find('#status').text().trim();    
          
-        console.log('wallet_address:', wallet_address)
+        console.log('wallet_withdrawals_id:', wallet_withdrawals_id)
+        //console.log("userStatus:",userStatus)
        // 여기서 AJAX 요청을 보내거나 필요한 작업을 수행
         // 상태가 '요청'인 경우에만 처리하도록 조건 추가
         if (userStatus === '신청') {
              $.ajax({
 			        type: 'POST',  // 또는 'GET' 등 HTTP 메소드 지정
-			        url: '/approveFundRequest',  // 실제로 처리할 URL로 변경
+			        url: '/updateFundRequest',  // 실제로 처리할 URL로 변경
 			        contentType: 'application/json',
 			        data: JSON.stringify({
-			            wallet_address: wallet_address
+			            wallet_withdrawals_id: wallet_withdrawals_id,
+			            is_request_state: "승인"			            
+			            
 			        }),
 			        success: function(response) {
 			            // 성공적으로 응답을 받았을 때 수행할 동작
@@ -40,7 +43,8 @@ $(document).ready(function() {
             debugger;
         }
     });
-
+    
+    
     $('#dataTable').DataTable({
         "order": [[0, 'desc']]
     });
