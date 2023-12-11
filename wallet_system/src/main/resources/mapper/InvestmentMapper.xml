@@ -112,7 +112,6 @@
 		    ww.wallet_address,
 		    ww.request_date,
 		    ww.complete_date,
-		    ww.fil_fee,
 		    ui.user_name,   
 		    ui.user_email 
 		FROM
@@ -122,13 +121,16 @@
 			
 	</select>
 	
-	<select id="updateStatus" resultType="com.wallet.system.vo.WalletWithdrawalVO">
+	<update  id="updateStatus" parameterType="com.wallet.system.vo.WalletWithdrawalVO" >
 		update Wallet_Withdrawals
-		SET
-		status = #{is_request_state}
+		SET status = #{is_request_state}
+		 <if test="memo != null">
+           , memo = #{memo}
+         </if>
+     
 		Where wallet_withdrawals_id = #{wallet_withdrawals_id}
 			
-	</select>
+	</update >
 	<insert id="addNewProductCategory" parameterType="com.wallet.system.vo.InvestmentCategoryVO">
 		insert  into Investment_Category (investment_category_name,cateogry_fil_per_tb, status)
 		VALUES(#{investment_category_name},#{cateogry_fil_per_tb},'사용')	

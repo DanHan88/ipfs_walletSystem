@@ -216,9 +216,13 @@ public String approveFundRequest(WalletWithdrawalVO walletWithdrawalVO) {
 
 public String declineFundRequest(WalletWithdrawalVO walletWithdrawalVO) {
 	// TODO Auto-generated method stub
-		investmentMapper.updateStatus(walletWithdrawalVO);
-		
+	investmentMapper.updateStatus(walletWithdrawalVO);
+
+    
+    // 조회된 행이 존재하고 상태가 '신청'인 경우에만 업데이트
 	return "success";
+
+		
 }
     
     

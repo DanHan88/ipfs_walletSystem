@@ -22,36 +22,23 @@ public class WalletWithdrawalVO {
 	private long wallet_withdrawals_id;
 	private String user_name;
 	private String user_email;
-	private float fil_fee;
+	private String memo;
 	private String is_request_state;
-	private String available_balance;
-	private String total_balance;
+	
 	
 
 	
+	public String getMemo() {
+		return memo;
+	}
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
 	public String getIs_request_state() {
 		return is_request_state;
 	}
 	public void setIs_request_state(String is_request_state) {
 		this.is_request_state = is_request_state;
-	}
-	public String getAvailable_balance() {
-		return available_balance;
-	}
-	public void setAvailable_balance(String available_balance) {
-		this.available_balance = available_balance;
-	}
-	public String getTotal_balance() {
-		return total_balance;
-	}
-	public void setTotal_balance(String total_balance) {
-		this.total_balance = total_balance;
-	}
-	public float getFil_fee() {
-		return fil_fee;
-	}
-	public void setFil_fee(float fil_fee) {
-		this.fil_fee = fil_fee;
 	}
 	public String getUser_name() {
 		return user_name;
