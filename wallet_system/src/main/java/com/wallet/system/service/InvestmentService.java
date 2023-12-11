@@ -207,16 +207,10 @@ public String approveFundRequest(WalletWithdrawalVO walletWithdrawalVO) {
 	// TODO Auto-generated method stub
 	investmentMapper.updateStatus(walletWithdrawalVO);
 
-    if (walletWithdrawalVO != null && "신청".equals(walletWithdrawalVO.getStatus())) {
+    
         // 조회된 행이 존재하고 상태가 '신청'인 경우에만 업데이트
-    	walletWithdrawalVO.setStatus("승인");
-        investmentMapper.updateStatus(walletWithdrawalVO);
-        return "success";
-    } else {
-        // 해당하는 행이 없거나 상태가 '신청'이 아닌 경우 처리
-        // ...
-        return "failed:invalid_request";
-    }
+    return "success";
+    
 }
 
 

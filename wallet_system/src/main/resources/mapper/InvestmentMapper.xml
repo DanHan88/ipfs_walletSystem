@@ -125,7 +125,7 @@
 	<select id="updateStatus" resultType="com.wallet.system.vo.WalletWithdrawalVO">
 		update Wallet_Withdrawals
 		SET
-		status = #{status}
+		status = #{is_request_state}
 		Where wallet_withdrawals_id = #{wallet_withdrawals_id}
 			
 	</select>

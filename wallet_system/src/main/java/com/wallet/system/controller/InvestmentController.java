@@ -106,9 +106,9 @@ public class InvestmentController {
             return "failed:session_closed";
         }
         
-        if ("승인".equals(walletWithdrawalVO.is_request_state())) {
+        if ("승인".equals(walletWithdrawalVO.getIs_request_state())) {
             return investmentService.approveFundRequest(walletWithdrawalVO);
-        } else if ("거절".equals(walletWithdrawalVO.is_request_state())) {
+        } else if ("거절".equals(walletWithdrawalVO.getIs_request_state())) {
             return investmentService.declineFundRequest(walletWithdrawalVO);
         }
 

@@ -1,6 +1,10 @@
 $(document).ready(function() {
     $('#dataTableContainer').show();
-
+	$('#alert_modal_requestfund').on('hidden.bs.modal', function (e) {
+							 if ($('#alert_header_user').hasClass("bg-success")){
+								 location.reload(true);
+							 } 
+					      });
     $('.request-approve').each(function() {
         if ($(this).parent().parent().find('#status').text() !='신청') {
             $(this).hide();
@@ -29,10 +33,28 @@ $(document).ready(function() {
 			            is_request_state: "승인"			            
 			            
 			        }),
-			        success: function(response) {
-			            // 성공적으로 응답을 받았을 때 수행할 동작
-			            console.log('요청 승인 성공:', response);
-			        },
+			        success: function (data) {
+						
+									if(data=='success'){
+										if ($('#alert_header_user').hasClass("bg-danger")) 
+											{
+							            		$('#alert_header_user').removeClass("bg-danger").addClass("bg-success");
+							       		 	} 
+										$('#alert_title_user').text("승인 완료");
+										$('#alert_modal_requestfund').modal('show');
+			                        }
+			                        else if(data='failed:session_closed'){	
+										$('#session_alert_user').modal('show');
+									}
+			                        else{
+										if ($('#alert_header_user').hasClass("bg-success")) 
+										{
+								            $('#alert_header_user').removeClass("bg-success").addClass("bg-danger");
+							       		} 			
+							       		 $('#alert_title_user').text("승인 실패");
+								            $('#alert_modal_requestfund').modal('show');
+									}
+			                    	},
 			        error: function(error) {
 			            // 요청에 실패했을 때 수행할 동작
 			            console.error('요청 승인 실패:', error);
@@ -40,9 +62,51 @@ $(document).ready(function() {
 			    });
         } else {
             console.log('이 요청은 처리할 수 없습니다. 상태: ' + userStatus);
-            debugger;
+            
         }
     });
+    $('.request-decline').on('click', function() {
+    var wallet_withdrawals_id = $(this).closest('tr').data('wallet-withdrawals-id');
+    
+    $.ajax({
+        type: 'POST',
+        url: '/updateFundRequest',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            wallet_withdrawals_id: wallet_withdrawals_id,
+            is_request_state: "거절"
+        }),
+        success: function (data) {
+			debugger;
+						
+									if(data=='success'){
+										if ($('#alert_header_user').hasClass("bg-danger")) 
+											{
+							            		$('#alert_header_user').removeClass("bg-danger").addClass("bg-success");
+							       		 	} 
+										$('#alert_title_user').text("거절 완료");
+										$('#alert_modal_requestfund').modal('show');
+			                        }
+			                        else if(data='failed:session_closed'){	
+										$('#session_alert_user').modal('show');
+									}
+			                        else{
+										if ($('#alert_header_user').hasClass("bg-success")) 
+										{
+								            $('#alert_header_user').removeClass("bg-success").addClass("bg-danger");
+							       		} 			
+							       		 $('#alert_title_user').text("거절 실패");
+								            $('#alert_modal_requestfund').modal('show');
+									}
+			                    	},
+			        error: function(error) {
+			            // 요청에 실패했을 때 수행할 동작
+			            console.error('거절 요청 실패:', error);
+			        }
+    });
+});
+    
+    
     
     
     $('#dataTable').DataTable({
