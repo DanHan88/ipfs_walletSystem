@@ -68,7 +68,7 @@ $('#fileInput').on('change', function (e) {
 			                    }
 			                });
 					    });
-					    $('#update_user_profile_img_btn').on('click', function() {     
+					    $('#update_profile_img_confirm').on('click', function() {     
 						       var user_id = $('#update_user_profile_img_btn').val(); 
 						       var fileInput = $('#fileInput')[0];    
 						       var formData = new FormData();

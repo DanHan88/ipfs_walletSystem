@@ -192,15 +192,17 @@
 		    investment_id = #{investment_id}
 	</insert>
 	<update id="updateUser" parameterType="com.wallet.system.vo.UserInfoVO">
-		UPDATE User_Info
-			SET
+		  UPDATE User_Info
+		  <set>
 		    user_phone = #{user_phone},
 		    user_status = #{user_status},
 		    user_name = #{user_name},
-		    user_email=#{user_email},
-		    profile_picture_url=#{profile_picture_url}
-			WHERE
-		    user_id = #{user_id}
+		    user_email = #{user_email},
+		    <if test="profile_picture_url != 'no_change'">
+		     profile_picture_url = #{profile_picture_url}
+		    </if>
+		  </set>
+		  WHERE user_id = #{user_id}
 	</update>
 	<select id="verifyUserInfoVO" parameterType="com.wallet.system.vo.UserInfoVO" resultType="com.wallet.system.vo.UserInfoVO">
 		select 

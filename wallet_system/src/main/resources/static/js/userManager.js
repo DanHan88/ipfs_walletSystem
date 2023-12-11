@@ -178,20 +178,24 @@ $(document).ready(function() {
 				    
 						});
 					    $('#user_edit_1_btn').on('click', function() {     
-							debugger;
 							   var user_name = $("#user_name").val();
 						       var user_email = $('#user_email').val();
 						       var user_phone = $('#user_phone').val();
 						       var user_status = $('input[name="user_status"]:checked').val();
 						       var user_id = $('#user_edit_1_btn').val(); 
-						       var fileInput = $('#fileInput')[0];    
+						       var fileInput = $('#fileInput')[0].files[0];    
 						       var formData = new FormData();
 								formData.append('user_email', user_email);
 								formData.append('user_phone', user_phone);
 								formData.append('user_name', user_name);
 								formData.append('user_status', user_status);
 								formData.append('user_id', user_id); 
-								formData.append('file', fileInput.files[0]);
+								if(fileInput!=undefined){
+									formData.append('file', fileInput);
+								}else{
+									formData.append('file', 'no_change');
+								}
+								
 					       $.ajax({
 								type: "POST",
 							    url: "/updateUser",

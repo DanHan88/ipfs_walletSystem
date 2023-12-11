@@ -206,7 +206,7 @@ public class InvestmentController {
                 e.printStackTrace();
             }
         }else {
-        	filePathString="/profile/default_profile.jpg";
+        	filePathString="no_change";
         }
 
         UserInfoVO userInfoVO = new UserInfoVO();
