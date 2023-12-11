@@ -1,13 +1,30 @@
 $(document).ready(function() {
 						$('#dataTableContainer').show();
+						  $('#alert_modal').on('hidden.bs.modal', function (e) {
+							 if ($('#alert_header').hasClass("bg-success")){
+								 location.reload(true);
+							 } 
+					      });
 						 $('#payout_fil_request').on('click', function() {
-					       $('#payout_request_modal').modal('show');
+							if($('#payout_fil_address').val()=='' ||$('#payout_fil_amount').val()==''){
+								$('#alert3_title').text('입력값을 확인해주세요');
+								$('#alert3_modal').modal('show');
+								return;
+							}else if(parseFloat($('#available_balance').data('available-balance'))<parseFloat($('#payout_fil_amount').val())){
+								$('#alert3_title').text('가용잔액을 초과하셨습니다');
+								$('#alert3_modal').modal('show');
+								
+								return;
+							}		
+							$('#request_wallet_address').text($('#payout_fil_address').val());
+							$('#request_fil_balance').text($('#payout_fil_amount').val());
+					    	$('#payout_request_modal').modal('show');
 					    });
 						
 						 $('#payout_confirm_button').on('click', function() {	
 							 let fil_amount= $('#payout_fil_amount').val();
 							 let user_id = $('#payout_fil_request').val();
-							 let wallet_address = $('#payout_fil_address').val();
+							 let wallet_address = $('#payout_fil_address').val(); 
 					       $.ajax({
 			                    type: "POST",
 			                    url: "/addWalletWithdrawal",
@@ -24,7 +41,7 @@ $(document).ready(function() {
 											{
 							            		$('#alert_header').removeClass("bg-danger").addClass("bg-success");
 							       		 	} 
-										$('#alert_title').text("제품등록 성공");
+										$('#alert_title').text("송금신청 완료");
 										$('#alert_modal').modal('show');
 			                        }
 			                        else if(data=='failed:session_closed'){
@@ -35,10 +52,9 @@ $(document).ready(function() {
 										{
 								            $('#alert_header').removeClass("bg-success").addClass("bg-danger");
 							       		} 		
-							       		 $('#alert_title').text("제품등록 실패 : 중복된 제품명");
+							       		 $('#alert_title').text("송금신청 실패");
 								            $('#alert_modal').modal('show');	
 									}	
-									$('#payout_confirm_button').show();	
 			                    }
 			                });
 					    });

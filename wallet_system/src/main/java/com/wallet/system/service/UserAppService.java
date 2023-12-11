@@ -65,7 +65,9 @@ public class UserAppService {
     	return userAppMapper.selectUserPassword(user_id);
     }
     
-    
+    public UserInfoVO selectDetailUserInfoByUserId(int user_id) {
+    	return userAppMapper.selectDetailUserInfoByUserId(user_id);
+    }
     
     
 

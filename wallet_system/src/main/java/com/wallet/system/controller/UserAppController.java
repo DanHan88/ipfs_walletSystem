@@ -162,6 +162,10 @@ public class UserAppController {
 	        }
 	        HttpSession session = request.getSession();
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
+	        
+	        UserInfoVO userInfoVO = userAppService.selectDetailUserInfoByUserId(loginVO.getUserInfoVO().getUser_id());
+	        
+	        mav.addObject("userInfoVO", userInfoVO);
 	        mav.addObject("sb", sb);
 	        mav.addObject("loginVO", loginVO);
 	        mav.setViewName("views/userAppMain");

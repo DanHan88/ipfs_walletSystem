@@ -25,7 +25,7 @@ public interface UserAppMapper {
 	public void updateUserProfileImg(UserInfoVO userInfoVO);
 	public void updateUserPassword(UserInfoVO userInfoVO);
 	public String selectUserPassword(int user_id);
-	
+	public UserInfoVO selectDetailUserInfoByUserId(int user_id);
 	
 }
 

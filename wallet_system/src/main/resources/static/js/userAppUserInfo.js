@@ -81,13 +81,13 @@ $('#fileInput').on('change', function (e) {
 							    contentType: false,
 							    processData: false,
 							    success: function (data) {
-									$('#detail_user_modal').modal('hide');
+									$('#profile_picture_modal').modal('hide');
 									if(data=='success'){
 										if ($('#alert_header_user').hasClass("bg-danger")) 
 											{
 							            		$('#alert_header_user').removeClass("bg-danger").addClass("bg-success");
 							       		 	} 
-										$('#alert_title_user').text("회원 정보 수정 완료");
+										$('#alert_title_user').text("회원사진 변경 완료");
 										$('#alert_modal_user').modal('show');
 			                        }
 			                        else if(data='failed:session_closed'){
@@ -98,7 +98,7 @@ $('#fileInput').on('change', function (e) {
 										{
 								            $('#alert_header_user').removeClass("bg-success").addClass("bg-danger");
 							       		} 			
-							       		 $('#alert_title_user').text("제품정보 수정 실패 : 중복된 제품명 또는 같은 정보");
+							       		 $('#alert_title_user').text("회원사진 변경 실패");
 								            $('#alert_modal_user').modal('show');
 									}
 			                    }
