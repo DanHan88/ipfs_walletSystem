@@ -106,6 +106,15 @@ $('#fileInput').on('change', function (e) {
 					    });
 					    
 					    
-					    $('#update_user_profile_img_btn').on('click', function() {    
+					    $('#update_user_profile_img_btn').on('click', function() { 
+							  if($('#fileInput')[0].files[0]==null){
+								   if ($('#alert_header_user').hasClass("bg-success")) 
+										{
+								            $('#alert_header_user').removeClass("bg-success").addClass("bg-danger");
+							       		} 			
+							       			 $('#alert_title_user').text("파일선택해주세요");
+								            $('#alert_modal_user').modal('show');
+								            return;
+							   }   
 							$('#profile_picture_modal').modal('show');  
 					    });
