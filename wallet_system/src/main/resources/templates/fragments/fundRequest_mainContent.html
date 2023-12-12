@@ -1,81 +1,166 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	
-      <div  th:fragment="MainContent">
-		  <div class="modal fade" id="alert_modal_requestfund" tabindex="-1" role="dialog">
-				  <div class="modal-dialog" role="document">
-				    <div class="modal-content">
-				      <div class="modal-header bg-success" id="alert_header_user">
-				        <h5 class="modal-title text-white " id="alert_title_user">승인 완료</h5>
-				        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-				          <span aria-hidden="true">&times;</span>
-				        </button>
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
-				      </div>
-				    </div>
-				  </div>
-			</div>
-		  	<form action="/payout" method="post">
-                <span class="container-fluid" id="dataTableContainer" style="display: none;">
-                    <div class="card shadow mb-4">
-						
-                        <div class="card-body">
-							<div class="dropdown mb-4">
-						  <h1 th:text="${sb}"></h1>
-						</div>
-                            <div class="table-responsive">
-                                <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-											<th class="d-none d-lg-table-cell" scope="col-xl">요청일시</th>
-                                            <th scope="d-none d-xl-table-cell">이메일</th>
-                                            <th scope="col">회원명</th>
-                                            <th class="d-none d-xl-table-cell" scope="col-xl">주소</th>
-                                            <th  class="d-none d-lg-table-cell" scope="col">요청금액/차감금액(FIL)</th>
-                                            <th scope="col-1">상태</th>
-                                            <th scope="col" style="width:100px;"</th>
-                                          
-                                           
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-											<th class="d-none d-lg-table-cell">요청일시</th>
-                                            <th>이메일</th>
-                                            <th>회원명</th>
-                                            <th class="d-none d-lg-table-cell">주소</th>
-                                            <th  class="d-none d-lg-table-cell">요청금액/차감금액(FIL)</th>
-                                            <th>상태</th>
-                                            <th style="width:100px;"></th>
-                                            
-                                            
-                                        </tr>
-                                    </tfoot>
-                                    <tbody> 
-									    <tr th:each="requestFil : ${requestFilList}">
-									        <td th:text="${requestFil.request_date}" class="d-none d-lg-table-cell"></td>
-									        <td th:utext="${requestFil.user_email}"></td>
-									        <td th:utext="${requestFil.user_name}"></td>
-									        <td th:text="${requestFil.wallet_address}" id="wallet_address" class="d-none d-xl-table-cell"></td>
-									        <td th:text="${requestFil.fil_amount}" class="d-none d-xl-table-cell"></td>
-									        <td th:text="${requestFil.status}" id="status" th:style="${requestFil.status == '승인' ? 'color: blue;' : (requestFil.status == '신청' ? 'color: red;' : 'color: black;')}" th:attr="data-wallet-withdrawals-id=${requestFil.wallet_withdrawals_id}"></td>
-											<td class="m-1 p-1" style="width:100px;">
-											    <button class="btn btn-secondary mr-2 mt-0 mb-0 request-approve" type="button">승인</button>
-											    <button class="btn btn-secondary request-decline" type="button">거절</button>
-											</td>
-									        
-									      
-									        
-									    </tr>
-									</tbody>
-                                </table>    
-                                 
-							</div>
-                            </div>
-                            
+
+<div th:fragment="MainContent">
+    <!-- 모달 템플릿 -->
+    <div class="modal fade" id="approvalModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-success" id="alert_header_user">
+                    <h5 class="modal-title text-white" id="alert_title_user">승인 하시겠습니까?</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <!-- 확인 버튼 클릭 시 동작 추가 -->
+                    <button type="button" class="btn btn-secondary" id="confirmModal">승인</button>
+                    <!-- 취소 버튼 클릭 시 동작 추가 -->
+                    <button type="button" class="btn btn-secondary" data-dismiss="cancelmodal">취소</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+   	 <div class="modal fade" id="confirmSuccessModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-success" id="success_header_user">
+                    <h5 class="modal-title text-white" id="success_title_user">승인 완료</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <!-- 확인 버튼 클릭 시 동작 추가 -->
+                    <button type="button" class="btn btn-secondary" id="confirmSuccessModalBtn">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="modal fade" id="declineModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger" id="decline_modal_header">
+                <h5 class="modal-title text-white" id="decline_title_user">거절 사유 입력</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea id="declineReason" rows="4" cols="50" placeholder="거절 사유를 입력하세요..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="declineConfirmBtn">확인</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+            </div>
+        </div>
+    </div>
+	</div>
+	<div class="modal fade" id="declineSuccessModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-success" id="declineSuccess_header_user">
+                    <h5 class="modal-title text-white" id="declineSuccess_title_user">거절 완료</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <!-- 확인 버튼 클릭 시 동작 추가 -->
+                    <button type="button" class="btn btn-secondary" id="declineSuccessModalBtn">확인</button>
+                </div>
+            </div>
+        </div>        
+    </div>
+    <div class="modal fade" id="declineMemoModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger" id="declineMemo_modal_header">
+                <h5 class="modal-title text-white" id="declineMemo_title_user">거절 사유 확인</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                 <textarea id="declineMemoModal_body" rows="15" cols="52" disabled></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+
+    <form action="/payout" method="post">
+        <span class="container-fluid" id="dataTableContainer" style="display: none;">
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <div class="dropdown mb-4">
+                        <h1 th:text="${sb}"></h1>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th class="d-none d-lg-table-cell" scope="col-xl">요청일시</th>
+                                    <th scope="d-none d-xl-table-cell">이메일</th>
+                                    <th scope="col">회원명</th>
+                                    <th class="d-none d-xl-table-cell" scope="col-xl">주소</th>
+                                    <th class="d-none d-lg-table-cell" scope="col">요청금액/차감금액(FIL)</th>
+                                    <th scope="col-1">상태</th>
+                                    <th scope="col" style="width:120px;"></th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th class="d-none d-lg-table-cell">요청일시</th>
+                                    <th>이메일</th>
+                                    <th>회원명</th>
+                                    <th class="d-none d-lg-table-cell">주소</th>
+                                    <th class="d-none d-lg-table-cell">요청금액/차감금액(FIL)</th>
+                                    <th>상태</th>
+                                    <th style="width:120px;"></th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <tr th:each="requestFil : ${requestFilList}">
+                                    <td th:text="${requestFil.request_date}" class="d-none d-lg-table-cell"></td>
+                                    <td th:utext="${requestFil.user_email}"></td>
+                                    <td th:utext="${requestFil.user_name}"></td>
+                                    <td th:text="${requestFil.wallet_address}" id="wallet_address" class="d-none d-xl-table-cell"></td>
+                                    <td th:text="${requestFil.fil_amount}" id="fil_amount" class="d-none d-xl-table-cell"></td>
+                                    <td id="status" th:style="${requestFil.status == '승인' ? 'color: blue;' : (requestFil.status == '신청' ? 'color: black;' : 'color: red;')}"
+									    th:attr="data-wallet-withdrawals-id=${requestFil.wallet_withdrawals_id}">
+									
+									    <!-- 거절 상태일 때 "거절 사유" 버튼으로 교체 -->
+									    <button th:if="${requestFil.status == '거절'}"
+								        class="btn btn-link m-0 p-0 request-DeclineMemo text-danger"
+								        type="button"
+								        data-toggle="modal"
+								        data-target="#declineMemoModal"
+								        th:attr="data-decline-memo=${requestFil.memo}"
+								        >거절</button>
+									
+									    <!-- 그 외의 상태일 때는 그냥 텍스트로 표시 -->
+									    <span th:unless="${requestFil.status == '거절'}" th:text="${requestFil.status}"></span>
+									</td>
+                                    <td>
+                                        <button th:if="${requestFil.status == '신청'}" class="btn btn-secondary mr-2 mt-0 mb-0 request-approve" type="button"
+                                            th:data-wallet-withdrawals-id="${requestFil.wallet_withdrawals_id}"
+                                            th:data-fil-amount="${requestFil.fil_amount}">승인</button>
+                                        <button th:if="${requestFil.status == '신청'}" class="btn btn-secondary request-decline" type="button"
+                                            th:data-wallet-withdrawals-id="${requestFil.wallet_withdrawals_id}">거절</button> 
+                                    </td>        
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                </div>
+            </div>
+        </span>
+    </form>
 </html>

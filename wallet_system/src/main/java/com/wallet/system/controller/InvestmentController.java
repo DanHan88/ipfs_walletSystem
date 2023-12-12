@@ -89,6 +89,7 @@ public class InvestmentController {
             rawPw = loginVO.getPassword();
             if (this.pwEncoder.matches((CharSequence)rawPw, encodePw = lvo.getPassword())) {
                 lvo.setPassword("");
+                lvo.setAdmin(true);
                 session.setAttribute("user", (Object)lvo);
                 return "redirect:/main";
             }
@@ -102,9 +103,7 @@ public class InvestmentController {
     @ResponseBody  
     @PostMapping(value={"/updateFundRequest"})
     public String updateFundRequest(@RequestBody WalletWithdrawalVO walletWithdrawalVO, HttpServletRequest request) {
-        if (!investmentService.checkSession(request)) {
-            return "failed:session_closed";
-        }
+        
         
         if ("승인".equals(walletWithdrawalVO.getIs_request_state())) {
             return investmentService.approveFundRequest(walletWithdrawalVO);
@@ -319,6 +318,7 @@ public class InvestmentController {
         mav.addObject("loginVO", loginVO);
         mav.addObject("loading",true);
         mav.setViewName("views/fundRequest");
+        
         return mav;
     }
     @GetMapping(value={"/main"})

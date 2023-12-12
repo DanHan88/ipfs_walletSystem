@@ -112,6 +112,7 @@
 		    ww.wallet_address,
 		    ww.request_date,
 		    ww.complete_date,
+		    ww.memo,
 		    ui.user_name,   
 		    ui.user_email 
 		FROM
