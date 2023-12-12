@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.wallet.system.vo.EventsAnnouncementVO;
 import com.wallet.system.vo.InvestmentVO;
 import com.wallet.system.vo.TokenPaidDetailVO;
 import com.wallet.system.vo.UserInfoVO;
@@ -26,6 +27,8 @@ public interface UserAppMapper {
 	public void updateUserPassword(UserInfoVO userInfoVO);
 	public String selectUserPassword(int user_id);
 	public UserInfoVO selectDetailUserInfoByUserId(int user_id);
+	public List<EventsAnnouncementVO> selectEventsByUser(int user_id);
+	public List<EventsAnnouncementVO> selectAnnouncementByUser(int user_id);
 	
 }
 

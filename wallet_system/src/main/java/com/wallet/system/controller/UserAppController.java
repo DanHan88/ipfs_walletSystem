@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.wallet.system.mapper.InvestmentMapper;
 import com.wallet.system.service.InvestmentService;
 import com.wallet.system.service.UserAppService;
+import com.wallet.system.vo.EventsAnnouncementVO;
 import com.wallet.system.vo.InvestmentCategoryVO;
 import com.wallet.system.vo.InvestmentVO;
 import com.wallet.system.vo.LoginVO;
@@ -46,8 +47,6 @@ public class UserAppController {
 	 @Value("${upload.directory}")
 	 private String uploadDirectory;
 	 
-	 
-
 	@GetMapping(value={"/UserApp"})
     public ModelAndView login(@ModelAttribute LoginVO loginVO, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
@@ -83,7 +82,7 @@ public class UserAppController {
 	    }
 	 
 	   @GetMapping(value={"/userAppPayOut"})
-	    public ModelAndView userAppPayOut(HttpServletRequest request, String category,String sb) {
+	    public ModelAndView userAppPayOut(HttpServletRequest request,String sb) {
 	        ModelAndView mav = new ModelAndView();
 	        HttpSession session = request.getSession();
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
@@ -98,7 +97,7 @@ public class UserAppController {
 	        return mav;
 	    }
 	   @GetMapping(value={"/userAppInvestment"})
-	    public ModelAndView userAppInvestment(HttpServletRequest request, String category,String sb) {
+	    public ModelAndView userAppInvestment(HttpServletRequest request,String sb) {
 	        ModelAndView mav = new ModelAndView();
 	        HttpSession session = request.getSession();
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
@@ -112,7 +111,7 @@ public class UserAppController {
 	        return mav;
 	    }
 	   @GetMapping(value={"/userAppRequestFund"})
-	    public ModelAndView userAppRequestFund(HttpServletRequest request, String category,String sb) {
+	    public ModelAndView userAppRequestFund(HttpServletRequest request,String sb) {
 	        ModelAndView mav = new ModelAndView();
 	        HttpSession session = request.getSession();
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
@@ -124,8 +123,32 @@ public class UserAppController {
 	        mav.setViewName("views/userApp_fundRequest");
 	        return mav;
 	    }
+	   @GetMapping(value={"/userAppEvents"})
+	    public ModelAndView userAppEvents(HttpServletRequest request,String sb) {
+	        ModelAndView mav = new ModelAndView();
+	        HttpSession session = request.getSession();
+	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
+	        List<EventsAnnouncementVO> eventList = userAppService.selectEventsByUser(loginVO.getUserInfoVO().getUser_id());
+	        mav.addObject("eventList", eventList);
+	        mav.addObject("sb", sb);
+	        mav.addObject("loginVO", loginVO);
+	        mav.setViewName("views/userApp_events");
+	        return mav;
+	    }
+	   @GetMapping(value={"/userAppAnnouncements"})
+	    public ModelAndView userAppAnnouncements(HttpServletRequest request,String sb) {
+	        ModelAndView mav = new ModelAndView();
+	        HttpSession session = request.getSession();
+	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
+	        List<EventsAnnouncementVO> announcementList = userAppService.selectAnnouncementByUser(loginVO.getUserInfoVO().getUser_id());
+	        mav.addObject("announcementList", announcementList);
+	        mav.addObject("sb", sb);
+	        mav.addObject("loginVO", loginVO);
+	        mav.setViewName("views/userApp_announcements");
+	        return mav;
+	    }
 	   @GetMapping(value={"/userAppUserInfo"})
-	    public ModelAndView userAppUserInfo(HttpServletRequest request, String category,String sb) {
+	    public ModelAndView userAppUserInfo(HttpServletRequest request,String sb) {
 	        ModelAndView mav = new ModelAndView();
 	        HttpSession session = request.getSession();
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
@@ -135,7 +158,7 @@ public class UserAppController {
 	        return mav;
 	    }
 	   @GetMapping(value={"/UserAppMain"})
-	    public ModelAndView userAppMain(HttpServletRequest request, String category,String sb) {
+	    public ModelAndView userAppMain(HttpServletRequest request,String sb) {
 	        ModelAndView mav = new ModelAndView();
 	        HttpSession session = request.getSession();
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");

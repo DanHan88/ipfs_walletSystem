@@ -9,6 +9,7 @@ package com.wallet.system.service;
 
 import com.wallet.system.mapper.InvestmentMapper;
 import com.wallet.system.mapper.UserAppMapper;
+import com.wallet.system.vo.EventsAnnouncementVO;
 import com.wallet.system.vo.InvestmentVO;
 import com.wallet.system.vo.MemoVO;
 import com.wallet.system.vo.TokenPaidDetailVO;
@@ -68,7 +69,12 @@ public class UserAppService {
     public UserInfoVO selectDetailUserInfoByUserId(int user_id) {
     	return userAppMapper.selectDetailUserInfoByUserId(user_id);
     }
-    
+    public List<EventsAnnouncementVO> selectEventsByUser(int user_id){
+    	return userAppMapper.selectEventsByUser(user_id);
+    }
+	public List<EventsAnnouncementVO> selectAnnouncementByUser(int user_id){
+		return userAppMapper.selectAnnouncementByUser(user_id);
+	}
     
 
 }

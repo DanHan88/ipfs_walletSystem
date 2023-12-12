@@ -71,6 +71,16 @@
 		 from User_Info
 		where user_id=#{user_id}
 	</select>
+	<select id="selectEventsByUser" parameterType="integer" resultType="com.wallet.system.vo.EventsAnnouncementVO">
+		SELECT ea.id, reg_date, title, body, admin, event_or_announcement,eauvr.read_date 
+			FROM ipfskdcw.events_announcements ea LEFT JOIN events_announcement_user_view_record eauvr ON ea.id = eauvr.events_announcements_id
+			WHERE ea.event_or_announcement ='event'
+	</select>
+	<select id="selectAnnouncementByUser" parameterType="integer" resultType="com.wallet.system.vo.EventsAnnouncementVO">
+		SELECT ea.id, reg_date, title, body, admin, event_or_announcement,eauvr.read_date 
+			FROM ipfskdcw.events_announcements ea LEFT JOIN events_announcement_user_view_record eauvr ON ea.id = eauvr.events_announcements_id
+			WHERE ea.event_or_announcement ='announcement'
+	</select>
 	
 	<select id="selectDetailUserInfoByUserId"  parameterType="integer" resultType="com.wallet.system.vo.UserInfoVO">
 		select 
