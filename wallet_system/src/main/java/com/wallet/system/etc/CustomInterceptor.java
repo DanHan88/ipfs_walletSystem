@@ -12,8 +12,8 @@ public class CustomInterceptor implements HandlerInterceptor{
 	 @Override
 	    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 	            throws Exception {
-		 if (!checkSession(request)) {
-			  LoginVO loginVO = (LoginVO)request.getSession().getAttribute("user");
+		 LoginVO loginVO = (LoginVO)request.getSession().getAttribute("user");
+		 if (loginVO==null || !checkSession(request)) { 
 			  if(!loginVO.isAdmin()){
 	            response.sendRedirect(request.getContextPath() + "/UserApp");
 			  }else {
