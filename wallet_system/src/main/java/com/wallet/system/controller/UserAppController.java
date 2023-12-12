@@ -83,8 +83,13 @@ public class UserAppController {
 	 
 	   @GetMapping(value={"/userAppPayOut"})
 	    public ModelAndView userAppPayOut(HttpServletRequest request,String sb) {
+		   
 	        ModelAndView mav = new ModelAndView();
-	        HttpSession session = request.getSession();
+	        HttpSession session = request.getSession(); 
+	        if(!investmentService.checkSession(request)) {
+	        	mav.setViewName("redirect:/UserApp");
+	            return mav;
+	        }
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
 	        
 	        List<TokenPaidDetailVO> tokenPaidDetailList = userAppService.getTokenPaidDetailListByUser(loginVO.getUserInfoVO());
@@ -100,8 +105,11 @@ public class UserAppController {
 	    public ModelAndView userAppInvestment(HttpServletRequest request,String sb) {
 	        ModelAndView mav = new ModelAndView();
 	        HttpSession session = request.getSession();
+	        if(!investmentService.checkSession(request)) {
+	        	mav.setViewName("redirect:/UserApp");
+	            return mav;
+	        }
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
-	        
 	        List<InvestmentVO> listInvestment = userAppService.getInvestmentListByUser(loginVO.getUserInfoVO());
 	        
 	        mav.addObject("listInvestment" , listInvestment);
@@ -114,7 +122,11 @@ public class UserAppController {
 	    public ModelAndView userAppRequestFund(HttpServletRequest request,String sb) {
 	        ModelAndView mav = new ModelAndView();
 	        HttpSession session = request.getSession();
-	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
+	        if(!investmentService.checkSession(request)) {
+	        	mav.setViewName("redirect:/UserApp");
+	            return mav;
+	        }
+	        LoginVO loginVO = (LoginVO)session.getAttribute("user"); 
 	        List<WalletWithdrawalVO> walletWithdrawalList = userAppService.selectWalletWithdrawal(loginVO.getUserInfoVO());
 	        
 	        mav.addObject("walletWithdrawalList", walletWithdrawalList);
@@ -127,6 +139,10 @@ public class UserAppController {
 	    public ModelAndView userAppEvents(HttpServletRequest request,String sb) {
 	        ModelAndView mav = new ModelAndView();
 	        HttpSession session = request.getSession();
+	        if(!investmentService.checkSession(request)) {
+	        	mav.setViewName("redirect:/UserApp");
+	            return mav;
+	        }
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
 	        List<EventsAnnouncementVO> eventList = userAppService.selectEventsByUser(loginVO.getUserInfoVO().getUser_id());
 	        mav.addObject("eventList", eventList);
@@ -139,6 +155,10 @@ public class UserAppController {
 	    public ModelAndView userAppAnnouncements(HttpServletRequest request,String sb) {
 	        ModelAndView mav = new ModelAndView();
 	        HttpSession session = request.getSession();
+	        if(!investmentService.checkSession(request)) {
+	        	mav.setViewName("redirect:/UserApp");
+	            return mav;
+	        }
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
 	        List<EventsAnnouncementVO> announcementList = userAppService.selectAnnouncementByUser(loginVO.getUserInfoVO().getUser_id());
 	        mav.addObject("announcementList", announcementList);
@@ -151,6 +171,10 @@ public class UserAppController {
 	    public ModelAndView userAppUserInfo(HttpServletRequest request,String sb) {
 	        ModelAndView mav = new ModelAndView();
 	        HttpSession session = request.getSession();
+	        if(!investmentService.checkSession(request)) {
+	        	mav.setViewName("redirect:/UserApp");
+	            return mav;
+	        }
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
 	        mav.addObject("sb", sb);
 	        mav.addObject("loginVO", loginVO);
@@ -161,6 +185,10 @@ public class UserAppController {
 	    public ModelAndView userAppMain(HttpServletRequest request,String sb) {
 	        ModelAndView mav = new ModelAndView();
 	        HttpSession session = request.getSession();
+	        if(!investmentService.checkSession(request)) {
+	        	mav.setViewName("redirect:/UserApp");
+	            return mav;
+	        }
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
 	        
 	        UserInfoVO userInfoVO = userAppService.selectDetailUserInfoByUserId(loginVO.getUserInfoVO().getUser_id());
@@ -175,13 +203,19 @@ public class UserAppController {
 	   @ResponseBody
 	    @PostMapping(value={"/addWalletWithdrawal"})
 	    public String addWalletWithdrawal(@RequestBody WalletWithdrawalVO walletWithdrawalVO,  HttpServletRequest request) {
-	    	userAppService.addWalletWithdrawal(walletWithdrawalVO);
+		   if(!investmentService.checkSession(request)) {
+	    		return "failed:session_closed";
+	    	}
+		   userAppService.addWalletWithdrawal(walletWithdrawalVO);
 	        return "success";
 	    }
 	   
 	   @ResponseBody
 	    @PostMapping(value = { "/updateUserProfileImg" })
 	    public String updateUserProfileImg(MultipartHttpServletRequest request) {
+		   if(!investmentService.checkSession(request)) {
+	    		return "failed:session_closed";
+	    	}
 	        int user_id = Integer.parseInt(request.getParameter("user_id"));
 	        MultipartFile file = request.getFile("file");
 	        String filePathString ="";
@@ -209,6 +243,9 @@ public class UserAppController {
 	   @ResponseBody
 	    @PostMapping(value = { "/updateUserPassword" })
 	    public String updateUserPassword(@RequestBody UserInfoVO userInfoVO, HttpServletRequest request) {
+		   if(!investmentService.checkSession(request)) {
+	    		return "failed:session_closed";
+	    	}
 	        int user_id = userInfoVO.getUser_id();     		
 	        if(!this.pwEncoder.matches((CharSequence)userInfoVO.getOriginal_password(), userAppService.selectUserPassword(user_id))) {
 	        	return "failed:wrong_password";
