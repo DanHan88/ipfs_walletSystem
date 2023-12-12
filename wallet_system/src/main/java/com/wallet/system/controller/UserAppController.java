@@ -67,6 +67,7 @@ public class UserAppController {
 	        if (userInfoVO != null) {
 	        	lvo.setId(userInfoVO.getUser_name());
 	            lvo.setUserInfoVO(userInfoVO);
+	            lvo.setAdmin(false);
 	        	rawPw = loginVO.getPassword();
 	            String value = pwEncoder.encode(rawPw);
 	            if (this.pwEncoder.matches((CharSequence)rawPw, encodePw = investmentMapper.getUserPassword(loginVO.getId()))) {
@@ -84,10 +85,6 @@ public class UserAppController {
 	   @GetMapping(value={"/userAppPayOut"})
 	    public ModelAndView userAppPayOut(HttpServletRequest request, String category,String sb) {
 	        ModelAndView mav = new ModelAndView();
-	        if(!investmentService.checkSession(request)) {
-	        	mav.setViewName("redirect:/UserApp");
-	            return mav;
-	        }
 	        HttpSession session = request.getSession();
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
 	        
@@ -103,11 +100,6 @@ public class UserAppController {
 	   @GetMapping(value={"/userAppInvestment"})
 	    public ModelAndView userAppInvestment(HttpServletRequest request, String category,String sb) {
 	        ModelAndView mav = new ModelAndView();
-	        
-	        if(!investmentService.checkSession(request)) {
-	        	mav.setViewName("redirect:/UserApp");
-	            return mav;
-	        }
 	        HttpSession session = request.getSession();
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
 	        
@@ -122,11 +114,6 @@ public class UserAppController {
 	   @GetMapping(value={"/userAppRequestFund"})
 	    public ModelAndView userAppRequestFund(HttpServletRequest request, String category,String sb) {
 	        ModelAndView mav = new ModelAndView();
-	        
-	        if(!investmentService.checkSession(request)) {
-	        	mav.setViewName("redirect:/UserApp");
-	            return mav;
-	        }
 	        HttpSession session = request.getSession();
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
 	        List<WalletWithdrawalVO> walletWithdrawalList = userAppService.selectWalletWithdrawal(loginVO.getUserInfoVO());
@@ -140,11 +127,6 @@ public class UserAppController {
 	   @GetMapping(value={"/userAppUserInfo"})
 	    public ModelAndView userAppUserInfo(HttpServletRequest request, String category,String sb) {
 	        ModelAndView mav = new ModelAndView();
-	        
-	        if(!investmentService.checkSession(request)) {
-	        	mav.setViewName("redirect:/UserApp");
-	            return mav;
-	        }
 	        HttpSession session = request.getSession();
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
 	        mav.addObject("sb", sb);
@@ -155,11 +137,6 @@ public class UserAppController {
 	   @GetMapping(value={"/UserAppMain"})
 	    public ModelAndView userAppMain(HttpServletRequest request, String category,String sb) {
 	        ModelAndView mav = new ModelAndView();
-	        
-	        if(!investmentService.checkSession(request)) {
-	        	mav.setViewName("redirect:/UserApp");
-	            return mav;
-	        }
 	        HttpSession session = request.getSession();
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
 	        
@@ -175,9 +152,6 @@ public class UserAppController {
 	   @ResponseBody
 	    @PostMapping(value={"/addWalletWithdrawal"})
 	    public String addWalletWithdrawal(@RequestBody WalletWithdrawalVO walletWithdrawalVO,  HttpServletRequest request) {
-	    	if(!investmentService.checkSession(request)) {
-	    		return "failed:session_closed";
-	    	}
 	    	userAppService.addWalletWithdrawal(walletWithdrawalVO);
 	        return "success";
 	    }
@@ -185,9 +159,6 @@ public class UserAppController {
 	   @ResponseBody
 	    @PostMapping(value = { "/updateUserProfileImg" })
 	    public String updateUserProfileImg(MultipartHttpServletRequest request) {
-	        if (!investmentService.checkSession(request)) {
-	            return "failed:session_closed";
-	        }
 	        int user_id = Integer.parseInt(request.getParameter("user_id"));
 	        MultipartFile file = request.getFile("file");
 	        String filePathString ="";
@@ -215,9 +186,6 @@ public class UserAppController {
 	   @ResponseBody
 	    @PostMapping(value = { "/updateUserPassword" })
 	    public String updateUserPassword(@RequestBody UserInfoVO userInfoVO, HttpServletRequest request) {
-	        if (!investmentService.checkSession(request)) {
-	            return "failed:session_closed";
-	        }
 	        int user_id = userInfoVO.getUser_id();     		
 	        if(!this.pwEncoder.matches((CharSequence)userInfoVO.getOriginal_password(), userAppService.selectUserPassword(user_id))) {
 	        	return "failed:wrong_password";

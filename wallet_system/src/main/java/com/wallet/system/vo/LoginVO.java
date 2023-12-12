@@ -19,8 +19,21 @@ public class LoginVO {
     private String id;
     private String password;
     private UserInfoVO userInfoVO;
+    private boolean isAdmin;
     
-    public UserInfoVO getUserInfoVO() {
+    
+    
+  
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	public UserInfoVO getUserInfoVO() {
 		return userInfoVO;
 	}
 
