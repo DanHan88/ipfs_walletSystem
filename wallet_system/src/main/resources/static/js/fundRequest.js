@@ -1,6 +1,12 @@
 $(document).ready(function() {
 	var wallet_withdrawals_id;
 	var userStatus;
+	var currentUrl;
+    var currentPageNumber;
+
+	
+	
+
     $('#dataTableContainer').show();
     $('#alert_modal_requestfund').on('hidden.bs.modal', function (e) {
         if ($('#alert_header_user').hasClass("bg-success")){
@@ -51,7 +57,14 @@ $(document).ready(function() {
                                     $('#confirmSuccessModal').modal('show');
                                     $('#confirmSuccessModalBtn').show();
                                     $('#confirmSuccessModalBtn').on('click', function() {
-								        location.reload(true);
+									     var currentPageNumber = $('#dataTable').DataTable().page.info().page;
+	                                var newUrl = updateQueryStringParameter(window.location.href, 'page', currentPageNumber);
+	                                window.location.href = newUrl;
+	                                location.reload(true);
+
+									    
+
+								   
 								    });
 
                                     // 승인 완료 모달 표시
@@ -106,6 +119,7 @@ $(document).ready(function() {
                         $('#declineSuccessModal').modal('show');
                         $('#declineSuccessModalBtn').show();
                         $('#declineSuccessModalBtn').on('click', function() {
+								
 								 location.reload(true);
 								    });
                         
@@ -141,5 +155,16 @@ $(document).ready(function() {
 
     $('#dataTable').DataTable({
         "order": [[0, 'desc']]
+       
     });
+
 });
+function updateQueryStringParameter(uri, key, value) {
+    var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+    if (uri.match(re)) {
+        return uri.replace(re, '$1' + key + "=" + value + '$2');
+    } else {
+        return uri + separator + key + "=" + value;
+    }
+}

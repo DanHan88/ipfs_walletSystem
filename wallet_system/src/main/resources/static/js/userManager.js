@@ -392,6 +392,71 @@ $(document).ready(function() {
 			                	});  
 							});
 							
+							
+							
+							$('#tokenSend-btn').on('click', function() {     
+							   	var send_token_amt = $("#send_token_amt").val();
+						       	var user_id = $('#user_edit_1_btn').val();
+      							var tx_list = [{
+									cateogry_fil_per_tb: 100,
+							        fil_paid_per_tb: send_token_amt,
+							        investment_category_id: 61,
+							        is_getting_paid: true,
+							        product_name: "개인 전송",
+							        user_id: user_id,
+
+								  }]
+								$('#sendTokenModal').modal('show');
+							       $('#confirmModal').off('click').on('click', function() {
+								       debugger;
+									   $('#alert_title_user').text("승인 하시겠습니까?");
+								       $.ajax({
+						                    type: "POST",
+						                    url: "/addNewTokenPaid",
+						                    contentType: "application/json",
+						                    data: JSON.stringify(tx_list),
+						                     success: function(data) {
+	                                if (data === 'success') {
+	                                    // 성공 시 모달 내용 변경
+	                                    $('#alert_header_user').removeClass("bg-danger").addClass("bg-success");
+	                                    $('#alert_title_user').text("전송중");
+	
+	                                    // 확인 버튼 대신 승인 완료 버튼 표시
+	                                    $('#approvalModal').hide();
+	                                    $('#confirmModal').hide();
+	                                    $('#cancelModal').hide();
+	                                    $('#confirmSuccessModal').modal('show');
+	                                    $('#confirmSuccessModalBtn').show();
+	                                    $('#confirmSuccessModalBtn').on('click', function() {
+										     var currentPageNumber = $('#dataTable').DataTable().page.info().page;
+		                                var newUrl = updateQueryStringParameter(window.location.href, 'page', currentPageNumber);
+		                                window.location.href = newUrl;
+		                                location.reload(true);
+	
+										    
+	
+									   
+									    });
+
+                                    // 승인 완료 모달 표시
+                      
+                                } else if (data === 'failed:session_closed') {
+                                    // 세션 종료 시 다른 처리
+                                    $('#session_alert_user').modal('show');
+                                } else {
+                                    // 실패 시 모달 내용 변경
+                                    $('#alert_header_user').removeClass("bg-success").addClass("bg-danger");
+                                    $('#alert_title_user').text("승인 실패");
+                                }
+                            },
+			                    error: function(error) {
+			                        // 요청에 실패했을 때 수행할 동작
+			                        console.error('승인 요청 실패:', error);
+			                    },
+					                });
+					                });
+						    });
+							
 					     $('#dataTable').DataTable({
 					    	"order": [[0, 'desc']]
 						});

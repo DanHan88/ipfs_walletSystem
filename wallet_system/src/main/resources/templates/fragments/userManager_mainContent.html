@@ -2,27 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	
       <div  th:fragment="MainContent">
-		   <div class="modal fade" id="diable_user_modal" tabindex="-1" role="dialog">
-				  <div class="modal-dialog" role="document">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <h5 class="modal-title" id="disable_user_email">임의 탈퇴</h5>
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				          <span aria-hidden="true">&times;</span>
-				        </button>
-				      </div>
-				      <div class="modal-body">
-				        <p>정말로 임의 탈퇴 하시겠습니까?</p>
-				        <p>임의탈퇴 사유 (필수)</p>
-				        <textarea id="join_deactivate_memo" class="form-control" rows="3"></textarea>
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-danger">탈퇴</button>
-				        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-				      </div>
-				    </div>
-				  </div>
-			</div>
 			<div class="modal fade" id="detail_user_modal" tabindex="-1" role="dialog">
 				 <div class="modal-dialog modal-lg" >
 					<div class="modal-content">
@@ -64,12 +43,45 @@
 							<div class="row">
 								<div class="col-md-12">								
 									<ul class="nav nav-tabs" id="myTab" role="tablist">
-										<li class="nav-item" id="a_li"><a class="nav-link active" data-toggle="tab" href="#tab_a" role="tab" aria-controls="tab_a" aria-expanded="true">회원 정보</a></li>
-										<li class="nav-item" id="a3_li"><a class="nav-link" data-toggle="tab" href="#tab_a3" role="tab" aria-controls="tab_a3" aria-expanded="false">투자내역</a></li>									
-										<li class="nav-item" id="f_li"><a class="nav-link" data-toggle="tab" href="#tab_f" role="tab" aria-controls="tab_f" aria-expanded="false">메모</a></li>										
+										<li class="nav-item" id="member_tab_li"><a class="nav-link active" data-toggle="tab" href="#member_tab" role="tab" aria-controls="member_tab" aria-expanded="true">회원 정보</a></li>
+										<li class="nav-item" id="investment_tab_li"><a class="nav-link" data-toggle="tab" href="#investment_tab" role="tab" aria-controls="investment_tab" aria-expanded="false">투자내역</a></li>									
+										<li class="nav-item" id="memo_tab_li"><a class="nav-link" data-toggle="tab" href="#memo_tab" role="tab" aria-controls="memo_tab" aria-expanded="false">메모</a></li>
+										<li class="nav-item" id="sendFil_tab_li"><a class="nav-link" data-toggle="tab" href="#sendFil_tab" role="tab" aria-controls="sendFil_tab" aria-expanded="false">Fil 전송</a></li>										
 									</ul>
 									<div class="tab-content p-5" >
-										<div class="tab-pane active" id="tab_a" role="tabpanel" aria-expanded="true">
+										<div class="tab-pane" id="sendFil_tab" role="tabpanel" aria-expanded="true">
+											<form id="uploadForm" method="post" enctype="multipart/form-data">
+											<div class="form-group row">
+												<label class="col-md-3 form-control-label" style="margin-top:5px;"><b>보낼 토큰 수량</b></label>
+												<div class="col-md-6">
+													<input id="send_token_amt" class="form-control" type="number">
+												</div>
+											</div>
+									
+											<div id="wallet_address_div" class="form-group row">
+												<label class="col-md-3 form-control-label" style="margin-top:5px;"><b id="wallet_address_b">FIL 토큰 보유량</b></label>
+												<div class="col-md-6 mt-1">
+													<b id="wallet_address_balance_b">0 FIL</b>
+												</div>
+					
+											</div>
+											<div id="user_address_div" class="form-group row" style="display: none;">
+												<label class="col-md-2 form-control-label" style="margin-top:5px;"><b id="user_address_b"></b></label>
+												<div class="col-md-10">
+													<div class="input-group">
+														<input id="user_address" class="form-control" type="text" disabled="">
+														<span class="input-group-btn"><button type="button" class="btn btn-secondary"><i class="fa fa-copy"></i></button></span>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-12">
+													<button id="tokenSend-btn" type="button" class="btn btn-primary float-right" >보내기</button>
+												</div>
+											</div>
+											</form>
+										</div>
+										<div class="tab-pane active" id="member_tab" role="tabpanel" aria-expanded="true">
 											<form id="uploadForm" method="post" enctype="multipart/form-data">
 											<div class="form-group row">
 												<label class="col-md-2 form-control-label" style="margin-top:5px;"><b>회원명</b></label>
@@ -124,7 +136,7 @@
 											</div>
 											</form>
 										</div>
-										<div class="tab-pane" id="tab_a3" role="tabpanel" aria-expanded="false">
+										<div class="tab-pane" id="investment_tab" role="tabpanel" aria-expanded="false">
 											<div class="row">
 												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 													<div class="card">
@@ -154,7 +166,7 @@
 												</div>
 											</div>
 										</div>										
-										<div class="tab-pane" id="tab_f" role="tabpanel" aria-expanded="false">
+										<div class="tab-pane" id="memo_tab" role="tabpanel" aria-expanded="false">
 											<div class="form-group row">
 												<div class="col-md-10">
 													<textarea id="user_memo" class="form-control" rows="3"></textarea>
@@ -353,6 +365,41 @@
 				    </div>
 				  </div>
 			</div>
+			<div class="modal fade" id="sendTokenModal" tabindex="-1" role="dialog">
+		        <div class="modal-dialog" role="document">
+		            <div class="modal-content">
+		                <div class="modal-header bg-success" id="alert_header_user">
+		                    <h5 class="modal-title text-white" id="alert_title_user">전송 하시겠습니까?</h5>
+		                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+		                        <span aria-hidden="true">&times;</span>
+		                    </button>
+		                </div>
+		                <div class="modal-footer">
+		                    <!-- 확인 버튼 클릭 시 동작 추가 -->
+		                    <button type="button" class="btn btn-secondary" id="confirmModal">확인</button>
+		                    <!-- 취소 버튼 클릭 시 동작 추가 -->
+		                    <button type="button" class="btn btn-secondary" data-dismiss="cancelmodal">취소</button>
+		                    
+		                </div>
+		            </div>
+		        </div>
+   			</div>
+   			<div class="modal fade" id="confirmSuccessModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-success" id="success_header_user">
+                    <h5 class="modal-title text-white" id="success_title_user">전송 완료</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <!-- 확인 버튼 클릭 시 동작 추가 -->
+                    <button type="button" class="btn btn-secondary" id="confirmSuccessModalBtn">확인</button>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
 			<div class="modal fade" id="alert_modal_user" tabindex="-1" role="dialog">
 				  <div class="modal-dialog" role="document">
 				    <div class="modal-content">
