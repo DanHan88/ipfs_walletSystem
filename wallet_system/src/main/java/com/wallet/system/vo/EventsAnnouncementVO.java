@@ -12,9 +12,16 @@ public class EventsAnnouncementVO {
 	private String title;
 	private String body;
 	private String admin;
-	private String type;
+	private String event_or_announcement;
 	private Date read_date;
 	
+	
+	public String getEvent_or_announcement() {
+		return event_or_announcement;
+	}
+	public void setEvent_or_announcement(String event_or_announcement) {
+		this.event_or_announcement = event_or_announcement;
+	}
 	public Date getRead_date() {
 		return read_date;
 	}
@@ -50,11 +57,5 @@ public class EventsAnnouncementVO {
 	}
 	public void setAdmin(String admin) {
 		this.admin = admin;
-	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
 	}
 }

@@ -24,7 +24,18 @@ public class InvestmentVO {
     private float fil_paid_per_tb;
     private boolean is_getting_paid;
 	private int cateogry_fil_per_tb;
+	private float fil_invested;
+	
+	
     
+	public float getFil_invested() {
+		return fil_invested;
+	}
+
+	public void setFil_invested(float fil_invested) {
+		this.fil_invested = fil_invested;
+	}
+
 	public int getCateogry_fil_per_tb() {
 		return cateogry_fil_per_tb;
 	}

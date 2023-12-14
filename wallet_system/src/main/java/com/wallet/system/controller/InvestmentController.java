@@ -20,6 +20,8 @@ package com.wallet.system.controller;
 import com.wallet.system.service.InvestmentService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
+
+import com.wallet.system.vo.EventsAnnouncementVO;
 import com.wallet.system.vo.InvestmentCategoryVO;
 import com.wallet.system.vo.InvestmentVO;
 import com.wallet.system.vo.LoginVO;
@@ -116,7 +118,7 @@ public class InvestmentController {
     @ResponseBody  
     @PostMapping(value={"/addNewProduct"})
     public InvestmentCategoryVO addNewProduct(@RequestBody InvestmentCategoryVO investmentCategoryVO,  HttpServletRequest request) {
-    	if(!investmentService.checkSession(request)) {
+    	if(!investmentService.checkSession(request,true)) {
     		investmentCategoryVO.setResponse("success");
     		return investmentCategoryVO;
     	}
@@ -126,7 +128,7 @@ public class InvestmentController {
     @ResponseBody
     @PostMapping(value={"/updateProduct"})
     public InvestmentCategoryVO updateProduct(@RequestBody InvestmentCategoryVO investmentCategoryVO, HttpServletRequest request) {
-    	if(!investmentService.checkSession(request)) {
+    	if(!investmentService.checkSession(request,true)) {
     		investmentCategoryVO.setResponse("success");
     		return investmentCategoryVO;
     	}
@@ -140,7 +142,7 @@ public class InvestmentController {
     @ResponseBody
     @PostMapping(value={"/addNewUser"})
     public String addNewUser(@RequestBody UserInfoVO userInfoVO, HttpServletRequest request) {
-    	if(!investmentService.checkSession(request)) {
+    	if(!investmentService.checkSession(request,true)) {
     		return "failed:session_closed";
     	}
     	return investmentService.addNewUser(userInfoVO,request);
@@ -148,7 +150,7 @@ public class InvestmentController {
     @ResponseBody
     @PostMapping(value={"/addNewInvestment"})
     public String addNewInvestment(@RequestBody InvestmentVO investmentVO, HttpServletRequest request) {
-    	if(!investmentService.checkSession(request)) {
+    	if(!investmentService.checkSession(request,true)) {
     		return "failed:session_closed";
     	}
     	return investmentService.addNewInvestment(investmentVO,request);
@@ -156,7 +158,7 @@ public class InvestmentController {
     @ResponseBody
     @PostMapping(value={"/modifyInvestment"})
     public String modifyInvestment(@RequestBody InvestmentVO investmentVO, HttpServletRequest request) {
-    	if(!investmentService.checkSession(request)) {
+    	if(!investmentService.checkSession(request,true)) {
     		return "failed:session_closed";
     	}
     	return investmentService.modifyInvestment(investmentVO,request);
@@ -164,7 +166,7 @@ public class InvestmentController {
     @ResponseBody
     @PostMapping(value={"/deleteInvestment"})
     public String deleteInvestment(@RequestBody InvestmentVO investmentVO, HttpServletRequest request) {
-    	if(!investmentService.checkSession(request)) {
+    	if(!investmentService.checkSession(request,true)) {
     		return "failed:session_closed";
     	}
     	return investmentService.deleteInvestment(investmentVO,request);
@@ -185,7 +187,7 @@ public class InvestmentController {
     @ResponseBody
     @PostMapping(value = { "/updateUser" })
     public String updateUser(MultipartHttpServletRequest request) {
-        if (!investmentService.checkSession(request)) {
+        if (!investmentService.checkSession(request,true)) {
             return "failed:session_closed";
         }
         String user_email = request.getParameter("user_email");
@@ -227,7 +229,7 @@ public class InvestmentController {
     @ResponseBody
     @PostMapping(value={"/regMemo"})
     public String regMemo(@RequestBody MemoVO memoVO, HttpServletRequest request) {
-    	if(!investmentService.checkSession(request)) {
+    	if(!investmentService.checkSession(request,true)) {
     		return "failed:session_closed";
     	}
     	return investmentService.regMemo(memoVO,request);
@@ -235,7 +237,7 @@ public class InvestmentController {
     @ResponseBody
     @PostMapping(value={"/payoutConfirm"})
     public String payoutConfirm(@RequestBody List<InvestmentVO> listInvestment, HttpServletRequest request) {
-    	if(!investmentService.checkSession(request)) {
+    	if(!investmentService.checkSession(request,true)) {
     		return "failed:session_closed";
     	}
     	String cmd = "lotus wallet list";
@@ -267,7 +269,7 @@ public class InvestmentController {
     @ResponseBody
     @PostMapping(value={"/addNewTokenPaid"})
     public String addNewTokenPaid(@RequestBody List<InvestmentVO> listInvestment, HttpServletRequest request) {
-    	if(!investmentService.checkSession(request)) {
+    	if(!investmentService.checkSession(request,true)) {
     		return "failed:session_closed";
     	}
         return investmentService.addNewTokenPaidInfo(listInvestment ,request);
@@ -275,7 +277,7 @@ public class InvestmentController {
     @ResponseBody
     @PostMapping(value={"/updateTokenPaid"})
     public String updateTokenPaid(@RequestBody TokenPaidVO tokenPaidVO, HttpServletRequest request) {
-    	if(!investmentService.checkSession(request)) {
+    	if(!investmentService.checkSession(request,true)) {
     		return "failed:session_closed";
     	}
         return investmentService.updateTokenPaid(tokenPaidVO);
@@ -288,7 +290,7 @@ public class InvestmentController {
     public ModelAndView userManager(HttpServletRequest request,String sb) {
         ModelAndView mav = new ModelAndView();
         
-        if(!investmentService.checkSession(request)) {
+        if(!investmentService.checkSession(request,true)) {
         	mav.setViewName("redirect:/");
             return mav;
         }
@@ -306,7 +308,7 @@ public class InvestmentController {
     @GetMapping(value={"/fundRequest"})
     public ModelAndView fundRequest(HttpServletRequest request,String sb) {
         ModelAndView mav = new ModelAndView();
-        if(!investmentService.checkSession(request)) {
+        if(!investmentService.checkSession(request,true)) {
         	mav.setViewName("redirect:/");
             return mav;
         }
@@ -325,7 +327,7 @@ public class InvestmentController {
     public ModelAndView main(HttpServletRequest request, String category,String sb) {
         ModelAndView mav = new ModelAndView();
         
-        if(!investmentService.checkSession(request)) {
+        if(!investmentService.checkSession(request,true)) {
         	mav.setViewName("redirect:/");
             return mav;
         }
@@ -343,7 +345,7 @@ public class InvestmentController {
     @GetMapping(value={"/payoutManager"})
     public ModelAndView payoutManager(HttpServletRequest request, String category,String sb) {
         ModelAndView mav = new ModelAndView();
-        if(!investmentService.checkSession(request)) {
+        if(!investmentService.checkSession(request,true)) {
         	mav.setViewName("redirect:/");
             return mav;
         }
@@ -357,6 +359,39 @@ public class InvestmentController {
         mav.addObject("tokenPaidVOList", tokenPaidVOList);
         mav.addObject("loginVO", loginVO);
         mav.setViewName("views/payoutManager");
+        return mav;
+    }
+    
+    @GetMapping(value={"/events"})
+    public ModelAndView userAppEvents(HttpServletRequest request,String sb) {
+        ModelAndView mav = new ModelAndView();
+        HttpSession session = request.getSession();
+        if(!investmentService.checkSession(request,true)) {
+        	mav.setViewName("redirect:/");
+            return mav;
+        }
+        LoginVO loginVO = (LoginVO)session.getAttribute("user");
+        List<EventsAnnouncementVO> eventList = investmentService.selectEvents();
+        mav.addObject("eventList", eventList);
+        mav.addObject("sb", sb);
+        mav.addObject("loginVO", loginVO);
+        mav.setViewName("views/events");
+        return mav;
+    }
+   @GetMapping(value={"/announcements"})
+    public ModelAndView userAppAnnouncements(HttpServletRequest request,String sb) {
+        ModelAndView mav = new ModelAndView();
+        HttpSession session = request.getSession();
+        if(!investmentService.checkSession(request,true)) {
+        	mav.setViewName("redirect:/");
+            return mav;
+        }
+        LoginVO loginVO = (LoginVO)session.getAttribute("user");
+        List<EventsAnnouncementVO> announcementList = investmentService.selectAnnouncements();
+        mav.addObject("announcementList", announcementList);
+        mav.addObject("sb", sb);
+        mav.addObject("loginVO", loginVO);
+        mav.setViewName("views/announcements");
         return mav;
     }
     

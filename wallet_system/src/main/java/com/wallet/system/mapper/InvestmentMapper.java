@@ -6,6 +6,7 @@
  */
 package com.wallet.system.mapper;
 
+import com.wallet.system.vo.EventsAnnouncementVO;
 import com.wallet.system.vo.InvestmentCategoryVO;
 import com.wallet.system.vo.InvestmentVO;
 import com.wallet.system.vo.LoginVO;
@@ -78,5 +79,9 @@ public interface InvestmentMapper {
     public String getUserPassword(String user_email);
     
     public void updateStatus(WalletWithdrawalVO walletWithdrawalVO);
+    
+    public List<EventsAnnouncementVO> selectEvents();
+    
+	public List<EventsAnnouncementVO> selectAnnouncements();
 }
 

@@ -1,4 +1,5 @@
 $(document).ready(function() {
+						var tx_list;
 						$('#dataTableContainer').show();
 						$('.disable_user').on('click', function() {
 							var clickedButton = $(this);
@@ -41,6 +42,7 @@ $(document).ready(function() {
 					       $('#user_investment_add').on('click', function() {
 							   var purchase_date = $("#datepicker_add").val();
 						       var purchase_size = $('#node_tib').val();
+						       var fil_invested = $('#node_fil').val();
 						       var investment_category_id = $('#selectBox_product').val();
 						       var user_id = $('#user_edit_1_btn').val(); 	   
 							   if(purchase_date==""||purchase_size==""||investment_category_id==""){
@@ -59,6 +61,7 @@ $(document).ready(function() {
 			                    data: JSON.stringify({
 							        purchase_date: purchase_date,
 							        purchase_size: purchase_size,
+							        fil_invested: fil_invested,
 							        investment_category_id : investment_category_id,
 							        user_id  : user_id
 							    }),
@@ -146,8 +149,8 @@ $(document).ready(function() {
 									    var newRow = '<tr>' +
 									        '<td align="center" id="update_purchase_date">' + formattedDate + '</td>' +
 									        '<td align="center" id="update_product_name" data-user_id="'+  item.investment_category_id + '">' + item.product_name + '</td>' +
-									        '<td align="center">' + '용량(TB)' + '</td>' +
-									        '<td align="center" id="update_purchase_size">' + item.purchase_size + '</td>' +
+									        '<<td align="center" id="update_purchase_size">' + item.purchase_size + '</td>' +
+									        '<td align="center" id="update_fil_invested">' + item.fil_invested + '</td>' +
 									        '<td align="center"><button type="button" class="btn btn-secondary btn-sm m-1 update_user_investment_button" value="' + item.investment_id + '">수정</button>'+
 									        '<button type="button" class="btn btn-secondary btn-sm m-1 delete_user_investment_button" value="'+ item.investment_id + '">삭제</button></td></tr>';
 									    $("#investment_user_table").append(newRow);
@@ -172,6 +175,7 @@ $(document).ready(function() {
 							$('#datepicker_update').val(superParent.find('#update_purchase_date').text());
 							$('#selectBox_product_update').val(superParent.find('#update_product_name').data('user_id'));
 							$('#node_tib_update').val(superParent.find('#update_purchase_size').text());
+							$('#node_fil_update').val(superParent.find('#update_fil_invested').text());
 							$('#user_investment_add').val($(this).val());
 						    $('#update_user_investment').modal('show');
 						    $('#user_investment_update').val($(this).val());
@@ -278,6 +282,7 @@ $(document).ready(function() {
 						       var purchase_size = $('#node_tib_update').val();
 						       var investment_category_id = $('#selectBox_product_update').val();
 						       var investment_id = $(this).val();
+						       var fil_invested = $('#node_fil_update').val();
 						       var user_id = $('#user_edit_1_btn').val();
 							   if(purchase_date==""||purchase_size==""||investment_category_id==""){
 										if ($('#alert_header_user').hasClass("bg-success")) 
@@ -295,6 +300,7 @@ $(document).ready(function() {
 			                    data: JSON.stringify({
 							        purchase_date: purchase_date,
 							        purchase_size: purchase_size,
+							        fil_invested: fil_invested,
 							        investment_category_id : investment_category_id,
 							        investment_id  : investment_id,
 							        user_id : user_id
@@ -397,19 +403,30 @@ $(document).ready(function() {
 							$('#tokenSend-btn').on('click', function() {     
 							   	var send_token_amt = $("#send_token_amt").val();
 						       	var user_id = $('#user_edit_1_btn').val();
-      							var tx_list = [{
+						       	
+						       	$('#user_email_td').text($('#user_email_span').text());
+						       	$('#user_name_td').text($('#user_name_span').text());
+						       	$('#user_category_name_td').text('개인지급');
+						       	$('#fil_amt_td').text(send_token_amt);
+      							 tx_list = [{
 									cateogry_fil_per_tb: 100,
-							        fil_paid_per_tb: send_token_amt,
+							        payout_fil: send_token_amt,
 							        investment_category_id: 61,
 							        is_getting_paid: true,
-							        product_name: "개인 전송",
+							        product_name: "개인지급",
 							        user_id: user_id,
-
-								  }]
-								$('#sendTokenModal').modal('show');
-							       $('#confirmModal').off('click').on('click', function() {
-								       debugger;
-									   $('#alert_title_user').text("승인 하시겠습니까?");
+								  }];
+								var fil_per_tb = $('#payout_fil_amount').val();
+							
+								if(fil_per_tb<=0){
+									$('#alert2_modal').modal('show');
+									return;
+								}
+								  
+								$('#sendTokenPersonalModal').modal('show');
+						    });
+						    
+						    $('#payout_confirm_button').on('click', function() {
 								       $.ajax({
 						                    type: "POST",
 						                    url: "/addNewTokenPaid",
@@ -419,27 +436,9 @@ $(document).ready(function() {
 	                                if (data === 'success') {
 	                                    // 성공 시 모달 내용 변경
 	                                    $('#alert_header_user').removeClass("bg-danger").addClass("bg-success");
-	                                    $('#alert_title_user').text("전송중");
-	
-	                                    // 확인 버튼 대신 승인 완료 버튼 표시
-	                                    $('#approvalModal').hide();
-	                                    $('#confirmModal').hide();
-	                                    $('#cancelModal').hide();
-	                                    $('#confirmSuccessModal').modal('show');
-	                                    $('#confirmSuccessModalBtn').show();
-	                                    $('#confirmSuccessModalBtn').on('click', function() {
-										     var currentPageNumber = $('#dataTable').DataTable().page.info().page;
-		                                var newUrl = updateQueryStringParameter(window.location.href, 'page', currentPageNumber);
-		                                window.location.href = newUrl;
-		                                location.reload(true);
-	
-										    
-	
-									   
-									    });
-
+	                                    $('#alert_title_user').text("전송완료");
+	                                    $('#alert_modal_user').modal('show');
                                     // 승인 완료 모달 표시
-                      
                                 } else if (data === 'failed:session_closed') {
                                     // 세션 종료 시 다른 처리
                                     $('#session_alert_user').modal('show');
@@ -453,9 +452,12 @@ $(document).ready(function() {
 			                        // 요청에 실패했을 때 수행할 동작
 			                        console.error('승인 요청 실패:', error);
 			                    },
-					                });
-					                });
-						    });
+					        });
+					    });
+						    
+						    
+						    
+						    
 							
 					     $('#dataTable').DataTable({
 					    	"order": [[0, 'desc']]

@@ -27,8 +27,8 @@ public interface UserAppMapper {
 	public void updateUserPassword(UserInfoVO userInfoVO);
 	public String selectUserPassword(int user_id);
 	public UserInfoVO selectDetailUserInfoByUserId(int user_id);
-	public List<EventsAnnouncementVO> selectEventsByUser(int user_id);
-	public List<EventsAnnouncementVO> selectAnnouncementByUser(int user_id);
+	public List<EventsAnnouncementVO> selectAnnouncementEventByUser(int user_id);
+	
 	
 }
 

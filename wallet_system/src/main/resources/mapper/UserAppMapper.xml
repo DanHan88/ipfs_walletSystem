@@ -13,11 +13,13 @@
 			B.cateogry_fil_per_tb AS cateogry_fil_per_tb,
 			B.investment_category_index AS investment_category_id,
 			A.purchase_date,
-			A.purchase_size
+			A.purchase_size,
+			A.fil_invested
 		 from Investment_Info AS A
 		 INNER JOIN Investment_Category AS B ON A.investment_category_id = B.investment_category_index
 		 INNER JOIN User_Info AS C ON A.user_id  = C.user_id
 		 WHERE B.status ='사용' AND A.status='active' AND C.user_status='정상' AND A.user_id = #{user_id}
+		 ORDER BY A.purchase_date DESC
 	</select>
 	<select id="getTokenPaidDetailListByUser" parameterType="com.wallet.system.vo.UserInfoVO" resultType="com.wallet.system.vo.TokenPaidDetailVO">
 		select 
@@ -31,6 +33,7 @@
 		inner join TokenPaid_Info tpi
 		ON tpdi.token_paid_id = tpdi.token_paid_id
 		where tpdi.user_id = #{user_id}
+		ORDER BY tpi.paid_date DESC
 	</select>
 	
 	<insert id="addWalletWithdrawal" parameterType="com.wallet.system.vo.WalletWithdrawalVO">
@@ -49,6 +52,7 @@
 			complete_date
 		from Wallet_Withdrawals   
 		where user_id = #{user_id}
+		ORDER BY request_date DESC
 	</select>
 	<update id="updateUserProfileImg" parameterType="com.wallet.system.vo.UserInfoVO">
 		UPDATE User_Info
@@ -71,15 +75,11 @@
 		 from User_Info
 		where user_id=#{user_id}
 	</select>
-	<select id="selectEventsByUser" parameterType="integer" resultType="com.wallet.system.vo.EventsAnnouncementVO">
+	
+	<select id="selectAnnouncementEventByUser" parameterType="integer" resultType="com.wallet.system.vo.EventsAnnouncementVO">
 		SELECT ea.id, reg_date, title, body, admin, event_or_announcement,eauvr.read_date 
 			FROM ipfskdcw.events_announcements ea LEFT JOIN events_announcement_user_view_record eauvr ON ea.id = eauvr.events_announcements_id
-			WHERE ea.event_or_announcement ='event'
-	</select>
-	<select id="selectAnnouncementByUser" parameterType="integer" resultType="com.wallet.system.vo.EventsAnnouncementVO">
-		SELECT ea.id, reg_date, title, body, admin, event_or_announcement,eauvr.read_date 
-			FROM ipfskdcw.events_announcements ea LEFT JOIN events_announcement_user_view_record eauvr ON ea.id = eauvr.events_announcements_id
-			WHERE ea.event_or_announcement ='announcement'
+			ORDER BY reg_date DESC
 	</select>
 	
 	<select id="selectDetailUserInfoByUserId"  parameterType="integer" resultType="com.wallet.system.vo.UserInfoVO">
@@ -96,7 +96,8 @@
 			u.user_name,
 			u.user_email,u.user_status,
 			u.user_phone,
-			u.profile_picture_url
+			u.profile_picture_url,
+			(SELECT COALESCE(SUM(ii.purchase_size), 0) from Investment_Info ii inner join Investment_Category ic on ii.investment_category_id = investment_category_index  where ii.user_id=u.user_id AND ii.status = 'active' AND ic.status='사용') as total_tb 
 		 from User_Info u	
 		 where user_id=#{user_id}
 		 GROUP BY u.user_email

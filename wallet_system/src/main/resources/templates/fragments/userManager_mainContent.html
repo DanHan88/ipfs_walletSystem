@@ -154,8 +154,8 @@
 																	<tr>
 																		<th>구매일</th>
 																		<th>상품명</th>
-																		<th>타입</th>
-																		<th>투자내역</th>
+																		<th>투자TB</th>
+																		<th>투자FIL</th>
 																		<th></th>
 																	</tr>
 																</thead>									
@@ -295,11 +295,17 @@
 								</div>									
 							</div>
 							<div class="form-group row">
-								<label class="col-md-4 form-control-label" style="margin-top:5px;"><b>투자내역</b></label>
+								<label class="col-md-4 form-control-label" style="margin-top:5px;"><b>투자TB</b></label>
 								<div class="col-md-8">
 									<input id="node_tib" class="form-control" type="number" pattern="[0-9]*" inputmode="numeric">
 								</div>
-							</div>																																	
+							</div>
+							<div class="form-group row">
+								<label class="col-md-4 form-control-label" style="margin-top:5px;"><b>투자FIL</b></label>
+								<div class="col-md-8">
+									<input id="node_fil" class="form-control" type="number" pattern="[0-9]*" inputmode="numeric">
+								</div>
+							</div>																																		
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
@@ -333,9 +339,16 @@
 								</div>									
 							</div>
 							<div class="form-group row">
-								<label class="col-md-4 form-control-label" style="margin-top:5px;"><b>투자내역</b></label>
+								<label class="col-md-4 form-control-label" style="margin-top:5px;"><b>투자TB</b></label>
 								<div class="col-md-8">
 									<input id="node_tib_update" class="form-control" type="number" pattern="[0-9]*" inputmode="numeric">
+								</div>
+							</div>
+							
+							<div class="form-group row">
+								<label class="col-md-4 form-control-label" style="margin-top:5px;"><b>투자FIL</b></label>
+								<div class="col-md-8">
+									<input id="node_fil_update" class="form-control" type="number" pattern="[0-9]*" inputmode="numeric">
 								</div>
 							</div>																																	
 						</div>
@@ -365,41 +378,52 @@
 				    </div>
 				  </div>
 			</div>
-			<div class="modal fade" id="sendTokenModal" tabindex="-1" role="dialog">
-		        <div class="modal-dialog" role="document">
-		            <div class="modal-content">
-		                <div class="modal-header bg-success" id="alert_header_user">
-		                    <h5 class="modal-title text-white" id="alert_title_user">전송 하시겠습니까?</h5>
-		                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-		                        <span aria-hidden="true">&times;</span>
-		                    </button>
-		                </div>
-		                <div class="modal-footer">
-		                    <!-- 확인 버튼 클릭 시 동작 추가 -->
-		                    <button type="button" class="btn btn-secondary" id="confirmModal">확인</button>
-		                    <!-- 취소 버튼 클릭 시 동작 추가 -->
-		                    <button type="button" class="btn btn-secondary" data-dismiss="cancelmodal">취소</button>
-		                    
-		                </div>
-		            </div>
-		        </div>
-   			</div>
-   			<div class="modal fade" id="confirmSuccessModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-success" id="success_header_user">
-                    <h5 class="modal-title text-white" id="success_title_user">전송 완료</h5>
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-footer">
-                    <!-- 확인 버튼 클릭 시 동작 추가 -->
-                    <button type="button" class="btn btn-secondary" id="confirmSuccessModalBtn">확인</button>
-		                </div>
-		            </div>
-		        </div>
-		    </div>
+			<div class="modal fade" id="sendTokenPersonalModal" tabindex="-1" role="dialog">
+				  <div class="modal-dialog modal-lg" style="overflow:auto; height:800px;">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h6 class="modal-title">배분 대상</h6>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="card">
+								<div class="card-header">
+									<button id="payout_confirm_button" type="button" class="btn btn-primary btn-sm float-right" style="margin-top: 0px;">지급하기</button>			
+								</div>								
+								<div class="card-block table-responsive">
+									<table id="payout_confirmation_table" class="table table-hover table-bordered table-sm">
+										<colgroup><col width="40%">
+										<col width="20%">
+										<col width="30%">
+										<col width="10%">				
+										</colgroup><thead>
+											<tr>
+												<th>이메일</th>
+												<th>회원명</th>
+												<th>투자상품명</th>
+												<th>FIL</th>
+											</tr>
+										</thead>									
+										<tbody>
+											<tr>
+	                                            <td id="user_email_td">123</td>
+	                                            <td id="user_name_td">123</td>
+	                                            <td id="user_category_name_td">123</td>
+	                                            <td id="fil_amt_td">123</td>
+                                        	</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+						</div>						
+					</div>
+				</div>
+				  </div>
 			<div class="modal fade" id="alert_modal_user" tabindex="-1" role="dialog">
 				  <div class="modal-dialog" role="document">
 				    <div class="modal-content">

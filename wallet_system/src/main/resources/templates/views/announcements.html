@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>IPFS KDC 지갑서비스</title>
+    <title>IPFS KDC ERP</title>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -19,12 +19,11 @@
 </head>
 <body id="page-top">
     <div id="wrapper">
-        <div th:replace="~{fragments/userApp_sidebar :: SideBar}"></div>
+        <div th:replace="~{fragments/sidebar :: SideBar}"></div>
     <div id="content-wrapper" class="d-flex flex-column">
-            <div th:replace="~{fragments/userApp_topbar :: TopBar}"></div>
-            <div th:replace="~{fragments/userApp_announcements_mainContent :: MainContent}"></div>           
+            <div th:replace="~{fragments/topbar :: TopBar}"></div>
+            <div th:replace="~{fragments/announcements_mainContent :: MainContent}"></div>           
         </div>
-
     </div>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -36,7 +35,7 @@
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-	<script src="js/userApp_announcement.js"></script>
+	<script src="js/announcement.js"></script>
 
 </body>
 </html>

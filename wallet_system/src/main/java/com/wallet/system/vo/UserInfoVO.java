@@ -27,26 +27,35 @@ public class UserInfoVO {
     private String profile_picture_url;
     private String password;
     private String original_password;
-	private String available_balance;
-	private String total_balance;
+	private double available_balance;
+	private double total_balance;
+	private long total_tb;
+	
+	
     
-	public String getAvailable_balance() {
-		return available_balance;
+	public long getTotal_tb() {
+		return total_tb;
 	}
-	public void setAvailable_balance(String available_balance) {
-		this.available_balance = available_balance;
-	}
-	public String getTotal_balance() {
-		return total_balance;
-	}
-	public void setTotal_balance(String total_balance) {
-		this.total_balance = total_balance;
+	public void setTotal_tb(long total_tb) {
+		this.total_tb = total_tb;
 	}
 	public String getOriginal_password() {
 		return original_password;
 	}
 	public void setOriginal_password(String original_password) {
 		this.original_password = original_password;
+	}
+	public double getAvailable_balance() {
+		return Math.floor(available_balance * 100) / 100;
+	}
+	public void setAvailable_balance(double available_balance) {
+		this.available_balance = available_balance;
+	}
+	public double getTotal_balance() {
+		return total_balance;
+	}
+	public void setTotal_balance(double total_balance) {
+		this.total_balance = total_balance;
 	}
 	public String getPassword() {
 		return password;

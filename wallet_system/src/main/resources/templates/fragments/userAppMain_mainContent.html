@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	
-      <div  th:fragment="MainContent">
+      <div  th:fragment="MainContent" class="bg-light" id="webviewHeight" style="overflow-y: auto; max-height: 500px; overflow-x: hidden;">
 		   <div class="modal fade" id="alert3_modal" tabindex="-1" role="dialog">
 				  <div class="modal-dialog" role="document">
 				    <div class="modal-content">
@@ -69,11 +69,29 @@
 					</div>
 				</div>
 				  </div>
+				   <div class="modal fade" id="eventAnnouncementBodyModal" tabindex="-1" role="dialog">
+		    <div class="modal-dialog" role="document">
+		        <div class="modal-content">
+		            <div class="modal-header bg-secondary">
+		                <h5 class="modal-title text-white">이벤트 공지사항</h5>
+		                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+		                    <span aria-hidden="true">&times;</span>
+		                </button>
+		            </div>
+		            <div class="modal-body  d-flex justify-content-center align-items-center">
+		                <textarea id="eventAnnouncemen_body" rows="15" cols="50" disabled></textarea>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+		            </div>
+		        </div>
+		    </div>
+		  </div>
 		  <div class="modal fade" id="alert_modal" tabindex="-1" role="dialog">
 				  <div class="modal-dialog" role="document">
 				    <div class="modal-content">
 				      <div class="modal-header bg-success" id="alert_header">
-				        <h5 class="modal-title text-white " id="alert_title">신청 완료</h5>
+				        <h5 class="modal-title" id="alert_title">신청 완료</h5>
 				        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
 				          <span aria-hidden="true">&times;</span>
 				        </button>
@@ -84,7 +102,7 @@
 				    </div>
 				  </div>
 			</div>
-                    <div class="row">
+                    <!-- <div class="row">
 						<div class="col-lg-3 col-md-6 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
@@ -116,7 +134,7 @@
 						<div class="col-md-12 col-lg-6 col-xl-6 input-group mb-3">	
 								  <input type="text" id="payout_fil_address" class="form-control">
 								  <div class="input-group-append"> 
-								  <button class="btn btn-secondary pl-4 pr-4" type="button" id="button-addon2">지급신청 주소</button>
+								  <button class="btn bg-info pl-4 pr-4 text-white" type="button" id="button-addon2">지급신청 주소</button>
 								  </div>
 						</div>
 					</div>  
@@ -124,14 +142,39 @@
 								<div class="col-md-12 col-lg-6 col-xl-6 input-group mb-3">
 								  <input type="number" id="payout_fil_amount" class="form-control">
 								  <div class="input-group-append"> 
-								  <button class="btn btn-secondary" type="button" id="button-addon2">FIL</button>
+								  <button class="btn bg-info text-white" type="button" id="button-addon2">FIL</button>
 								  </div>
 								  <div class="input-group-append">
 								  
 								  <button class="btn btn-primary" id="payout_fil_request" th:value="${userInfoVO.user_id}"><span class="text">송금신청 <i class="fa fa-chevron-right"></i></span></button>
 								</div>
 								</div>
-					</div>  
-                    
+					</div>  -->
+					<div class="row" > 
+						 <div th:each="announcementEvent : ${announcementEventList}" class="col-lg-3 col-md-6 mb-4">
+					        <div class="card shadow h-100 py-2 announcementEventBodyBtn m-2" style="cursor: pointer; border-radius: 15px;">
+                                <div class="card-head">
+									<b th:text="${announcementEvent.event_or_announcement}" th:class="'pl-3 text-xs ' + (${announcementEvent.event_or_announcement == '공지사항' ? 'text-primary' : 'text-info'})"></b>
+									<p th:text="${#dates.format(announcementEvent.reg_date, 'yyyy-MM-dd HH:mm:ss')}" class="pl-1 d-inline text-xs"></p>
+									<p id="eventAnnouncement_body" th:text="${announcementEvent.body}" style="display: none;"></p>
+								</div>
+                                <div class="card-body mb-0 pb-0">
+                                    <div class="row">
+                                        <div class="col mr-2">
+                                            <p class="text-secondary text-uppercase mb-1" th:text="${announcementEvent.title}">
+                                                </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col mr-2 text-right" >
+                                            <b class="text-xs  text-secondary text-uppercase mb-1" th:text="${announcementEvent.admin}">
+                                                </b>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+					    </div>
+                    </div> 
                 </div>
 </html>

@@ -69,13 +69,11 @@ public class UserAppService {
     public UserInfoVO selectDetailUserInfoByUserId(int user_id) {
     	return userAppMapper.selectDetailUserInfoByUserId(user_id);
     }
-    public List<EventsAnnouncementVO> selectEventsByUser(int user_id){
-    	return userAppMapper.selectEventsByUser(user_id);
-    }
-	public List<EventsAnnouncementVO> selectAnnouncementByUser(int user_id){
-		return userAppMapper.selectAnnouncementByUser(user_id);
+	public List<EventsAnnouncementVO> selectAnnouncementEventByUser(int user_id){
+		return userAppMapper.selectAnnouncementEventByUser(user_id);
 	}
     
+	
 
 }
 

@@ -1,5 +1,12 @@
+function resizeWebView() {
+						    var webViewHeight = $(window).height();  // 현재 WebView의 높이
+						    var maxContentHeight = webViewHeight  - $('#webviewTopHeight').height(); 
+						
+						    $('#webviewHeight').css({
+						        'max-height': maxContentHeight + 'px'
+						    });
+						}	
 $(document).ready(function() {
-						$('#dataTableContainer').show();
 						  $('#alert_modal').on('hidden.bs.modal', function (e) {
 							 if ($('#alert_header').hasClass("bg-success")){
 								 location.reload(true);
@@ -58,9 +65,9 @@ $(document).ready(function() {
 			                    }
 			                });
 					    });
-						
-					     $('#dataTable').DataTable({
-					    	 "order": [[0, 'desc']]
-						});
-					    
+					     $('.announcementEventBodyBtn').on('click', function() {
+							 $('#eventAnnouncemen_body').val($(this).find('#eventAnnouncement_body').text());
+					    	$('#eventAnnouncementBodyModal').modal('show');
+					    });	
+  
 });

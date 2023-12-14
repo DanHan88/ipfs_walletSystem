@@ -1,3 +1,12 @@
+function resizeWebView() {
+						    var webViewHeight = $(window).height();  // 현재 WebView의 높이
+						    var maxContentHeight = webViewHeight - $('#webviewTopHeight').height(); 
+						
+						    $('#webviewHeight').css({
+						        'max-height': maxContentHeight + 'px'
+						    });
+						}
+$(document).ready(function() {
 $('#fileInput').on('change', function (e) {
 				            var file = e.target.files[0];
 				
@@ -118,3 +127,4 @@ $('#fileInput').on('change', function (e) {
 							   }   
 							$('#profile_picture_modal').modal('show');  
 					    });
+});

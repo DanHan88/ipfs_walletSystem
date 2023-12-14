@@ -1,34 +1,73 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-      <div th:fragment="TopBar">
-         <div id="content">
+      <div th:fragment="TopBar" id="webviewTopHeight">
+<ul class="navbar-nav bg-light">
+			<div class="card shadow mb-0 pb-0 bg-light">
+					<div class="card-body mb-0 pb-0">
+							<div class="row mb-0 pb-0">
+								<div class="col-md-12">								
+											<div class="form-group row mb-0 pb-0">
+												<div class="col-4">
+												<img th:src="@{'/uploads'+${loginVO.userInfoVO.profile_picture_url}}" id="profilePicture" alt="Profile Picture" class="img-thumbnail" style="max-width: 100px;">
+												</div>
+												<div class="col-8">
+													<div class="row">
+														<label class="col-5 form-control-label ml-0 mr-0 pl-0 pr-0 text-dark" style="margin-top:5px;">회원명</label>
+														<p class="col-7 pl-0 pr-0" th:text="${loginVO.userInfoVO.user_name}" style="margin-top:5px;"></p>					
+													</div>
+													<div class="row">
+														<label class="col-5 form-control-label ml-0 mr-0 pl-0 pr-0 text-dark" style="margin-top:5px;">총투자TB</label>
+														<p class="col-7 pl-0 pr-0" th:text="${loginVO.userInfoVO.total_tb} + ' TB'" style="margin-top:5px;"></p>					
+														</div>
+													<div class="row">
+														<label class="col-5 form-control-label ml-0 mr-0 pl-0 pr-0 text-dark" style="margin-top:5px;">출금가능FIL</label>
+														<p class="col-7 pl-0 pr-0" th:text="${loginVO.userInfoVO.available_balance} +' FIL'" style="margin-top:5px;"></p>					
+														</div>
+												</div>			
+											</div>																												
+								</div>
+							</div>
+							<div class="row mt-1 pt-1 mb-1 pb-1 justify-content-center">
+							<div style="display: flex;"><!--<div style="display: flex;"> --> 
+				<a th:href="@{/userAppPayOut}" style="margin: 0 8px;">
+				  <i><img src="/img/green_cube.png" alt="White Cube"></i>
+				  <b class="text-secondary">배분 내역</b>
+				</a>
+				
+				<a th:href="@{/userAppInvestment}" style="margin: 0 8px;">
+				  <i><img src="/img/green_cube.png" alt="White Cube"></i>
+				  <b class="text-secondary">투자 내역</b>
+				</a>
+			 
+                <a th:href="@{/userAppRequestFund}" style="margin: 0 8px;">
+                   <i><img src="/img/green_cube.png" alt="White Cube"></i>
+                    <b class="text-secondary">송금 내역</b></a>
 
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-0 static-top shadow">
-					<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                    <ul class="navbar-nav ml-auto">
 
-                                                <div class="topbar-divider d-none d-sm-block"></div>
+                <a th:href="@{/userAppUserInfo}" style="margin: 0 8px;">
+                      <i><img src="/img/green_cube.png" alt="White Cube"></i>
+                    <b class="text-secondary">유저 설정</b></a>
+  
+			<!--
+                <a th:href="@{/UserAppMain}" style="margin: 0 8px;">
+                      <i><img src="/img/green_cube.png" alt="White Cube"></i>
+                    <span class="text-white">송금 신청</span></a>
 
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${loginVO.id}"></span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a th:href="@{/logoutUser}" class="dropdown-item">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
+			
+                <a th:href="@{/userAppAnnouncements}" style="margin: 0 8px;">
+                    <i><img src="/img/green_cube.png" alt="White Cube"></i>
+                    <span class="text-white">공지사항</span></a>
 
-                    </ul>
 
-                </nav>
-                </div>
+                <a  th:href="@{/userAppEvents}" style="margin: 0 8px;">
+                    <i><img src="/img/green_cube.png" alt="White Cube"></i>
+                    <span class="text-white">이벤트</span></a> 
+            -->
+            </div>
+						</div>
+					</div>
+					</div>
+            
+        </ul>
+        </div>
 </html>

@@ -157,7 +157,7 @@
                                     </tfoot>
                                     <tbody>
                                         <tr th:each="tokenPaid : ${tokenPaidVOList}">
-                                            <td th:text="${tokenPaid.paid_date}" class="d-none d-lg-table-cell"></td>
+                                            <td th:text="${#dates.format(tokenPaid.paid_date, 'yyyy-MM-dd hh:mm:ss')}" class="d-none d-lg-table-cell"></td>
                                             <td id="paid_per_tb_td" th:text="${tokenPaid.fil_paid_per_tb}"></td>
                                             <td th:text="${tokenPaid.total_paid}" class="d-none d-lg-table-cell"></td>
                                             <td id="status_td" th:text="${tokenPaid.status}" th:style="${tokenPaid.status == '정상' ? 'color: green;' : 'color: red;'}"></td>

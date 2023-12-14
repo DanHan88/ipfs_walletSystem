@@ -8,6 +8,7 @@
 package com.wallet.system.service;
 
 import com.wallet.system.mapper.InvestmentMapper;
+import com.wallet.system.vo.EventsAnnouncementVO;
 import com.wallet.system.vo.InvestmentCategoryVO;
 import com.wallet.system.vo.InvestmentVO;
 import com.wallet.system.vo.LoginVO;
@@ -64,12 +65,15 @@ public class InvestmentService {
         return this.investmentMapper.findAdminByAdminId(id);
     }
 
-    public boolean checkSession(HttpServletRequest request) {
+    public boolean checkSession(HttpServletRequest request,boolean isAdmin) {
     	HttpSession session = request.getSession();
     	LoginVO loginVO = (LoginVO)session.getAttribute("user");
         if (session.getAttribute("user") == null || loginVO.getId() == "") {
 	        return false;
 	    }
+        if(isAdmin!=loginVO.isAdmin()) {
+        	return false;
+        }
 	    return true;
     }
     public boolean debuggingCheckSession(HttpServletRequest request) {
@@ -172,6 +176,14 @@ public class InvestmentService {
     public List<InvestmentVO> selectInvestmentListForUser(int user_id){
     	return investmentMapper.selectInvestmentListForUser(user_id);
     }
+    
+    
+    public List<EventsAnnouncementVO> selectEvents(){
+    	return investmentMapper.selectEvents();
+    }
+	public List<EventsAnnouncementVO> selectAnnouncements(){
+		return investmentMapper.selectAnnouncements();
+	}
     
     public String addNewTokenPaidInfo(List<InvestmentVO> listInvestment, HttpServletRequest request) {
     	
