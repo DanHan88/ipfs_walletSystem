@@ -61,6 +61,9 @@ public class UserAppController {
 	        UserInfoVO userInfoVO = new UserInfoVO();     
 	        userInfoVO.setUser_email(loginVO.getId());
 	        userInfoVO = investmentMapper.verifyUserInfoVO(userInfoVO);
+	        if (userInfoVO == null) {
+	        	 return "redirect:/UserApp";
+	        }
 	        userInfoVO = userAppService.selectDetailUserInfoByUserId(userInfoVO.getUser_id());
 	        HttpSession session = request.getSession();
 	        String rawPw = "";
