@@ -116,6 +116,12 @@ public class InvestmentController {
         return "failed:invalid_request_state";
     	}
     @ResponseBody  
+    @PostMapping(value={"/checkAdminBalance"})
+    public float checkAdminBalance(HttpServletRequest request) {
+        float balance = investmentService.walletCheck();
+        return balance;
+    	}
+    @ResponseBody  
     @PostMapping(value={"/addNewProduct"})
     public InvestmentCategoryVO addNewProduct(@RequestBody InvestmentCategoryVO investmentCategoryVO,  HttpServletRequest request) {
     	if(!investmentService.checkSession(request,true)) {

@@ -12,12 +12,17 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <div class="modal-body">
+                    <p class="modal-title text-dark" id="admin_balance"></p>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
                 <div class="modal-footer">
                     <!-- 확인 버튼 클릭 시 동작 추가 -->
                     <button type="button" class="btn btn-secondary" id="confirmModal">승인</button>
                     <!-- 취소 버튼 클릭 시 동작 추가 -->
-                    <button type="button" class="btn btn-secondary" data-dismiss="cancelmodal">취소</button>
-                    
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">취소</button>
                 </div>
             </div>
         </div>
@@ -25,15 +30,14 @@
    	 <div class="modal fade" id="confirmSuccessModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header bg-success" id="success_header_user">
-                    <h5 class="modal-title text-white" id="success_title_user">승인 완료</h5>
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <div class="modal-header bg-success" id="success_header_fundRequest">
+                    <h5 class="modal-title text-white" id="success_title_fundRequest">승인 완료</h5>
+                </div>
+                <div class="modal-body">
+                    <p class="text-dark" id="success_body_fundRequest"></p>
                 </div>
                 <div class="modal-footer">
-                    <!-- 확인 버튼 클릭 시 동작 추가 -->
-                    <button type="button" class="btn btn-secondary" id="confirmSuccessModalBtn">확인</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">확인</button>
                 </div>
             </div>
         </div>
@@ -60,15 +64,11 @@
 	<div class="modal fade" id="declineSuccessModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header bg-success" id="declineSuccess_header_user">
-                    <h5 class="modal-title text-white" id="declineSuccess_title_user">거절 완료</h5>
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <div class="modal-header bg-success" id="declineSuccess_header_fundRequest">
+                    <h5 class="modal-title text-white" id="declineSuccess_title_fundRequest">거절 완료</h5>
                 </div>
                 <div class="modal-footer">
-                    <!-- 확인 버튼 클릭 시 동작 추가 -->
-                    <button type="button" class="btn btn-secondary" id="declineSuccessModalBtn">확인</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">확인</button>
                 </div>
             </div>
         </div>        
@@ -144,9 +144,13 @@
 								        data-target="#declineMemoModal"
 								        th:attr="data-decline-memo=${requestFil.memo}"
 								        >거절</button>
-									
+								        <button th:if="${requestFil.status == '승인'}"
+								        class="btn btn-link m-0 p-0 request-confirmMessage text-success"
+								        type="button"
+								        th:attr="data-message=${requestFil.message}"
+								        >승인</button>
 									    <!-- 그 외의 상태일 때는 그냥 텍스트로 표시 -->
-									    <span th:unless="${requestFil.status == '거절'}" th:text="${requestFil.status}"></span>
+									    <span th:if="${requestFil.status == '신청'}" th:text="${requestFil.status}"></span>
 									</td>
                                     <td>
                                         <button th:if="${requestFil.status == '신청'}" class="btn btn-secondary mr-2 mt-0 mb-0 request-approve" type="button"

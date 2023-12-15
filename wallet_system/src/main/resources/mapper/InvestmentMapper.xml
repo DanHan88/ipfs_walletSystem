@@ -130,6 +130,9 @@
 		 <if test="memo != null">
            , memo = #{memo}
          </if>
+         <if test="message != null">
+           , message = #{message}
+         </if>
      
 		Where wallet_withdrawals_id = #{wallet_withdrawals_id}
 			

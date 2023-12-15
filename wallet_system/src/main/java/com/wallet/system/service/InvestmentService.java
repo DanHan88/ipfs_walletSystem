@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -33,6 +34,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class InvestmentService {
     @Autowired
     InvestmentMapper investmentMapper;
+    
+    @Value("${admin.wallet.address}")
+    private String admin_walletAddress;
 
     public List<InvestmentVO> getInvestmentList() {
         return this.investmentMapper.selectInvestmentList();
@@ -219,51 +223,83 @@ public class InvestmentService {
  
 
 public String approveFundRequest(WalletWithdrawalVO walletWithdrawalVO) {
-	// TODO Auto-generated method stub
-	investmentMapper.updateStatus(walletWithdrawalVO);
-	String walletCheck = walletCheck();
-    System.out.println("테스트 조회 : " + walletCheck);
 	
-    return "success";
-    
+	float walletCheck = walletCheck();
+	if(-1 == walletCheck) {
+    	return "에러: 로터스 노드 연결실패:"+ walletCheck;
+    }
+    System.out.println("테스트 조회 : " + walletCheck);
+    if(walletWithdrawalVO.getFil_amount()+1 > walletCheck) {
+    	return "에러: 관리자 지갑 잔고 부족:"+ walletCheck;
+    }
+    String returnHash = lotusSend(walletWithdrawalVO.getWallet_address(),walletWithdrawalVO.getFil_amount());
+    walletWithdrawalVO.setMessage(returnHash);
+	investmentMapper.updateStatus(walletWithdrawalVO);
+	System.out.println("send 결과 : " + returnHash);
+    return "success";  
 }
 
 
 public String declineFundRequest(WalletWithdrawalVO walletWithdrawalVO) {
 	// TODO Auto-generated method stub
 	investmentMapper.updateStatus(walletWithdrawalVO);
-
-    
     // 조회된 행이 존재하고 상태가 '신청'인 경우에만 업데이트
-	return "success";
-
-		
+	return "success";	
 }
 
-public String walletCheck() {
-	String cmd = "lotus wallet list";
-    String[] command = {"/bin/sh","-c",cmd};
-    String result = ""; 
-    try 
-    {
-    	ProcessBuilder processBuilder = new ProcessBuilder(command);
-    	Process process = processBuilder.start();
+public float walletCheck() {
+    String cmd = "echo $(lotus wallet balance "+ admin_walletAddress +") | awk '{print $1}'";
+    System.out.println(cmd);
+    String[] command = {"/bin/sh", "-c", cmd};
+    float result = 0; 
+    try {
+        ProcessBuilder processBuilder = new ProcessBuilder(command);
+        Process process = processBuilder.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         String line;
         while ((line = reader.readLine()) != null) {
-        	result +=line+"\n";
+            try {
+                result = Float.parseFloat(line);
+            } catch (NumberFormatException e) {
+                result = -1;
+            }
         }
-        int exitCode = process.waitFor(); 
+        int exitCode = process.waitFor();
         if (exitCode != 0) {
-        	result = "Command failed";
+            result = -1; 
         }
-     } 
-    catch (Exception e) 
-    {     
-    	result = "ERROR";
+    } catch (Exception e) {
+        result = -1; 
     }
-    return result; 
-} 
+    return result;
+}
+public String lotusSend(String user_address, float fil_amount) {
+    String cmd = "lotus send --from " +  admin_walletAddress +  " " + user_address + " " + fil_amount;
+    System.out.println(cmd);
+    
+    String[] command = {"/bin/sh", "-c", cmd};
+    String result = "";
+
+    try {
+        ProcessBuilder processBuilder = new ProcessBuilder(command);
+        Process process = processBuilder.start();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            result += line + "\n";
+        }
+
+        int exitCode = process.waitFor();
+        if (exitCode != 0) {
+            result = "Command failed";
+        }
+    } catch (Exception e) {
+        result = "ERROR";
+    }
+
+    return result.trim();
+}
     
 
 }
