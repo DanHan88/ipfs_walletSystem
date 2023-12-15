@@ -234,7 +234,7 @@ public class InvestmentController {
     	}
     	return investmentService.regMemo(memoVO,request);
     }  
-    @ResponseBody
+    @ResponseBody  //테스트용
     @PostMapping(value={"/payoutConfirm"})
     public String payoutConfirm(@RequestBody List<InvestmentVO> listInvestment, HttpServletRequest request) {
     	if(!investmentService.checkSession(request,true)) {

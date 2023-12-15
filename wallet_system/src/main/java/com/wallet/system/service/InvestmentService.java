@@ -18,6 +18,8 @@ import com.wallet.system.vo.TokenPaidDetailVO;
 import com.wallet.system.vo.TokenPaidVO;
 import com.wallet.system.vo.UserInfoVO;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +27,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class InvestmentService {
@@ -218,9 +221,9 @@ public class InvestmentService {
 public String approveFundRequest(WalletWithdrawalVO walletWithdrawalVO) {
 	// TODO Auto-generated method stub
 	investmentMapper.updateStatus(walletWithdrawalVO);
-
-    
-        // 조회된 행이 존재하고 상태가 '신청'인 경우에만 업데이트
+	String walletCheck = walletCheck();
+    System.out.println("테스트 조회 : " + walletCheck);
+	
     return "success";
     
 }
@@ -236,8 +239,31 @@ public String declineFundRequest(WalletWithdrawalVO walletWithdrawalVO) {
 
 		
 }
-    
-    
+
+public String walletCheck() {
+	String cmd = "lotus wallet list";
+    String[] command = {"/bin/sh","-c",cmd};
+    String result = ""; 
+    try 
+    {
+    	ProcessBuilder processBuilder = new ProcessBuilder(command);
+    	Process process = processBuilder.start();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line;
+        while ((line = reader.readLine()) != null) {
+        	result +=line+"\n";
+        }
+        int exitCode = process.waitFor(); 
+        if (exitCode != 0) {
+        	result = "Command failed";
+        }
+     } 
+    catch (Exception e) 
+    {     
+    	result = "ERROR";
+    }
+    return result; 
+} 
     
 
 }
