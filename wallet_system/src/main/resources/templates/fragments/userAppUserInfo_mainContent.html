@@ -99,36 +99,21 @@
 								<div class="col-md-12">								
 											<form id="uploadForm" method="post" enctype="multipart/form-data">
 											<div class="form-group row">
-												<div class="col-3">
-												<img th:src="@{'/uploads'+${loginVO.userInfoVO.profile_picture_url}}" id="profilePicture" alt="Profile Picture" class="img-thumbnail">
-												</div>
 												<div class="col-9">
-													<div class="row">
-														<label class="col-4 form-control-label" style="margin-top:5px;"><b>회원명</b></label>
-														<div class="col-8">
-															<input id="user_name" th:value="${loginVO.userInfoVO.user_name}" class="form-control" type="text" disabled>
-														</div>						
-													</div>
 													<div class="row">
 														<label class="col-4 form-control-label" style="margin-top:5px;"><b>이메일</b></label>
 														<div class="col-8">
-															<input id="user_email" th:value="${loginVO.userInfoVO.user_email}" class="form-control" type="text" disabled>
+															<input id="user_email" th:value="${loginVO.userInfoVO.user_email}" class="form-control" type="text" style="border: none; background-color: transparent;" disabled>
 														</div>								
 													</div>
 													<div class="row">
-														<label class="col-4 form-control-label" style="margin-top:5px;"><b>휴대폰번호</b></label>
+														<label class="col-4 form-control-label" style="margin-top:5px;" style="border: none; background-color: transparent;"><b>휴대폰번호</b></label>
 														<div class="col-8">
 															<input id="user_phone" th:value="${loginVO.userInfoVO.user_phone}" class="form-control" type="text" disabled>
 														</div>								
 													</div>
 													
 												</div>			
-											</div>
-											<div id="wallet_address_div" class="form-group row">
-												<label class="col-md-2 form-control-label" style="margin-top:5px;"><b id="wallet_address_b">FIL 토큰 보유량</b></label>
-												<div class="col-md-10 mt-1">
-													<b id="wallet_address_balance_b">0 FIL</b>
-												</div>	
 											</div>
 											<div id="wallet_address_div" class="form-group row">
 												<label class="col-md-2 form-control-label" style="margin-top:5px;"><b>회원사진</b></label>

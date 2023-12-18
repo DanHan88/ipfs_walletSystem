@@ -13,9 +13,21 @@ public class TokenPaidVO {
 	private Date update_date;
 	private float fil_paid_ratio_change;
 	private float total_paid;
+	private int unique_category_count;
+	private String payout_category_name;
 	
-	
-	
+	public int getUnique_category_count() {
+		return unique_category_count;
+	}
+	public void setUnique_category_count(int unique_category_count) {
+		this.unique_category_count = unique_category_count;
+	}
+	public String getPayout_category_name() {
+		return payout_category_name;
+	}
+	public void setPayout_category_name(String payout_category_name) {
+		this.payout_category_name = payout_category_name;
+	}
 	public float getFil_paid_ratio_change() {
 		return fil_paid_ratio_change;
 	}

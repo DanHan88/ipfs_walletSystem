@@ -21,15 +21,27 @@
 		 WHERE B.status ='사용' AND A.status='active' AND C.user_status='정상'
 	</select>
 	<select id="selectTokenPaidVOList" resultType="com.wallet.system.vo.TokenPaidVO">
-		select 
-		 A.token_paid_id,
-		 A.paid_date,
-		 A.fil_paid_per_tb,
-		 A.admin_id,
-		 A.status,
-		 A.update_date,
-		 (SELECT SUM(B.paid_fil) from TokenPaid_detail_info B WHERE B.token_paid_id = A.token_paid_id)AS total_paid
-		 from TokenPaid_Info A
+		SELECT 
+		    A.token_paid_id,
+		    A.paid_date,
+		    A.fil_paid_per_tb,
+		    A.admin_id,
+		    A.status,
+		    A.update_date,
+		    COUNT(DISTINCT s.investment_category_index) AS unique_category_count,
+		    CASE
+		        WHEN COUNT(DISTINCT s.investment_category_index) > 2 THEN '다중지급'
+		        ELSE GROUP_CONCAT(DISTINCT ic.investment_category_name)
+		    END AS payout_category_name,
+		    (SELECT SUM(B.paid_fil) FROM TokenPaid_detail_info B WHERE B.token_paid_id = A.token_paid_id) AS total_paid
+		FROM 
+		    TokenPaid_Info A
+		JOIN
+		    TokenPaid_detail_info s ON A.token_paid_id = s.token_paid_id
+		JOIN
+		    Investment_Category ic ON ic.investment_category_index = s.investment_category_index
+		GROUP BY
+		    A.token_paid_id
 	</select>
 	<select id="selectTokenDetailList" parameterType="com.wallet.system.vo.TokenPaidVO" resultType="com.wallet.system.vo.TokenPaidDetailVO">
 		select * from TokenPaid_detail_info A 
