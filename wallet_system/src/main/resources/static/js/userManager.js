@@ -1,4 +1,5 @@
 $(document).ready(function() {
+						
 						var tx_list;
 						$('#dataTableContainer').show();
 						$('.disable_user').on('click', function() {
@@ -127,7 +128,9 @@ $(document).ready(function() {
 						            { "data": "admin_id" }
 						        ]
 						    });
+						$('#wallet_address_balance_a').text(clickedButton.attr('data-filAmount')+" FIL");
 						$('#wallet_address_balance_b').text(clickedButton.attr('data-filAmount')+" FIL");
+						$('#wallet_address_balance_c').text(clickedButton.attr('data-filAmount')+" FIL");
 						
 							if(clickedButton.parent().parent().find('.user_status').text()=='정상'){
 								$('input[name="user_status"][value="정상"]').prop('checked', true);
@@ -451,6 +454,63 @@ $(document).ready(function() {
 			                    error: function(error) {
 			                        // 요청에 실패했을 때 수행할 동작
 			                        console.error('승인 요청 실패:', error);
+			                    },
+					        });
+					    });
+					    
+					    $('#tokenMinus-btn').on('click', function() {     
+							   	var minus_token_amt = $("#minus_token_amt").val();
+						       	var user_id = $('#user_edit_1_btn').val();
+						       	var minus_token_amt2 = -Math.abs(minus_token_amt);
+						       	$('#user_email_td_c').text($('#user_email_span').text());
+						       	$('#user_name_td_c').text($('#user_name_span').text());
+						       	$('#user_category_name_td_c').text('개인차감');
+						       	$('#fil_amt_td_c').text(minus_token_amt);
+      							 tx_list = [{
+									cateogry_fil_per_tb: 100,
+							        payout_fil: minus_token_amt2,
+							        investment_category_id: 62,
+							        is_getting_paid: true,
+							        product_name: "개인차감",
+							        user_id: user_id,
+								  }];
+								var fil_per_tb = $('#payout_fil_amount').val();
+							
+								if(fil_per_tb<=0){
+									$('#alert2_modal').modal('show');
+									return;
+								}
+								  
+								$('#minusTokenPersonalModal').modal('show');
+
+						    });
+						    
+						    $('#minus_confirm_button').on('click', function() {
+								 
+								       $.ajax({
+						                    type: "POST",
+						                    url: "/addNewTokenPaid",
+						                    contentType: "application/json",
+						                    data: JSON.stringify(tx_list),
+						                     success: function(data) {
+	                                if (data === 'success') {
+	                                    // 성공 시 모달 내용 변경
+	                                    $('#alert_header_user').removeClass("bg-danger").addClass("bg-success");
+	                                    $('#alert_title_user').text("차감완료");
+	                                    $('#alert_modal_user').modal('show');
+                                    // 승인 완료 모달 표시
+                                } else if (data === 'failed:session_closed') {
+                                    // 세션 종료 시 다른 처리
+                                    $('#session_alert_user').modal('show');
+                                } else {
+                                    // 실패 시 모달 내용 변경
+                                    $('#alert_header_user').removeClass("bg-success").addClass("bg-danger");
+                                    $('#alert_title_user').text("차감 실패");
+                                }
+                            },
+			                    error: function(error) {
+			                        // 요청에 실패했을 때 수행할 동작
+			                        console.error('차감 요청 실패:', error);
 			                    },
 					        });
 					    });

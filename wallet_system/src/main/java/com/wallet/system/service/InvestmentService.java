@@ -193,7 +193,6 @@ public class InvestmentService {
 	}
     
     public String addNewTokenPaidInfo(List<InvestmentVO> listInvestment, HttpServletRequest request) {
-    	
     	TokenPaidVO tokenPaidVO = new TokenPaidVO();
     	tokenPaidVO.setFil_paid_per_tb(listInvestment.get(0).getFil_paid_per_tb());
     	HttpSession session = request.getSession();
