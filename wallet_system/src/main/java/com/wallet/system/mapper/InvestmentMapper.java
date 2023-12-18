@@ -83,5 +83,7 @@ public interface InvestmentMapper {
     public List<EventsAnnouncementVO> selectEvents();
     
 	public List<EventsAnnouncementVO> selectAnnouncements();
+	
+	public void insertAnnouncement (EventsAnnouncementVO eventsAnnouncementVO);
 }
 

@@ -288,7 +288,29 @@ public class InvestmentController {
     	}
         return investmentService.updateTokenPaid(tokenPaidVO);
     }
+    @ResponseBody
+    @PostMapping(value={"/updateAnnouncements"})
+    public String update_announcement(@RequestBody EventsAnnouncementVO eventsAnnouncementVO, HttpServletRequest request) {
+    	if(!investmentService.checkSession(request,true)) {
+    		return "failed:session_closed";
+    	}
+    	 HttpSession session = request.getSession();
+    	LoginVO loginVO = (LoginVO)session.getAttribute("user");
+    	eventsAnnouncementVO.setAdmin(loginVO.getId());
+    	return investmentService.insert_Events_or_Announcement(eventsAnnouncementVO);
+    }
     
+    @ResponseBody
+    @PostMapping(value={"/updateEvents"})
+    public String update_Events(@RequestBody EventsAnnouncementVO eventsAnnouncementVO, HttpServletRequest request) {
+    	if(!investmentService.checkSession(request,true)) {
+    		return "failed:session_closed";
+    	}
+    	HttpSession session = request.getSession();
+    	LoginVO loginVO = (LoginVO)session.getAttribute("user");
+    	eventsAnnouncementVO.setAdmin(loginVO.getId());
+    	return investmentService.insert_Events_or_Announcement(eventsAnnouncementVO);
+    }
     
     
     

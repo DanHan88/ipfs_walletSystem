@@ -300,7 +300,13 @@ public String lotusSend(String user_address, float fil_amount) {
 
     return result.trim();
 }
-    
+
+public String insert_Events_or_Announcement(EventsAnnouncementVO eventsAnnouncementVO) {
+	// TODO Auto-generated method stub
+	investmentMapper.insertAnnouncement(eventsAnnouncementVO);
+    // 조회된 행이 존재하고 상태가 '신청'인 경우에만 업데이트
+	return "success";	
+}
 
 }
 

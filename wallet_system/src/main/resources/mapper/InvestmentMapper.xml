@@ -291,4 +291,11 @@
 			ORDER BY reg_date DESC
 	</select>
 	
+	<insert id="insertAnnouncement" parameterType="com.wallet.system.vo.EventsAnnouncementVO">
+	    INSERT INTO ipfskdcw.events_announcements
+	    (reg_date, title, body, admin, event_or_announcement)
+	    VALUES
+	    (NOW(), #{title}, #{body}, #{admin}, #{event_or_announcement})
+	</insert>
+		
 </mapper>
