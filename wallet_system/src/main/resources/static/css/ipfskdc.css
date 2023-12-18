@@ -8,6 +8,14 @@
   background-size: cover;
 }
 
+  .user-update-button {
+            background: url('/img/user_update.png') no-repeat center center;
+		    background-size: contain; /* Adjusted to 'contain' */
+		    height: 50px;
+		    width: 150px;
+		    border: none;
+		    cursor: pointer;
+        }
 i img {
             width: 20px; /* Adjust the width as needed */
             height: 20px; /* Adjust the height as needed */

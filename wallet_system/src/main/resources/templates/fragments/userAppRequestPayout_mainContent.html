@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	
+      <div  th:fragment="MainContent" class="bg-light" id="webviewHeight" style="overflow-y: auto; max-height: 500px; overflow-x: hidden;">
+		   <div class="modal fade" id="alert3_modal" tabindex="-1" role="dialog">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header bg-warning">
+				        <h5 class="modal-title text-white " id="alert3_title">입력값을 확인해주십시오</h5>
+				        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
+				      </div>
+				    </div>
+				  </div>
+		 </div>
+		  <div class="modal fade" id="payout_request_modal" tabindex="-1" role="dialog">
+				  <div class="modal-dialog modal-lg" style="overflow:auto; height:800px;">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title"><b>송금 신청하시겠습니까?</b></h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="card">
+								<div class="card-header">
+									<button id="payout_confirm_button" type="button" class="btn btn-primary btn-sm float-right" style="margin-top: 0px;">신청하기</button>			
+								</div>	
+								<div class="card-body">
+									<div class="row">
+									<div class="col-xl-6 col-md-6 mb-4">
+			                            <div class="card border-left-primary shadow h-100 py-2">
+			                                <div class="card-body">
+			                                    <div class="row no-gutters align-items-center">
+			                                        <div class="col mr-2">
+			                                            <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">
+			                                                송금 요청 지갑</div>
+			                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="request_wallet_address"></div>
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        </div>
+			                        <div class="col-xl-6 col-md-6 mb-4">
+			                            <div class="card border-left-primary shadow h-100 py-2">
+			                                <div class="card-body">
+			                                    <div class="row no-gutters align-items-center">
+			                                        <div class="col mr-2">
+			                                            <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">
+			                                                송금요청 FIL</div>
+			                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="request_fil_balance"></div>
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        </div>
+			                        </div>
+								</div>							
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+						</div>						
+					</div>
+				</div>
+				  </div>
+				   <div class="modal fade" id="eventAnnouncementBodyModal" tabindex="-1" role="dialog">
+		    <div class="modal-dialog" role="document">
+		        <div class="modal-content">
+		            <div class="modal-header bg-secondary">
+		                <h5 class="modal-title text-white">이벤트 공지사항</h5>
+		                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+		                    <span aria-hidden="true">&times;</span>
+		                </button>
+		            </div>
+		            <div class="modal-body  d-flex justify-content-center align-items-center">
+		                <textarea id="eventAnnouncemen_body" rows="15" cols="50" disabled></textarea>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+		            </div>
+		        </div>
+		    </div>
+		  </div>
+		  <div class="modal fade" id="alert_modal" tabindex="-1" role="dialog">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header bg-success" id="alert_header">
+				        <h5 class="modal-title" id="alert_title">신청 완료</h5>
+				        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
+				      </div>
+				    </div>
+				  </div>
+			</div>
+                    <div class="row">
+						<div class="col-md-12 col-lg-6 col-xl-6 input-group mb-3">	
+								  <input type="text" id="payout_fil_address" class="form-control">
+								  <div class="input-group-append"> 
+								  <button class="btn bg-info pl-4 pr-4 text-white" type="button" id="button-addon2">지급신청 주소</button>
+								  </div>
+						</div>
+					</div>  
+					 <div class="row">
+								<div class="col-md-12 col-lg-6 col-xl-6 input-group mb-3">
+								  <input type="number" id="payout_fil_amount" class="form-control">
+								  <div class="input-group-append"> 
+								  <button class="btn bg-info text-white" type="button" id="button-addon2">FIL</button>
+								  </div>
+								  <div class="input-group-append">
+								  
+								  <button class="btn btn-primary" id="payout_fil_request" th:value="${userInfoVO.user_id}"><span class="text">송금신청 <i class="fa fa-chevron-right"></i></span></button>
+								</div>
+								</div>
+					</div>   
+                </div>
+</html>

@@ -170,6 +170,23 @@ public class UserAppController {
 	        mav.setViewName("views/userAppMain");
 	        return mav;
 	    }
+	   @GetMapping(value={"/userAppRequestPayout"})
+	    public ModelAndView userAppRequestPayout(HttpServletRequest request,String sb) {
+	        ModelAndView mav = new ModelAndView();
+	        HttpSession session = request.getSession();
+	        if(!investmentService.checkSession(request,false)) {
+	        	mav.setViewName("redirect:/UserApp");
+	            return mav;
+	        }
+	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
+	        UserInfoVO userInfoVO = userAppService.selectDetailUserInfoByUserId(loginVO.getUserInfoVO().getUser_id());
+	        
+	        mav.addObject("userInfoVO",userInfoVO);
+	        mav.addObject("sb", sb);
+	        mav.addObject("loginVO", loginVO);
+	        mav.setViewName("views/userApp_requestPayout");
+	        return mav;
+	    }
 	   
 	   @ResponseBody
 	    @PostMapping(value={"/addWalletWithdrawal"})

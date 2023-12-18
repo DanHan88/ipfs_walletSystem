@@ -13,7 +13,8 @@
 												<div class="col-8">
 													<div class="row">
 														<label class="col-5 form-control-label ml-0 mr-0 pl-0 pr-0 text-dark" style="margin-top:5px;">회원명</label>
-														<p class="col-7 pl-0 pr-0" th:text="${loginVO.userInfoVO.user_name}" style="margin-top:5px;"></p>					
+														<p class="col-5 pl-0 pr-0" th:text="${loginVO.userInfoVO.user_name}" style="margin-top:5px;"></p>
+														<a class="col-2 btn user-update-button" th:href="@{/userAppUserInfo}"></a>							
 													</div>
 													<div class="row">
 														<label class="col-5 form-control-label ml-0 mr-0 pl-0 pr-0 text-dark" style="margin-top:5px;">총투자TB</label>
@@ -21,14 +22,19 @@
 														</div>
 													<div class="row">
 														<label class="col-5 form-control-label ml-0 mr-0 pl-0 pr-0 text-dark" style="margin-top:5px;">출금가능FIL</label>
-														<p class="col-7 pl-0 pr-0" th:text="${loginVO.userInfoVO.available_balance} +' FIL'" style="margin-top:5px;"></p>					
+														<p class="col-7 pl-0 pr-0" th:text="${loginVO.userInfoVO.available_balance} +' FIL'" style="margin-top:5px;"></p>	
+														
 														</div>
 												</div>			
 											</div>																												
 								</div>
 							</div>
 							<div class="row mt-1 pt-1 mb-1 pb-1 justify-content-center">
-							<div style="display: none;"><!--<div style="display: flex;"> --> 
+							<div style="display: flex;"><!--<div style="display: flex;"> --> 
+				<a th:href="@{/UserAppMain}" style="margin: 0 8px;">
+				  <i><img src="/img/green_cube.png" alt="White Cube"></i>
+				  <b class="text-secondary">메인</b>
+				</a>
 				<a th:href="@{/userAppPayOut}" style="margin: 0 8px;">
 				  <i><img src="/img/green_cube.png" alt="White Cube"></i>
 				  <b class="text-secondary">배분 내역</b>
@@ -42,27 +48,10 @@
                 <a th:href="@{/userAppRequestFund}" style="margin: 0 8px;">
                    <i><img src="/img/green_cube.png" alt="White Cube"></i>
                     <b class="text-secondary">송금 내역</b></a>
-
-
-                <a th:href="@{/userAppUserInfo}" style="margin: 0 8px;">
+                    
+				<a th:href="@{userAppRequestPayout}" style="margin: 0 8px;">
                       <i><img src="/img/green_cube.png" alt="White Cube"></i>
-                    <b class="text-secondary">유저 설정</b></a>
-  
-			<!--
-                <a th:href="@{/UserAppMain}" style="margin: 0 8px;">
-                      <i><img src="/img/green_cube.png" alt="White Cube"></i>
-                    <span class="text-white">송금 신청</span></a>
-
-			
-                <a th:href="@{/userAppAnnouncements}" style="margin: 0 8px;">
-                    <i><img src="/img/green_cube.png" alt="White Cube"></i>
-                    <span class="text-white">공지사항</span></a>
-
-
-                <a  th:href="@{/userAppEvents}" style="margin: 0 8px;">
-                    <i><img src="/img/green_cube.png" alt="White Cube"></i>
-                    <span class="text-white">이벤트</span></a> 
-            -->
+                    <b class="text-secondary">송금 신청</b></a>
             </div>
 						</div>
 					</div>
