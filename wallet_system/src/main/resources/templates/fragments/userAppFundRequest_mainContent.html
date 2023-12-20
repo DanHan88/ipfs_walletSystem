@@ -3,7 +3,7 @@
 	
     <div  th:fragment="MainContent" id="webviewHeight" style="overflow-y: auto; max-height: 500px; overflow-x: hidden;">
 		   <div class="row" > 
-						 <div th:each="walletWithdrawal : ${walletWithdrawalList}" class="col-lg-3 col-md-6 mb-4 ">
+						 <div th:each="walletWithdrawal : ${walletWithdrawalList}" class="col-lg-3 col-md-6 mb-2 ">
 					        <div class="card shadow h-100 py-2 announcementEventBodyBtn  m-2" style="cursor: pointer; border-radius: 15px;">
                                 <div class="card-head">
 									<b th:text="${walletWithdrawal.wallet_address}" class="pl-3 text-xs text-info"></b>
@@ -12,7 +12,7 @@
                                 <div class="card-body mb-0 pb-0">
                                     <div class="row">
                                         <div class="col mr-2">
-                                            <p class="text-secondary text-uppercase mb-1" th:text="${walletWithdrawal.fil_amount} + ' FIL'">
+                                            <p class="text-dark text-uppercase mb-1" th:text="${walletWithdrawal.fil_amount} + ' FIL'">
                                                 </p>
                                         </div>
                                     </div>

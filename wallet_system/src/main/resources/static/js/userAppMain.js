@@ -7,6 +7,10 @@ function resizeWebView() {
 						    });
 						}	
 $(document).ready(function() {
+						 var loginError = "${loginError}";
+				        if (loginError) {
+				            alert(loginError);
+				        }
 					     $('.announcementEventBodyBtn').on('click', function() {
 							 $('#eventAnnouncemen_body').val($(this).find('#eventAnnouncement_body').text());
 					    	$('#eventAnnouncementBodyModal').modal('show');

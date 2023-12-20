@@ -33,7 +33,7 @@
 								</div>	
 								<div class="card-body">
 									<div class="row">
-									<div class="col-xl-6 col-md-6 mb-4">
+									<div class="col-xl-6 col-md-6 mb-2">
 			                            <div class="card border-left-primary shadow h-100 py-2">
 			                                <div class="card-body">
 			                                    <div class="row no-gutters align-items-center">
@@ -46,7 +46,7 @@
 			                                </div>
 			                            </div>
 			                        </div>
-			                        <div class="col-xl-6 col-md-6 mb-4">
+			                        <div class="col-xl-6 col-md-6 mb-2">
 			                            <div class="card border-left-primary shadow h-100 py-2">
 			                                <div class="card-body">
 			                                    <div class="row no-gutters align-items-center">
@@ -102,56 +102,8 @@
 				    </div>
 				  </div>
 			</div>
-                    <!-- <div class="row">
-						<div class="col-lg-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-lg font-weight-bold text-success text-uppercase mb-1">
-                                                총잔액</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${userInfoVO.total_balance} +' FIL'"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-lg font-weight-bold text-success text-uppercase mb-1">
-                                                가용잔액</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="available_balance" th:attr="data-available-balance=${userInfoVO.available_balance}" th:text="${userInfoVO.available_balance} +' FIL'"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-					</div>
-                    <div class="row">
-						<div class="col-md-12 col-lg-6 col-xl-6 input-group mb-3">	
-								  <input type="text" id="payout_fil_address" class="form-control">
-								  <div class="input-group-append"> 
-								  <button class="btn bg-info pl-4 pr-4 text-white" type="button" id="button-addon2">지급신청 주소</button>
-								  </div>
-						</div>
-					</div>  
-					 <div class="row">
-								<div class="col-md-12 col-lg-6 col-xl-6 input-group mb-3">
-								  <input type="number" id="payout_fil_amount" class="form-control">
-								  <div class="input-group-append"> 
-								  <button class="btn bg-info text-white" type="button" id="button-addon2">FIL</button>
-								  </div>
-								  <div class="input-group-append">
-								  
-								  <button class="btn btn-primary" id="payout_fil_request" th:value="${userInfoVO.user_id}"><span class="text">송금신청 <i class="fa fa-chevron-right"></i></span></button>
-								</div>
-								</div>
-					</div>  -->
 					<div class="row" > 
-						 <div th:each="announcementEvent : ${announcementEventList}" class="col-lg-3 col-md-6 mb-4">
+						 <div th:each="announcementEvent : ${announcementEventList}" class="col-lg-3 col-md-6 mb-2">
 					        <div class="card shadow h-100 py-2 announcementEventBodyBtn m-2" style="cursor: pointer; border-radius: 15px;">
                                 <div class="card-head">
 									<b th:text="${announcementEvent.event_or_announcement}" th:class="'pl-3 text-xs ' + (${announcementEvent.event_or_announcement == '공지사항' ? 'text-primary' : 'text-info'})"></b>
@@ -161,7 +113,7 @@
                                 <div class="card-body mb-0 pb-0">
                                     <div class="row">
                                         <div class="col mr-2">
-                                            <p class="text-secondary text-uppercase mb-1" th:text="${announcementEvent.title}">
+                                            <p class="text-dark text-uppercase mb-1" th:text="${announcementEvent.title}">
                                                 </p>
                                         </div>
                                     </div>

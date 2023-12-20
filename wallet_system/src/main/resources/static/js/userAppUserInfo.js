@@ -8,19 +8,34 @@ function resizeWebView() {
 						}
 $(document).ready(function() {
 $('#fileInput').on('change', function (e) {
-				            var file = e.target.files[0];
-				
-				            if (file) {
-				                var reader = new FileReader();
-				                reader.onload = function (e) {
-				                    $('#profilePicture').attr('src', e.target.result).show();
-				                };
-				                reader.readAsDataURL(file);
-				            } else {
-				                $('#profilePicture').hide();
-				            }
-				        });
+            var fileInput = this;
+            var maxSizeMB = 100; 
+            var maxFileSize = maxSizeMB * 1024 * 1024; 
+
+            if (fileInput.files.length > 0) {
+                var file = fileInput.files[0];
+
+                if (file.size > maxFileSize) {
+                    alert('사진 용량이 허용량(100MB) 를 초과 하였씁니다.');
+                    $(fileInput).val('');
+                    $('#profilePicture').hide(); 
+                    return;
+                }
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#profilePicture').attr('src', e.target.result).show();
+                };
+                reader.readAsDataURL(file);
+            } else {
+                $('#profilePicture').hide(); // Hide the preview if no file is selected
+            }
+        });
 				        
+				        $('#alert_modal_user').on('hidden.bs.modal', function (e) {
+							 if ($('#alert_header_user').hasClass("bg-success")){
+								 location.reload(true);
+							 } 
+					      });
 				            $('#update_user_password_btn').on('click', function() {  
 								$('#original_password').val('');   
 							    $('#user_password').val(''); 

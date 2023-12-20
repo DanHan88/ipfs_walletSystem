@@ -95,11 +95,9 @@ public class InvestmentController {
                 session.setAttribute("user", (Object)lvo);
                 return "redirect:/main";
             }
-            redirect.addFlashAttribute("result", (Object)0);
-            return "redirect:/";
         }
-        redirect.addFlashAttribute("result", (Object)0);
-        return "redirect:/";
+        redirect.addFlashAttribute("loginError", "아이디와 페스워드를 확인해주세요");
+        return "redirect:/UserApp";
     }
     
     @ResponseBody  

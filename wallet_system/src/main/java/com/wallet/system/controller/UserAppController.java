@@ -57,12 +57,13 @@ public class UserAppController {
 	
 	 @PostMapping(value={"/UserApplogin.do"})
 	    private String doLogin(LoginVO loginVO, BindingResult result, RedirectAttributes redirect, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	        LoginVO lvo = new LoginVO();;
+	        LoginVO lvo = new LoginVO();
 	        UserInfoVO userInfoVO = new UserInfoVO();     
 	        userInfoVO.setUser_email(loginVO.getId());
 	        userInfoVO = investmentMapper.verifyUserInfoVO(userInfoVO);
 	        if (userInfoVO == null) {
-	        	 return "redirect:/UserApp";
+	        	redirect.addFlashAttribute("loginError", "아이디를 확인해주세요");
+	            return "redirect:/UserApp";
 	        }
 	        userInfoVO = userAppService.selectDetailUserInfoByUserId(userInfoVO.getUser_id());
 	        HttpSession session = request.getSession();
@@ -79,10 +80,8 @@ public class UserAppController {
 	                session.setAttribute("user", (Object)lvo);
 	                return "redirect:/UserAppMain";
 	            }
-	            redirect.addFlashAttribute("result", (Object)0);
-	            return "redirect:/UserApp";
 	        }
-	        redirect.addFlashAttribute("result", (Object)0);
+	        redirect.addFlashAttribute("loginError", "비밀번호를 확인해주세요");
 	        return "redirect:/UserApp";
 	    }
 	 
@@ -226,7 +225,16 @@ public class UserAppController {
 	        UserInfoVO userInfoVO = new UserInfoVO();
 	        userInfoVO.setUser_id(user_id);
 	        userInfoVO.setProfile_picture_url(filePathString);
-	        return userAppService.updateUserProfileImg(userInfoVO, request);
+	        userAppService.updateUserProfileImg(userInfoVO, request);
+	        userInfoVO = userAppService.selectDetailUserInfoByUserId(userInfoVO.getUser_id());
+	        HttpSession session = request.getSession();  
+	        LoginVO lvo = new LoginVO();
+	        	lvo.setId(userInfoVO.getUser_name());
+	            lvo.setUserInfoVO(userInfoVO);
+	            lvo.setAdmin(false);
+	            lvo.setPassword("");
+	            session.setAttribute("user", (Object)lvo);
+	        return "success";       
 	    }
 	   @ResponseBody
 	    @PostMapping(value = { "/updateUserPassword" })
