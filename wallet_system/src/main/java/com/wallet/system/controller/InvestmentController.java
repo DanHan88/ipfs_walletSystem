@@ -68,9 +68,10 @@ public class InvestmentController {
    
 
     @GetMapping(value={"/"})
-    public ModelAndView login(@ModelAttribute LoginVO loginVO, HttpServletRequest request) {
+    public ModelAndView login(@ModelAttribute("loginError") String loginError,@ModelAttribute LoginVO loginVO, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("views/login");
+        mav.addObject("loginError", loginError);
         return mav;
     }
 
@@ -97,7 +98,7 @@ public class InvestmentController {
             }
         }
         redirect.addFlashAttribute("loginError", "아이디와 페스워드를 확인해주세요");
-        return "redirect:/UserApp";
+        return "redirect:/";
     }
     
     @ResponseBody  

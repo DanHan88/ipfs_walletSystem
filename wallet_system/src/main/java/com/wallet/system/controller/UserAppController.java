@@ -49,8 +49,9 @@ public class UserAppController {
 	 private String uploadDirectory;
 	 
 	@GetMapping(value={"/UserApp"})
-    public ModelAndView login(@ModelAttribute LoginVO loginVO, HttpServletRequest request) {
+    public ModelAndView login(@ModelAttribute("loginError") String loginError , @ModelAttribute LoginVO loginVO, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
+        mav.addObject("loginError", loginError);
         mav.setViewName("views/userAppLogin");
         return mav;
     }

@@ -1,9 +1,5 @@
 var uncheckedList=[];
 $(document).ready(function() {
-						 var loginError = "${loginError}";
-				        if (loginError) {
-				            alert(loginError);
-				        }
 						$('#dataTableContainer').show();
 						$('#alert_modal').on('hidden.bs.modal', function (e) {
 							 if ($('#alert_header').hasClass("bg-success")){

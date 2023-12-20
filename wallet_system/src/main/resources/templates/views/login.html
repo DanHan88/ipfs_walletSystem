@@ -61,11 +61,13 @@
                                             <input type="text" th:field="*{id}" name="id" class="form-control"
                                                 placeholder="운영자아이디..." required="required">
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group mb-0">
                                             <input type="password" class="form-control"
                                                 th:field="*{password}" name="password" 
                   						id="password" required="required" placeholder="비밀번호">
                                         </div>
+                                        <div class="form-group text-danger" th:text="${loginError}">
+											</div>
                               
                                         <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
                                     </form>
@@ -82,15 +84,9 @@
         </div>
 
     </div>
-
-    <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
 </body>
