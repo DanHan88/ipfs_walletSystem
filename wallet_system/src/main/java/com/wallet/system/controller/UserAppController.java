@@ -55,6 +55,13 @@ public class UserAppController {
         mav.setViewName("views/userAppLogin");
         return mav;
     }
+	@GetMapping(value={"/register"})
+    public ModelAndView register(@ModelAttribute("loginError") String loginError , @ModelAttribute LoginVO loginVO, HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("loginError", loginError);
+        mav.setViewName("views/register");
+        return mav;
+    }
 	
 	 @PostMapping(value={"/UserApplogin.do"})
 	    private String doLogin(LoginVO loginVO, BindingResult result, RedirectAttributes redirect, HttpServletRequest request, HttpServletResponse response) throws Exception {
