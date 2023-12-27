@@ -18,6 +18,8 @@
 package com.wallet.system.controller;
 
 import com.wallet.system.service.InvestmentService;
+import com.wallet.system.service.UserAppService;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 
@@ -65,7 +67,7 @@ public class InvestmentController {
     
     @Value("${upload.directory}")
     private String uploadDirectory;
-   
+    
 
     @GetMapping(value={"/"})
     public ModelAndView login(@ModelAttribute("loginError") String loginError,@ModelAttribute LoginVO loginVO, HttpServletRequest request) {
@@ -88,6 +90,7 @@ public class InvestmentController {
         HttpSession session = request.getSession();
         String rawPw = "";
         String encodePw = "";
+       
         if (lvo != null) {
             rawPw = loginVO.getPassword();
             if (this.pwEncoder.matches((CharSequence)rawPw, encodePw = lvo.getPassword())) {
@@ -429,5 +432,7 @@ public class InvestmentController {
             return input.substring(0, maxLength) + "...";
         }
     }
+    
+   
 }
 

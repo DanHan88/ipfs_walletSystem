@@ -72,8 +72,20 @@ public class UserAppService {
 	public List<EventsAnnouncementVO> selectAnnouncementEventByUser(int user_id){
 		return userAppMapper.selectAnnouncementEventByUser(user_id);
 	}
-    
+	public boolean selectUserEmail(UserInfoVO userInfoVO) {
+		if (userAppMapper.selectCheckUserEmail(userInfoVO.getUser_email()) == null) {
+			return false;
+		}
+		return true;
+	}
 	
+	public String insertUser(UserInfoVO userInfoVO) {
+		 userAppMapper.insertUser(userInfoVO);
+		 return "success";
+	}
+	
+	
+	}
+    
 
-}
 

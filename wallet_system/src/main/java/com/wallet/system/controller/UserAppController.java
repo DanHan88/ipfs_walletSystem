@@ -63,6 +63,7 @@ public class UserAppController {
         return mav;
     }
 	
+	
 	 @PostMapping(value={"/UserApplogin.do"})
 	    private String doLogin(LoginVO loginVO, BindingResult result, RedirectAttributes redirect, HttpServletRequest request, HttpServletResponse response) throws Exception {
 	        LoginVO lvo = new LoginVO();
@@ -74,6 +75,10 @@ public class UserAppController {
 	            return "redirect:/UserApp";
 	        }
 	        userInfoVO = userAppService.selectDetailUserInfoByUserId(userInfoVO.getUser_id());
+	        if ("중지".equals(userInfoVO.getUser_status()) || "가입거절".equals(userInfoVO.getUser_status())) {
+	        	redirect.addFlashAttribute("loginError", "유효하지 않은 아이디입니다.");
+	            return "redirect:/UserApp";
+	        }
 	        HttpSession session = request.getSession();
 	        String rawPw = "";
 	        String encodePw = "";
@@ -193,6 +198,28 @@ public class UserAppController {
 	        mav.addObject("loginVO", loginVO);
 	        mav.setViewName("views/userApp_requestPayout");
 	        return mav;
+	    }
+	   
+	   
+	   @ResponseBody
+	    @PostMapping(value={"/insertUser"})
+	    public String insertUser(@RequestBody UserInfoVO userInfoVO,  HttpServletRequest request) {
+		   String rawPw = "";
+	       rawPw = userInfoVO.getPassword();
+	       String value = pwEncoder.encode(rawPw);
+	       userInfoVO.setPassword(value);
+		   
+	        return userAppService.insertUser(userInfoVO);
+	    }
+	   
+	   
+	   @ResponseBody
+	    @PostMapping(value={"/checkUserEmail"})
+	    public boolean checkUserEmail(@RequestBody UserInfoVO userInfoVO,  HttpServletRequest request) {
+		   
+		   
+		   
+	        return userAppService.selectUserEmail(userInfoVO);
 	    }
 	   
 	   @ResponseBody

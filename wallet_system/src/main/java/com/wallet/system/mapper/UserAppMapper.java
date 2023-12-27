@@ -28,6 +28,9 @@ public interface UserAppMapper {
 	public String selectUserPassword(int user_id);
 	public UserInfoVO selectDetailUserInfoByUserId(int user_id);
 	public List<EventsAnnouncementVO> selectAnnouncementEventByUser(int user_id);
+	public String selectCheckUserEmail(String user_email);
+	public void insertUser(UserInfoVO userInfoVO);
+	
 	
 	
 }

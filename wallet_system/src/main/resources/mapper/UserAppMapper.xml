@@ -102,4 +102,15 @@
 		 where user_id=#{user_id}
 		 GROUP BY u.user_email
 	</select>
+	<select id="selectCheckUserEmail" parameterType="string" resultType="string">
+		SELECT user_id from User_Info
+		WHERE user_email = #{user_email};
+	</select>
+	
+	
+	<insert id="insertUser" parameterType="com.wallet.system.vo.UserInfoVO">
+  INSERT INTO User_Info (user_phone, user_status, user_name, user_email, profile_picture_url, password, fil_amount,user_reg_date)
+  VALUES (#{user_phone}, '가입대기', #{user_name}, #{user_email},'/profile/default_profile.jpg',#{password}, 0,NOW())
+</insert>
+	
 </mapper>

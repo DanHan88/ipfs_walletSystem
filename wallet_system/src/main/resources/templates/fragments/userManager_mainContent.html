@@ -539,7 +539,88 @@
 				    </div>
 				  </div>
 			</div>
+			<!-- 가입 신청 승인 모달 -->
+			<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel"
+			     aria-hidden="true">
+			    <div class="modal-dialog" role="document">
+			        <div class="modal-content">
+			            <div class="modal-header">
+			                <h5 class="modal-title" id="confirmModalLabel">승인 확인</h5>
+			                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			                    <span aria-hidden="true">&times;</span>
+			                </button>
+			            </div>
+			            <div class="modal-body">
+			                <p>승인하시겠습니까?</p>
+			            </div>
+			            <div class="modal-footer">
+							<button type="button" class="btn btn-success" id="confirmApproveBtn">승인</button>
+			                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+			            </div>
+			        </div>
+			    </div>
+			</div>
 			
+			<div class="modal fade" id="confirmSuccessModal" tabindex="-1" role="dialog" aria-labelledby="confirmSuccessModalLabel"
+			     aria-hidden="true">
+			    <div class="modal-dialog" role="document">
+			        <div class="modal-content">
+			            <div class="modal-header">
+			                <h5 class="modal-title" id="confirmSuccessModalLabel">승인 완료</h5>
+			                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			                    <span aria-hidden="true">&times;</span>
+			                </button>
+			            </div>
+			            <div class="modal-body">
+			                <p>승인이 완료되었습니다.</p>
+			            </div>
+			            <div class="modal-footer">
+			                <button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+			<!-- 가입 신청 거절 모달 -->
+			<div class="modal fade" id="denyModal" tabindex="-1" role="dialog" aria-labelledby="denyModalLabel"
+			     aria-hidden="true">
+			    <div class="modal-dialog" role="document">
+			        <div class="modal-content">
+			            <div class="modal-header">
+			                <h5 class="modal-title" id="denyModalLabel">거절 확인</h5>
+			                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			                    <span aria-hidden="true">&times;</span>
+			                </button>
+			            </div>
+			            <div class="modal-body">
+			                <p>거절하시겠습니까?</p>
+			            </div>
+			            <div class="modal-footer">
+							<button type="button" class="btn btn-success" id="confirmDenyBtn">거절</button>
+			                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+			
+			<div class="modal fade" id="confirmDenyModal" tabindex="-1" role="dialog" aria-labelledby="confirmDenyModalLabel"
+			     aria-hidden="true">
+			    <div class="modal-dialog" role="document">
+			        <div class="modal-content">
+			            <div class="modal-header">
+			                <h5 class="modal-title" id="confirmDenyModalLabel">거절 완료</h5>
+			                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			                    <span aria-hidden="true">&times;</span>
+			                </button>
+			            </div>
+			            <div class="modal-body">
+			                <p>거절이 완료되었습니다.</p>
+			            </div>
+			            <div class="modal-footer">
+			                <button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
+			            </div>
+			        </div>
+			    </div>
+			</div>
 		  	<form action="/payout" method="post">
                 <span class="container-fluid" id="dataTableContainer" style="display: none;">
                     <div class="card shadow mb-2">
@@ -576,16 +657,33 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr th:each="userInfo : ${userInfoList}" th:attr="data-picture=${userInfo.profile_picture_url}">
-                                            <td th:text="${#dates.format(userInfo.user_reg_date, 'yyyy-MM-dd HH:mm:ss')}" class="user_reg_date d-none d-xl-table-cell"></td>
-                                            <td th:text="${userInfo.user_name}" class="user_name "></td>
-                                            <td th:text="${userInfo.user_email}" class="user_email d-none d-lg-table-cell"></td>
-                                            <td th:text="${userInfo.user_phone}" class="user_phone d-none d-xl-table-cell"></td>
-                                            <td th:text="${userInfo.investment_count}" class ='d-none d-xl-table-cell'></td>
-                                            <td th:text="${userInfo.user_status}" class="user_status d-none d-lg-table-cell" th:style="${userInfo.user_status == '정상' ? 'color: green;' : 'color: red;'}"></td>
-                                            <td class="m-1 p-1"><button class="btn btn-secondary mr-2 mt-0 mb-0 detail_user" type="button" id="button-addon2"  th:attr="data-filAmount=${userInfo.fil_amount}" th:value="${userInfo.user_id}">상세</button></td>
-                                        </tr>
-                                    </tbody>
+									    <tr th:each="userInfo : ${userInfoList}" th:attr="data-picture=${userInfo.profile_picture_url}">
+									        <td th:text="${#dates.format(userInfo.user_reg_date, 'yyyy-MM-dd HH:mm:ss')}" class="user_reg_date d-none d-xl-table-cell"></td>
+									        <td th:text="${userInfo.user_name}" class="user_name"></td>
+									        <td th:text="${userInfo.user_email}" class="user_email d-none d-lg-table-cell"></td>
+									        <td th:text="${userInfo.user_phone}" class="user_phone d-none d-xl-table-cell"></td>
+									        <td th:text="${userInfo.investment_count}" class='d-none d-xl-table-cell'></td>
+									        <td th:text="${userInfo.user_status}" class="user_status d-none d-lg-table-cell"
+									            th:style="${userInfo.user_status == '정상' ? 'color: green;' : 'color: red;'}"
+									            th:attr="data-user-id=${userInfo.user_id}"></td>
+									        <td class="m-1 p-1">
+									            <!-- "상세" 버튼 -->
+									            <button th:if="${userInfo.user_status == '정상' || userInfo.user_status == '중지'}"
+									                    class="btn btn-secondary mr-2 mt-0 mb-0 detail_user" type="button" id="button-addon2"
+									                    th:attr="data-filAmount=${userInfo.fil_amount}" th:value="${userInfo.user_id}">상세
+									            </button>
+									            <!-- "승인" 버튼 -->
+									            <button th:if="${userInfo.user_status == '가입대기'}" class="btn btn-success mr-2 mt-0 mb-0 approve_user"
+									                    type="button" id="button-addon4" data-toggle="modal" data-target="#confirmModal" th:value="${userInfo.user_id}" th:data-user-id="${userInfo.user_id}">승인
+									            </button>
+									            <!-- "거절" 버튼 -->
+									            <button th:if="${userInfo.user_status == '가입대기'}" class="btn btn-danger mr-2 mt-0 mb-0 reject_user"
+									                    type="button" id="button-addon3" data-toggle="modal" data-target="#denyModal" th:value="${userInfo.user_id}" th:data-user-id="${userInfo.user_id}">거절
+									            </button>
+									        </td>
+										</tr>
+									</tbody>
+
                                 </table>    
                                  
 							</div>

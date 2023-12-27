@@ -216,10 +216,10 @@
 	<update id="updateUser" parameterType="com.wallet.system.vo.UserInfoVO">
 		  UPDATE User_Info
 		  <set>
-		    user_phone = #{user_phone},
-		    user_status = #{user_status},
-		    user_name = #{user_name},
-		    user_email = #{user_email},
+		    <if test="user_phone != null">user_phone = #{user_phone},</if>
+	        <if test="user_status != null">user_status = #{user_status},</if>
+	        <if test="user_name != null">user_name = #{user_name},</if>
+	        <if test="user_email != null">user_email = #{user_email},</if>
 		    <if test="profile_picture_url != 'no_change'">
 		     profile_picture_url = #{profile_picture_url}
 		    </if>
@@ -297,5 +297,8 @@
 	    VALUES
 	    (NOW(), #{title}, #{body}, #{admin}, #{event_or_announcement})
 	</insert>
+	
+	
+
 		
 </mapper>

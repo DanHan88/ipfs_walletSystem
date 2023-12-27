@@ -513,7 +513,70 @@ $(document).ready(function() {
 			                        console.error('차감 요청 실패:', error);
 			                    },
 					        });
+					     
 					    });
+					    $('#confirmApproveBtn').on('click', function() {
+
+							var userId = $('.approve_user').attr('data-user-id');
+							$('#confirmModal').modal('show');
+							var formData = new FormData();
+								formData.append('user_status', "정상");
+								formData.append('user_id', userId); 
+							 $.ajax({
+			                    type: "POST",
+			                    url: "/updateUser",
+			                    contentType: "application/json",
+			                    data: formData,
+			                    contentType: false,
+							    processData: false,
+			                    success: function (data) {
+									if (data === 'success') {
+                                    $('#confirmSuccessModal').modal('show');
+									$('#confirmModal').modal('hide');
+									location.reload(true);
+					                      
+                                }
+			                        
+                
+			                    }
+			                });
+			                
+			                });
+			                
+			              $('#confirmDenyBtn').on('click', function() {
+
+							var userId = $('.approve_user').attr('data-user-id');
+							$('#confirmModal').modal('show');
+							var formData = new FormData();
+								formData.append('user_status', "가입거절");
+								formData.append('user_id', userId); 
+							 $.ajax({
+			                    type: "POST",
+			                    url: "/updateUser",
+			                    contentType: "application/json",
+			                    data: formData,
+			                    contentType: false,
+							    processData: false,
+			                    success: function (data) {
+									if (data === 'success') {
+                                    $('#confirmSuccessModal').modal('show');
+									$('#confirmModal').modal('hide');
+									location.reload(true);
+					                      
+                                }
+			                        
+                
+			                    }
+			                });
+			                
+			                });
+					    
+					 
+						
+								 
+								 
+								 
+							
 						    
 						    
 						    
