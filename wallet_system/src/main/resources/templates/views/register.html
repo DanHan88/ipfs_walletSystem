@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
 
@@ -9,10 +9,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Register</title>
+    <title>IPFS KDC ERP</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
@@ -98,8 +98,8 @@
                 회원가입을 신청하시겠습니까?
             </div>
             <div class="modal-footer">
+				<button type="button" class="btn btn-warning" id="confirmButton">확인</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                <button type="button" class="btn btn-warning" id="confirmButton">확인</button>
             </div>
         </div>
     </div>
@@ -108,7 +108,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-success" id="success_header_fundRequest">
-                    <h5 class="modal-title text-white" id="success_title_fundRequest">가입 완료</h5>
+                    <h5 class="modal-title text-white" id="success_title_fundRequest">가입신청 완료</h5>
                 </div>
                 <div class="modal-body">
                     <p class="text-dark" id="success_body_fundRequest"></p>
@@ -121,15 +121,11 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="js/sb-admin-2.min.js"></script>
-    <script src="js/UserAppRegister.js"></script>
+    <script src="js/userAppRegister.js"></script>
     
 
 </body>

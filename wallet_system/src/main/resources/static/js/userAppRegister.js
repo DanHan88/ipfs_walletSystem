@@ -11,6 +11,8 @@ $(document).ready(function() {
 							 var phone;
 							 var password; 
 							 var check_password; 
+						
+							 
 
 						 $('#confirmButton').on('click', function() {
 							 
@@ -55,10 +57,12 @@ $(document).ready(function() {
 
 							if (name == "" || email == "" || phone == "" || password == "" || check_password  == ""){
 								$('#alertText').text('입력값을 확인 해주세요!');
+								$('#alertText').show();
 								return;
 							}
 							if (password != check_password){
 								$('#alertText').text('비밀번호가 일치하지 않습니다.');
+								$('#alertText').show();
 								return;
 							}
 							$.ajax({
@@ -72,6 +76,7 @@ $(document).ready(function() {
 									if(data){
 										
 										$('#alertText').text('이미 가입된 이메일입니다.');
+										$('#alertText').show();
 										return;
 								}
 			                        

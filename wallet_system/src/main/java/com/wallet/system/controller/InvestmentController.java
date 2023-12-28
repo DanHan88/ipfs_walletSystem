@@ -203,8 +203,10 @@ public class InvestmentController {
         String user_name = request.getParameter("user_name");
         String user_status = request.getParameter("user_status");
         int user_id = Integer.parseInt(request.getParameter("user_id"));
+        
         MultipartFile file = request.getFile("file");
         String filePathString ="";
+        
         if (file != null && !file.isEmpty()) {
             try {
                 String fileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -223,7 +225,6 @@ public class InvestmentController {
         }else {
         	filePathString="no_change";
         }
-
         UserInfoVO userInfoVO = new UserInfoVO();
         userInfoVO.setUser_email(user_email);
         userInfoVO.setUser_phone(user_phone);

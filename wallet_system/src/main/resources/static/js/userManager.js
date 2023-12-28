@@ -1,7 +1,10 @@
 $(document).ready(function() {
-						
+	
+					
+	
 						var tx_list;
 						$('#dataTableContainer').show();
+						
 						$('.disable_user').on('click', function() {
 							var clickedButton = $(this);
 							$('#disable_user_email').text(clickedButton.parent().parent().find('.user_email').text());
@@ -189,9 +192,12 @@ $(document).ready(function() {
 						       var user_email = $('#user_email').val();
 						       var user_phone = $('#user_phone').val();
 						       var user_status = $('input[name="user_status"]:checked').val();
+						       
 						       var user_id = $('#user_edit_1_btn').val(); 
-						       var fileInput = $('#fileInput')[0].files[0];    
+						       var fileInput = $('#fileInput')[0].files[0];
+						       
 						       var formData = new FormData();
+						      
 								formData.append('user_email', user_email);
 								formData.append('user_phone', user_phone);
 								formData.append('user_name', user_name);
@@ -220,6 +226,7 @@ $(document).ready(function() {
 										$('#alert_modal_user').modal('show');
 			                        }
 			                        else if(data='failed:session_closed'){
+										
 										$('#session_alert_user').modal('show');
 									}
 			                        else{
@@ -582,10 +589,10 @@ $(document).ready(function() {
 						    
 						    
 							
-					     $('#dataTable').DataTable({
-					    	"order": [[0, 'desc']]
-						});
-						
+					    $('#dataTable').DataTable({
+					        "order": [[0, 'desc']]
+					    });
+					   
 						
 						    
 });

@@ -98,17 +98,23 @@
 		 WHERE status ='active'
 	</select>
 	<select id="selectUserInfoList"  resultType="com.wallet.system.vo.UserInfoVO">
-		select 
-			u.user_id,
-			u.user_reg_date,
-			u.fil_amount + (SELECT SUM(tpdi.paid_fil) from TokenPaid_detail_info tpdi inner join TokenPaid_Info tpi ON tpi.token_paid_id =tpdi.token_paid_id WHERE tpi.status='정상' AND u.user_id =tpdi.user_id) AS fil_amount,
-			u.user_name,
-			u.user_email,u.user_status,
-			u.user_phone,
-			u.profile_picture_url,
-			(SELECT COUNT(i.investment_id) from Investment_Info i WHERE i.user_id = u.user_id AND i.status ='active')AS investment_count
-		 from User_Info u	
-		 GROUP BY u.user_email
+		SELECT 
+		    u.user_id,
+		    u.user_reg_date,
+		    u.fil_amount + (SELECT SUM(tpdi.paid_fil) FROM TokenPaid_detail_info tpdi INNER JOIN TokenPaid_Info tpi ON tpi.token_paid_id = tpdi.token_paid_id WHERE tpi.status = '정상' AND u.user_id = tpdi.user_id) AS fil_amount,
+		    u.user_name,
+		    u.user_email,
+		    u.user_status,
+		    u.user_phone,
+		    u.profile_picture_url,
+		    (SELECT COUNT(i.investment_id) FROM Investment_Info i WHERE i.user_id = u.user_id AND i.status = 'active') AS investment_count
+		FROM 
+		    User_Info u	
+		WHERE 
+		    u.user_status != '중지'
+		GROUP BY 
+		    u.user_email;
+
 	</select>
 	<select id="selectUserMemo" parameterType="com.wallet.system.vo.UserInfoVO" resultType="com.wallet.system.vo.MemoVO">
 		select 
@@ -217,14 +223,20 @@
 		  UPDATE User_Info
 		  <set>
 		    <if test="user_phone != null">user_phone = #{user_phone},</if>
-	        <if test="user_status != null">user_status = #{user_status},</if>
-	        <if test="user_name != null">user_name = #{user_name},</if>
-	        <if test="user_email != null">user_email = #{user_email},</if>
+		    <if test="user_status != null">
+		      user_status = #{user_status},
+		      <if test="user_status eq '중지'">user_email = '',</if>
+		    </if>
+		    <if test="user_name != null">user_name = #{user_name},</if>
+		    <if test="user_email != null">
+		      <if test="user_status neq '중지'">user_email = #{user_email},</if>
+		    </if>
 		    <if test="profile_picture_url != 'no_change'">
-		     profile_picture_url = #{profile_picture_url}
+		      profile_picture_url = #{profile_picture_url}
 		    </if>
 		  </set>
 		  WHERE user_id = #{user_id}
+
 	</update>
 	<select id="verifyUserInfoVO" parameterType="com.wallet.system.vo.UserInfoVO" resultType="com.wallet.system.vo.UserInfoVO">
 		select 
