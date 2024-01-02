@@ -74,7 +74,7 @@ $(document).ready(function() {
 					                                    // �꽦怨� �떆 紐⑤떖 �떕怨� �깉濡쒓퀬移�
 					                                    $('#announcementModal').modal('hide');
 					                                    $('#alert_header_user').removeClass("bg-danger").addClass("bg-success");
-					                                    $('#alert_title_user').text("�닔�젙�셿猷�");
+					                                    $('#alert_title_user').text("수정완료");
 					                                    $('#alert_modal_user').modal('show');
 					                                    //location.reload(true);
 					                                    
@@ -87,7 +87,7 @@ $(document).ready(function() {
 					                            },
 					                    error: function(error) {
 					                        // �슂泥��뿉 �떎�뙣�뻽�쓣 �븣 �닔�뻾�븷 �룞�옉
-					                        console.error('�듅�씤 �슂泥� �떎�뙣:', error);
+					                        console.error('요청 실패:', error);
 					                    },   
 					                });
 					            
@@ -99,11 +99,11 @@ $(document).ready(function() {
 								    // �꽌踰꾨줈 �뾽�뜲�씠�듃 �슂泥� 蹂대궡湲�
 								    $.ajax({
 								        type: 'POST',
-								        url: '/deleteAnnouncements', // �떎�젣 �뾽�뜲�씠�듃瑜� �닔�뻾�븯�뒗 �꽌踰� �뿏�뱶�룷�씤�듃濡� �꽕�젙
+								        url: '/deleteAnnouncements',
 								        contentType: 'application/json',
 								        data: JSON.stringify({
 								            id: announcementId,
-								            event_or_announcement:"�궘�젣�맂�빆紐�"
+								            event_or_announcement:"삭제된항목"
 								        }),
 					                    success: function(data) {
 													//$('#announcementModal').modal('hide');
@@ -112,7 +112,7 @@ $(document).ready(function() {
 					                                    // �꽦怨� �떆 紐⑤떖 �떕怨� �깉濡쒓퀬移�
 					                                    $('#announcementModal').modal('hide');
 					                                    $('#alert_header_user').removeClass("bg-danger").addClass("bg-success");
-					                                    $('#alert_title_user').text("�궘�젣�셿猷�");
+					                                    $('#alert_title_user').text("삭제완료");
 					                                    $('#alert_modal_user').modal('show');
 					                                    //location.reload(true);
 					                                    
@@ -125,7 +125,7 @@ $(document).ready(function() {
 					                            },
 					                    error: function(error) {
 					                        // �슂泥��뿉 �떎�뙣�뻽�쓣 �븣 �닔�뻾�븷 �룞�옉
-					                        console.error('�듅�씤 �슂泥� �떎�뙣:', error);
+					                        console.error('요청 실패:', error);
 					                    },   
 					                });
 					            

@@ -12,9 +12,12 @@
 		                </button>
 		            </div>
 		            <div class="modal-body">
-		                <textarea id="event_body" rows="15" cols="52" disabled></textarea>
+						<textarea id="event_title" rows="3" cols="52" ></textarea>
+		                <textarea id="event_body" rows="15" cols="52" ></textarea>
 		            </div>
 		            <div class="modal-footer">
+						<button type="button" id="deleteButton" class="btn btn-danger"  data-dismiss="modal">삭제</button>
+						<button type="button" id="editButton" class="btn btn-info"  data-dismiss="modal">수정</button>
 		                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 		            </div>
 		        </div>
@@ -50,6 +53,23 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="alert_modal_user" tabindex="-1" role="dialog">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header bg-success" id="alert_header_user">
+				        <h5 class="modal-title text-white " id="alert_title_user">수정 완료</h5>
+				        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
+				      </div>
+				    </div>
+				  </div>
+			</div>
+			
 		  <span class="container-fluid" id="dataTableContainer" style="display: none;">
               <div class="row">
 				<div class="col-xl-8">
@@ -69,7 +89,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       <tr th:each="event : ${eventList}" class="eventBodyBtn" style="cursor: pointer;" th:attr="data-event-dody=${event.body}">
+                                       <tr th:each="event : ${eventList}" class="eventBodyBtn" style="cursor: pointer;" th:attr="data-event-id=${event.id},data-event-dody=${event.body}, data-event-title=${event.title}">
 											<td th:text="${#dates.format(event.reg_date, 'yyyy-MM-dd hh:mm:ss')}" ></td>
                                             <td th:text="${event.title}"></td>
                                             <td th:text="${event.admin}"></td>

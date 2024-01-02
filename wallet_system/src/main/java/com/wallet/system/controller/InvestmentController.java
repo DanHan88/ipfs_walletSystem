@@ -316,6 +316,7 @@ public class InvestmentController {
     	return investmentService.update_Events_or_Announcement(eventsAnnouncementVO);
     }
     
+    
     @ResponseBody
     @PostMapping(value={"/updateEvents"})
     public String update_Events(@RequestBody EventsAnnouncementVO eventsAnnouncementVO, HttpServletRequest request) {
