@@ -1,8 +1,9 @@
-$(document).ready(function() {			
+$(document).ready(function() {
+						var clickedAnnouncementId;
 						 $('.announcementBodyBtn').on('click', function() {
-							 
+							 clickedAnnouncementId = $(this).data('announced-id');
 							 $('#announcement_body').val($(this).data('announce-dody'));
-							 
+							 $('#announcement_title').val($(this).data('announce-title'));
 					    	$('#announcementBodyModal').modal('show');
 					    });     
 						    
@@ -13,10 +14,11 @@ $(document).ready(function() {
 					    	
 					    	 
 					    }); 
-					    $('#announcementConfirm').off('click').on('click', function() {						 
+					    $('#announcementConfirm').off('click').on('click', function() {		
+													 
 					                $.ajax({
 					                    type: 'POST',
-					                    url: '/updateAnnouncements',
+					                    url: '/uploadAnnouncements',
 					                    contentType: 'application/json',
 					                    data: JSON.stringify({
 					                        title: $('#announcementTitle').val(),
@@ -44,6 +46,90 @@ $(document).ready(function() {
 					                });
 					            
 					        }); 
+					         $('#alert_modal_user').on('hidden.bs.modal', function (e) {
+							 if ($('#alert_header_user').hasClass("bg-success")){
+								 location.reload(true);
+							 } 
+						      });
+					        
+					         $('#editButton').off('click').on('click', function() {			
+								 	var announcementId = clickedAnnouncementId;
+								    var updatedTitle = $('#announcement_title').val();
+								    var updatedBody = $('#announcement_body').val();
+								
+								    // �꽌踰꾨줈 �뾽�뜲�씠�듃 �슂泥� 蹂대궡湲�
+								    $.ajax({
+								        type: 'POST',
+								        url: '/updateAnnouncements', // �떎�젣 �뾽�뜲�씠�듃瑜� �닔�뻾�븯�뒗 �꽌踰� �뿏�뱶�룷�씤�듃濡� �꽕�젙
+								        contentType: 'application/json',
+								        data: JSON.stringify({
+								            id: announcementId,
+								            title: updatedTitle,
+								            body: updatedBody
+								        }),
+					                    success: function(data) {
+													//$('#announcementModal').modal('hide');
+													
+					                                if (data === 'success') {
+					                                    // �꽦怨� �떆 紐⑤떖 �떕怨� �깉濡쒓퀬移�
+					                                    $('#announcementModal').modal('hide');
+					                                    $('#alert_header_user').removeClass("bg-danger").addClass("bg-success");
+					                                    $('#alert_title_user').text("�닔�젙�셿猷�");
+					                                    $('#alert_modal_user').modal('show');
+					                                    //location.reload(true);
+					                                    
+					                                  
+					                      
+					                                } else if (data === 'failed:session_closed') {
+					                                    // �꽭�뀡 醫낅즺 �떆 �떎瑜� 泥섎━
+					                                    $('#session_alert_user').modal('show');
+					                                }
+					                            },
+					                    error: function(error) {
+					                        // �슂泥��뿉 �떎�뙣�뻽�쓣 �븣 �닔�뻾�븷 �룞�옉
+					                        console.error('�듅�씤 �슂泥� �떎�뙣:', error);
+					                    },   
+					                });
+					            
+					        }); 
+					         $('#deleteButton').off('click').on('click', function() {			
+								 	var announcementId = clickedAnnouncementId;
+								    
+								
+								    // �꽌踰꾨줈 �뾽�뜲�씠�듃 �슂泥� 蹂대궡湲�
+								    $.ajax({
+								        type: 'POST',
+								        url: '/deleteAnnouncements', // �떎�젣 �뾽�뜲�씠�듃瑜� �닔�뻾�븯�뒗 �꽌踰� �뿏�뱶�룷�씤�듃濡� �꽕�젙
+								        contentType: 'application/json',
+								        data: JSON.stringify({
+								            id: announcementId,
+								            event_or_announcement:"�궘�젣�맂�빆紐�"
+								        }),
+					                    success: function(data) {
+													//$('#announcementModal').modal('hide');
+													
+					                                if (data === 'success') {
+					                                    // �꽦怨� �떆 紐⑤떖 �떕怨� �깉濡쒓퀬移�
+					                                    $('#announcementModal').modal('hide');
+					                                    $('#alert_header_user').removeClass("bg-danger").addClass("bg-success");
+					                                    $('#alert_title_user').text("�궘�젣�셿猷�");
+					                                    $('#alert_modal_user').modal('show');
+					                                    //location.reload(true);
+					                                    
+					                                  
+					                      
+					                                } else if (data === 'failed:session_closed') {
+					                                    // �꽭�뀡 醫낅즺 �떆 �떎瑜� 泥섎━
+					                                    $('#session_alert_user').modal('show');
+					                                }
+					                            },
+					                    error: function(error) {
+					                        // �슂泥��뿉 �떎�뙣�뻽�쓣 �븣 �닔�뻾�븷 �룞�옉
+					                        console.error('�듅�씤 �슂泥� �떎�뙣:', error);
+					                    },   
+					                });
+					            
+					        });
 					    
 					     $('#dataTable').DataTable({
 					    	 "order": [[0, 'desc']]

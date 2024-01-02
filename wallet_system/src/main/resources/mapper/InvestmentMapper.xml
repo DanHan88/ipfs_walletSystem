@@ -309,7 +309,20 @@
 	    (NOW(), #{title}, #{body}, #{admin}, #{event_or_announcement})
 	</insert>
 	
+	<update id="updateAnnouncement" parameterType="com.wallet.system.vo.EventsAnnouncementVO">
+	    UPDATE ipfskdcw.events_announcements
+	    SET title = #{title}, body = #{body}
+	    WHERE id = #{id}
+	</update>
 	
+	<update id="deleteAnnouncement" parameterType="com.wallet.system.vo.EventsAnnouncementVO">
+	    UPDATE ipfskdcw.events_announcements
+	    SET event_or_announcement= #{event_or_announcement}
+	    WHERE id = #{id}
+	</update>
+	
+	
+
 
 		
 </mapper>

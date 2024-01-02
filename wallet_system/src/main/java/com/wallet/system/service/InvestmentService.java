@@ -310,5 +310,19 @@ public String insert_Events_or_Announcement(EventsAnnouncementVO eventsAnnouncem
 	return "success";	
 }
 
+public String update_Events_or_Announcement(EventsAnnouncementVO eventsAnnouncementVO) {
+	// TODO Auto-generated method stub
+	investmentMapper.updateAnnouncement(eventsAnnouncementVO);
+    // 議고쉶�맂 �뻾�씠 議댁옱�븯怨� �긽�깭媛� '�떊泥�'�씤 寃쎌슦�뿉留� �뾽�뜲�씠�듃
+	return "success";	
+}
+
+public String delete_Events_or_Announcement(EventsAnnouncementVO eventsAnnouncementVO) {
+	// TODO Auto-generated method stub
+	investmentMapper.deleteAnnouncement(eventsAnnouncementVO);
+    // 議고쉶�맂 �뻾�씠 議댁옱�븯怨� �긽�깭媛� '�떊泥�'�씤 寃쎌슦�뿉留� �뾽�뜲�씠�듃
+	return "success";	
+}
+
 }
 
