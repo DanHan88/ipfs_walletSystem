@@ -20,6 +20,7 @@ import com.wallet.system.vo.UserInfoVO;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -223,13 +224,15 @@ public class InvestmentService {
 
 public String approveFundRequest(WalletWithdrawalVO walletWithdrawalVO) {
 	
-	float walletCheck = walletCheck();
-	if(-1 == walletCheck) {
+	BigDecimal walletCheck = walletCheck();
+	if(walletCheck.equals(BigDecimal.valueOf(-1))) {
     	return "에러: 로터스 노드 연결실패:"+ walletCheck;
     }
     System.out.println("테스트 조회 : " + walletCheck);
-    if(walletWithdrawalVO.getFil_amount()+1 > walletCheck) {
-    	return "에러: 관리자 지갑 잔고 부족:"+ walletCheck;
+    BigDecimal filAmount = walletWithdrawalVO.getFil_amount();
+    BigDecimal one = BigDecimal.ONE;
+    if (filAmount.add(one).compareTo(walletCheck) > 0) {
+        return "에러: 관리자 지갑 잔고 부족:" + walletCheck;
     }
     String returnHash = lotusSend(walletWithdrawalVO.getWallet_address(),walletWithdrawalVO.getFil_amount());
     walletWithdrawalVO.setMessage(returnHash);
@@ -246,11 +249,11 @@ public String declineFundRequest(WalletWithdrawalVO walletWithdrawalVO) {
 	return "success";	
 }
 
-public float walletCheck() {
+public BigDecimal walletCheck() {
     String cmd = "echo $(lotus wallet balance "+ admin_walletAddress +") | awk '{print $1}'";
     System.out.println(cmd);
     String[] command = {"/bin/sh", "-c", cmd};
-    float result = 0; 
+    BigDecimal result = new BigDecimal(0); 
     try {
         ProcessBuilder processBuilder = new ProcessBuilder(command);
         Process process = processBuilder.start();
@@ -258,21 +261,21 @@ public float walletCheck() {
         String line;
         while ((line = reader.readLine()) != null) {
             try {
-                result = Float.parseFloat(line);
+                result = new BigDecimal(line);
             } catch (NumberFormatException e) {
-                result = -1;
+                result = new BigDecimal(-1);
             }
         }
         int exitCode = process.waitFor();
         if (exitCode != 0) {
-            result = -1; 
+            result = new BigDecimal(-1); 
         }
     } catch (Exception e) {
-        result = -1; 
+        result = new BigDecimal(-1); 
     }
     return result;
 }
-public String lotusSend(String user_address, float fil_amount) {
+public String lotusSend(String user_address, BigDecimal fil_amount) {
     String cmd = "lotus send --from " +  admin_walletAddress +  " " + user_address + " " + fil_amount;
     System.out.println(cmd);
     

@@ -6,6 +6,7 @@
  */
 package com.wallet.system.vo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Repository;
 public class WalletWithdrawalVO {
 	
 	private int user_id;
-	private float fil_amount;
+	private BigDecimal fil_amount;
 	private String status;
 	private String message;
 	private String wallet_address;
@@ -58,10 +59,10 @@ public class WalletWithdrawalVO {
 	public void setUser_id(int user_id) {
 		this.user_id = user_id;
 	}
-	public float getFil_amount() {
+	public BigDecimal getFil_amount() {
 		return fil_amount;
 	}
-	public void setFil_amount(float fil_amount) {
+	public void setFil_amount(BigDecimal fil_amount) {
 		this.fil_amount = fil_amount;
 	}
 	public String getStatus() {

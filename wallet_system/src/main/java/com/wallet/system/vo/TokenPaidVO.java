@@ -1,5 +1,6 @@
 package com.wallet.system.vo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -7,12 +8,12 @@ public class TokenPaidVO {
 
 	private double token_paid_id;
 	private Date paid_date;
-	private float fil_paid_per_tb;
+	private BigDecimal fil_paid_per_tb;
 	private String admin_id;
 	private String status;
 	private Date update_date;
-	private float fil_paid_ratio_change;
-	private float total_paid;
+	private BigDecimal fil_paid_ratio_change;
+	private BigDecimal total_paid;
 	private int unique_category_count;
 	private String payout_category_name;
 	
@@ -28,16 +29,16 @@ public class TokenPaidVO {
 	public void setPayout_category_name(String payout_category_name) {
 		this.payout_category_name = payout_category_name;
 	}
-	public float getFil_paid_ratio_change() {
+	public BigDecimal getFil_paid_ratio_change() {
 		return fil_paid_ratio_change;
 	}
-	public void setFil_paid_ratio_change(float fil_paid_ratio_change) {
+	public void setFil_paid_ratio_change(BigDecimal fil_paid_ratio_change) {
 		this.fil_paid_ratio_change = fil_paid_ratio_change;
 	}
-	public float getTotal_paid() {
+	public BigDecimal getTotal_paid() {
 		return total_paid;
 	}
-	public void setTotal_paid(float total_paid) {
+	public void setTotal_paid(BigDecimal total_paid) {
 		this.total_paid = total_paid;
 	}
 	private List<TokenPaidDetailVO> tokenPaidDetailVOList;
@@ -66,10 +67,10 @@ public class TokenPaidVO {
 	public void setPaid_date(Date paid_date) {
 		this.paid_date = paid_date;
 	}
-	public float getFil_paid_per_tb() {
+	public BigDecimal getFil_paid_per_tb() {
 		return fil_paid_per_tb;
 	}
-	public void setFil_paid_per_tb(float fil_paid_per_tb) {
+	public void setFil_paid_per_tb(BigDecimal fil_paid_per_tb) {
 		this.fil_paid_per_tb = fil_paid_per_tb;
 	}
 	public String getAdmin_id() {

@@ -6,6 +6,7 @@
  */
 package com.wallet.system.vo;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.springframework.stereotype.Repository;
@@ -20,15 +21,15 @@ public class UserInfoVO {
     private String user_investment_date;
     private int purchase_size;
     private String user_node;
-    private float fil_amount;
+    private BigDecimal fil_amount;
     private String user_name;
     private String user_email;
     private int investment_count;
     private String profile_picture_url;
     private String password;
     private String original_password;
-	private double available_balance;
-	private double total_balance;
+	private BigDecimal available_balance;
+	private BigDecimal total_balance;
 	private long total_tb;
 	
 	
@@ -45,16 +46,16 @@ public class UserInfoVO {
 	public void setOriginal_password(String original_password) {
 		this.original_password = original_password;
 	}
-	public double getAvailable_balance() {
-		return Math.floor(available_balance * 100) / 100;
+	public BigDecimal getAvailable_balance() {
+		return this.available_balance;
 	}
-	public void setAvailable_balance(double available_balance) {
+	public void setAvailable_balance(BigDecimal available_balance) {
 		this.available_balance = available_balance;
 	}
-	public double getTotal_balance() {
+	public BigDecimal getTotal_balance() {
 		return total_balance;
 	}
-	public void setTotal_balance(double total_balance) {
+	public void setTotal_balance(BigDecimal total_balance) {
 		this.total_balance = total_balance;
 	}
 	public String getPassword() {
@@ -123,10 +124,10 @@ public class UserInfoVO {
 	public void setUser_node(String user_node) {
 		this.user_node = user_node;
 	}
-	public float getFil_amount() {
+	public BigDecimal getFil_amount() {
 		return fil_amount;
 	}
-	public void setFil_amount(float fil_amount) {
+	public void setFil_amount(BigDecimal fil_amount) {
 		this.fil_amount = fil_amount;
 	}
 	public String getUser_name() {

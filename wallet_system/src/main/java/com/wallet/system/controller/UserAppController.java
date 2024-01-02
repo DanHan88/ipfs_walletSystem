@@ -55,6 +55,15 @@ public class UserAppController {
         mav.setViewName("views/userAppLogin");
         return mav;
     }
+	
+	@GetMapping(value={"/logoutUser_user"})
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.invalidate();
+        return "redirect:/UserApp";
+    }
+	
+	
 	@GetMapping(value={"/register"})
     public ModelAndView register(@ModelAttribute("loginError") String loginError , @ModelAttribute LoginVO loginVO, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();

@@ -37,6 +37,7 @@ import com.wallet.system.vo.WalletWithdrawalVO;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -83,6 +84,7 @@ public class InvestmentController {
         session.invalidate();
         return "redirect:/";
     }
+    
 
     @PostMapping(value={"/login.do"})
     private String doLogin(LoginVO loginVO, BindingResult result, RedirectAttributes redirect, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -119,8 +121,8 @@ public class InvestmentController {
     	}
     @ResponseBody  
     @PostMapping(value={"/checkAdminBalance"})
-    public float checkAdminBalance(HttpServletRequest request) {
-        float balance = investmentService.walletCheck();
+    public BigDecimal checkAdminBalance(HttpServletRequest request) {
+    	BigDecimal balance = investmentService.walletCheck();
         return balance;
     	}
     @ResponseBody  
@@ -318,7 +320,7 @@ public class InvestmentController {
     
     
     @GetMapping(value={"/userManager"})
-    public ModelAndView userManager(HttpServletRequest request,String sb) {
+    public ModelAndView userManager(HttpServletRequest request,String sb,Integer init_page) {
         ModelAndView mav = new ModelAndView();
         
         if(!investmentService.checkSession(request,true)) {
@@ -329,6 +331,8 @@ public class InvestmentController {
         LoginVO loginVO = (LoginVO)session.getAttribute("user");
         List<UserInfoVO> userInfoList = this.investmentService.selectUserInfoList();
         List<InvestmentCategoryVO> listInvestmentCategory = this.investmentService.getInvestmentCategoryList();
+        int page = (init_page != null) ? init_page : 1;
+        mav.addObject("page",page);
         mav.addObject("sb", sb);
         mav.addObject("listInvestmentCategory", listInvestmentCategory);
         mav.addObject("userInfoList", userInfoList);

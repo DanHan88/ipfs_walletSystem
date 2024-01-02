@@ -1,5 +1,6 @@
 package com.wallet.system.vo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class TokenPaidDetailVO {
@@ -7,7 +8,7 @@ public class TokenPaidDetailVO {
 	private double token_paid_detail_id;
 	private int user_id;
 	private double token_paid_id;
-	private float paid_fil;
+	private BigDecimal paid_fil;
 	private int investment_category_index;
 	
 	private String user_email;
@@ -66,10 +67,10 @@ public class TokenPaidDetailVO {
 	public void setToken_paid_id(double token_paid_id) {
 		this.token_paid_id = token_paid_id;
 	}
-	public float getPaid_fil() {
+	public BigDecimal getPaid_fil() {
 		return paid_fil;
 	}
-	public void setPaid_fil(float paid_fil) {
+	public void setPaid_fil(BigDecimal paid_fil) {
 		this.paid_fil = paid_fil;
 	}
 	public int getInvestment_category_index() {

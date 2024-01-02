@@ -6,6 +6,7 @@
  */
 package com.wallet.system.vo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import org.springframework.stereotype.Repository;
 
@@ -16,9 +17,9 @@ public class RequestFilVO{
 	private String user_email;
 	private String user_name;
 	private String fil_address;
-	private double request_amount;
-	private double gas_fee;
-	private double total_amount;
+	private BigDecimal request_amount;
+	private BigDecimal gas_fee;
+	private BigDecimal total_amount;
 	private String status;
 	private String memo;
 	
@@ -46,22 +47,22 @@ public class RequestFilVO{
 	public void setFil_address(String fil_address) {
 		this.fil_address = fil_address;
 	}
-	public double getRequest_amount() {
+	public BigDecimal getRequest_amount() {
 		return request_amount;
 	}
-	public void setRequest_amount(double request_amount) {
+	public void setRequest_amount(BigDecimal request_amount) {
 		this.request_amount = request_amount;
 	}
-	public double getGas_fee() {
+	public BigDecimal getGas_fee() {
 		return gas_fee;
 	}
-	public void setGas_fee(double gas_fee) {
+	public void setGas_fee(BigDecimal gas_fee) {
 		this.gas_fee = gas_fee;
 	}
-	public double getTotal_amount() {
+	public BigDecimal getTotal_amount() {
 		return total_amount;
 	}
-	public void setTotal_amount(double total_amount) {
+	public void setTotal_amount(BigDecimal total_amount) {
 		this.total_amount = total_amount;
 	}
 	public String getStatus() {

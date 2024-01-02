@@ -25,9 +25,10 @@ $(document).ready(function() {
 				            }
 				        });
 					    
-					    $('#alert_modal_user').on('hidden.bs.modal', function (e) {
+					      $('#alert_modal_user').on('hidden.bs.modal', function (e) {
 							 if ($('#alert_header_user').hasClass("bg-success")){
-								 location.reload(true);
+								 //location.reload(true);
+								 window.location.href = "/userManager?init_page="+4
 							 } 
 					      });
 					      $('#session_alert_user').on('hidden.bs.modal', function (e) {
@@ -577,20 +578,9 @@ $(document).ready(function() {
 			                });
 			                
 			                });
-					    
-					 
-						
-								 
-								 
-								 
-							
-						    
-						    
-						    
-						    
-							
-					    $('#dataTable').DataTable({
-					        "order": [[0, 'desc']]
+					    var dataTable = $('#dataTable').DataTable({
+					        "order": [[0, 'desc']],
+					        "page": $('#dataTableContainer').val()
 					    });
 					   
 						
