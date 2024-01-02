@@ -33,7 +33,7 @@ public class TokenPaidVO {
 		if (fil_paid_ratio_change != null) {
 			 return fil_paid_ratio_change.stripTrailingZeros();
 	           }
-		return fil_paid_ratio_change;
+		return new BigDecimal("0").stripTrailingZeros();
 	}
 	public void setFil_paid_ratio_change(BigDecimal fil_paid_ratio_change) {
 		if (fil_paid_ratio_change != null) {
@@ -45,7 +45,7 @@ public class TokenPaidVO {
 		if (total_paid != null) {
 			 return total_paid.stripTrailingZeros();
 	           }
-		return total_paid;
+		return new BigDecimal("0").stripTrailingZeros();
 	}
 	public void setTotal_paid(BigDecimal total_paid) {
 		if (total_paid != null) {
@@ -83,7 +83,7 @@ public class TokenPaidVO {
 		if (fil_paid_per_tb != null) {
 			 return fil_paid_per_tb.stripTrailingZeros();
 	           }
-		return fil_paid_per_tb;
+		return new BigDecimal("0").stripTrailingZeros();
 	}
 	public void setFil_paid_per_tb(BigDecimal fil_paid_per_tb) {
 		if (fil_paid_per_tb != null) {

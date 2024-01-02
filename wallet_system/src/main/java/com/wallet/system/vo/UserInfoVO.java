@@ -50,7 +50,7 @@ public class UserInfoVO {
 		if (available_balance != null) {
 			 return available_balance.stripTrailingZeros();
 	           }
-		return available_balance;
+		return new BigDecimal("0").stripTrailingZeros();
 	}
 	public void setAvailable_balance(BigDecimal available_balance) {
 		if (available_balance != null) {
@@ -62,7 +62,7 @@ public class UserInfoVO {
 		if (total_balance != null) {
 			 return total_balance.stripTrailingZeros();
 	           }
-		return total_balance;
+		return new BigDecimal("0").stripTrailingZeros();
 	}
 	public void setTotal_balance(BigDecimal total_balance) {
 		if (total_balance != null) {
@@ -140,7 +140,7 @@ public class UserInfoVO {
 		if (fil_amount != null) {
 			 return fil_amount.stripTrailingZeros();
 	           }
-		return fil_amount;
+		return new BigDecimal("0").stripTrailingZeros();
 	}
 	public void setFil_amount(BigDecimal fil_amount) {
 		if (fil_amount != null) {
