@@ -107,14 +107,13 @@
 		    u.user_status,
 		    u.user_phone,
 		    u.profile_picture_url,
-		    (SELECT COUNT(i.investment_id) FROM Investment_Info i WHERE i.user_id = u.user_id AND i.status = 'active') AS investment_count
+		    (SELECT COUNT(i.investment_id) FROM Investment_Info i Inner Join Investment_Category ic ON i.investment_category_id =ic.investment_category_index WHERE i.user_id = u.user_id AND i.status = 'active' AND ic.status ='사용') AS investment_count
 		FROM 
 		    User_Info u	
 		WHERE 
 		    u.user_status != '중지'
 		GROUP BY 
-		    u.user_email;
-
+		    u.user_email
 	</select>
 	<select id="selectUserMemo" parameterType="com.wallet.system.vo.UserInfoVO" resultType="com.wallet.system.vo.MemoVO">
 		select 
