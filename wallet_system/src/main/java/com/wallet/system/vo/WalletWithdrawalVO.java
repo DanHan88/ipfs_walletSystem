@@ -64,7 +64,7 @@ public class WalletWithdrawalVO {
 		if (fil_amount != null) {
             return fil_amount.stripTrailingZeros();
         } 
-		return fil_amount;
+		return new BigDecimal("0").stripTrailingZeros();
 	}
 	public void setFil_amount(BigDecimal fil_amount) {
 		if (fil_amount != null) {

@@ -33,7 +33,7 @@ public class InvestmentVO {
 		 if (fil_invested != null) {
 			 return fil_invested.stripTrailingZeros();
 	           }
-		return fil_invested;
+		return new BigDecimal("0").stripTrailingZeros();
 	}
 
 	public void setFil_invested(BigDecimal fil_invested) {
@@ -55,7 +55,7 @@ public class InvestmentVO {
 		 if (fil_paid_per_tb != null) {
 			 return fil_paid_per_tb.stripTrailingZeros();
 	           }
-		return fil_paid_per_tb;
+		return new BigDecimal("0").stripTrailingZeros();
 	}
 
 	public void setFil_paid_per_tb(BigDecimal fil_paid_per_tb) {
@@ -69,7 +69,7 @@ public class InvestmentVO {
 		 if (payout_fil != null) {
 			 return payout_fil.stripTrailingZeros();
 	           }
-		return payout_fil;
+		return new BigDecimal("0").stripTrailingZeros();
 	}
 
 	public void setPayout_fil(BigDecimal payout_fil) {

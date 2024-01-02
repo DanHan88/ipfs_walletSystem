@@ -51,7 +51,7 @@ public class RequestFilVO{
 		if (request_amount != null) {
 			 return request_amount.stripTrailingZeros();
 	           }
-		return request_amount;
+		return new BigDecimal("0").stripTrailingZeros();
 	}
 	public void setRequest_amount(BigDecimal request_amount) {
 		if (request_amount != null) {
@@ -63,7 +63,7 @@ public class RequestFilVO{
 		if (gas_fee != null) {
 			 return gas_fee.stripTrailingZeros();
 	           }
-		return gas_fee;
+		return new BigDecimal("0").stripTrailingZeros();
 	}
 	public void setGas_fee(BigDecimal gas_fee) {
 		if (gas_fee != null) {
@@ -75,7 +75,7 @@ public class RequestFilVO{
 		if (total_amount != null) {
 			 return total_amount.stripTrailingZeros();
 	           }
-		return total_amount;
+		return new BigDecimal("0").stripTrailingZeros();
 	}
 	public void setTotal_amount(BigDecimal total_amount) {
 		if (total_amount != null) {

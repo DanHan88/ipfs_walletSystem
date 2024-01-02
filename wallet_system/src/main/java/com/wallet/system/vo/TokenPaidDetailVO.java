@@ -71,7 +71,7 @@ public class TokenPaidDetailVO {
 		if (paid_fil != null) {
 			 return paid_fil.stripTrailingZeros();
 	           }
-		return paid_fil;
+		return new BigDecimal("0").stripTrailingZeros();
 	}
 	public void setPaid_fil(BigDecimal paid_fil) {
 		if (paid_fil != null) {
