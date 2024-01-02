@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	
+						 var page = parseInt($('#dataTableContainer').attr('data-page'),10);
 					
 	
 						var tx_list;
@@ -24,13 +24,6 @@ $(document).ready(function() {
 				                $('#profilePicture').hide();
 				            }
 				        });
-					    
-					      $('#alert_modal_user').on('hidden.bs.modal', function (e) {
-							 if ($('#alert_header_user').hasClass("bg-success")){
-								 //location.reload(true);
-								 window.location.href = "/userManager?init_page="+4
-							 } 
-					      });
 					      $('#session_alert_user').on('hidden.bs.modal', function (e) {
 								 window.location.href = "/";
 					      });  
@@ -580,9 +573,13 @@ $(document).ready(function() {
 			                });
 					    var dataTable = $('#dataTable').DataTable({
 					        "order": [[0, 'desc']],
-					        "page": $('#dataTableContainer').val()
 					    });
-					   
-						
+
+					   $('#alert_modal_user').on('hidden.bs.modal', function (e) {
+							 if ($('#alert_header_user').hasClass("bg-success")){
+								 window.location.href = "/userManager?init_page="+dataTable.page.info().page;
+							 } 
+					      });		   
+					   dataTable.page(page).draw('page');
 						    
 });

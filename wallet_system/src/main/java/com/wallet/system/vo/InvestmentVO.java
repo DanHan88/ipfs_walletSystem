@@ -30,10 +30,16 @@ public class InvestmentVO {
 	
     
 	public BigDecimal getFil_invested() {
+		 if (fil_invested != null) {
+			 return fil_invested.stripTrailingZeros();
+	           }
 		return fil_invested;
 	}
 
 	public void setFil_invested(BigDecimal fil_invested) {
+		if (fil_invested != null) {
+			this.fil_invested = fil_invested.stripTrailingZeros();
+	           }
 		this.fil_invested = fil_invested;
 	}
 
@@ -46,18 +52,30 @@ public class InvestmentVO {
 	}
 
 	public BigDecimal getFil_paid_per_tb() {
+		 if (fil_paid_per_tb != null) {
+			 return fil_paid_per_tb.stripTrailingZeros();
+	           }
 		return fil_paid_per_tb;
 	}
 
 	public void setFil_paid_per_tb(BigDecimal fil_paid_per_tb) {
+		if (fil_paid_per_tb != null) {
+			this.fil_paid_per_tb = fil_paid_per_tb.stripTrailingZeros();
+	           }
 		this.fil_paid_per_tb = fil_paid_per_tb;
 	}
 
 	public BigDecimal getPayout_fil() {
+		 if (payout_fil != null) {
+			 return payout_fil.stripTrailingZeros();
+	           }
 		return payout_fil;
 	}
 
 	public void setPayout_fil(BigDecimal payout_fil) {
+		if (payout_fil != null) {
+			this.payout_fil = payout_fil.stripTrailingZeros();
+	           }
 		this.payout_fil = payout_fil;
 	}
 

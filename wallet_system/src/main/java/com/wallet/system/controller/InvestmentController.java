@@ -331,7 +331,7 @@ public class InvestmentController {
         LoginVO loginVO = (LoginVO)session.getAttribute("user");
         List<UserInfoVO> userInfoList = this.investmentService.selectUserInfoList();
         List<InvestmentCategoryVO> listInvestmentCategory = this.investmentService.getInvestmentCategoryList();
-        int page = (init_page != null) ? init_page : 1;
+        int page = (init_page != null) ? init_page : 0;
         mav.addObject("page",page);
         mav.addObject("sb", sb);
         mav.addObject("listInvestmentCategory", listInvestmentCategory);

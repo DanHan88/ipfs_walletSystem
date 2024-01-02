@@ -68,9 +68,15 @@ public class TokenPaidDetailVO {
 		this.token_paid_id = token_paid_id;
 	}
 	public BigDecimal getPaid_fil() {
+		if (paid_fil != null) {
+			 return paid_fil.stripTrailingZeros();
+	           }
 		return paid_fil;
 	}
 	public void setPaid_fil(BigDecimal paid_fil) {
+		if (paid_fil != null) {
+			this.paid_fil = paid_fil.stripTrailingZeros();
+	           }
 		this.paid_fil = paid_fil;
 	}
 	public int getInvestment_category_index() {

@@ -60,10 +60,17 @@ public class WalletWithdrawalVO {
 		this.user_id = user_id;
 	}
 	public BigDecimal getFil_amount() {
+		
+		if (fil_amount != null) {
+            return fil_amount.stripTrailingZeros();
+        } 
 		return fil_amount;
 	}
 	public void setFil_amount(BigDecimal fil_amount) {
-		this.fil_amount = fil_amount;
+		if (fil_amount != null) {
+			this.fil_amount = fil_amount.stripTrailingZeros();
+        } 
+		this.fil_amount= fil_amount;
 	}
 	public String getStatus() {
 		return status;

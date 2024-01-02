@@ -622,7 +622,7 @@
 			    </div>
 			</div>
 		  	<form action="/payout" method="post">
-                <span class="container-fluid" id="dataTableContainer" style="display: none;" th:value="${page}">
+                <span class="container-fluid" id="dataTableContainer" style="display: none;" th:attr="data-page=${page}">
                     <div class="card shadow mb-2">	
                         <div class="card-body">
 							<button class="btn btn-primary mr-3" type="button" id="add_user_button">

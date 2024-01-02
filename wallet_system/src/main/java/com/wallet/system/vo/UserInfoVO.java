@@ -47,15 +47,27 @@ public class UserInfoVO {
 		this.original_password = original_password;
 	}
 	public BigDecimal getAvailable_balance() {
-		return this.available_balance;
+		if (available_balance != null) {
+			 return available_balance.stripTrailingZeros();
+	           }
+		return available_balance;
 	}
 	public void setAvailable_balance(BigDecimal available_balance) {
+		if (available_balance != null) {
+			this.available_balance = available_balance.stripTrailingZeros();
+	           }
 		this.available_balance = available_balance;
 	}
 	public BigDecimal getTotal_balance() {
+		if (total_balance != null) {
+			 return total_balance.stripTrailingZeros();
+	           }
 		return total_balance;
 	}
 	public void setTotal_balance(BigDecimal total_balance) {
+		if (total_balance != null) {
+			this.total_balance = total_balance.stripTrailingZeros();
+	           }
 		this.total_balance = total_balance;
 	}
 	public String getPassword() {
@@ -125,9 +137,15 @@ public class UserInfoVO {
 		this.user_node = user_node;
 	}
 	public BigDecimal getFil_amount() {
+		if (fil_amount != null) {
+			 return fil_amount.stripTrailingZeros();
+	           }
 		return fil_amount;
 	}
 	public void setFil_amount(BigDecimal fil_amount) {
+		if (fil_amount != null) {
+			this.fil_amount = fil_amount.stripTrailingZeros();
+	           }
 		this.fil_amount = fil_amount;
 	}
 	public String getUser_name() {
