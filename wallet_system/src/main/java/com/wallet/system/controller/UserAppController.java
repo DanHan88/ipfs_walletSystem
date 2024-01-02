@@ -75,7 +75,7 @@ public class UserAppController {
 	            return "redirect:/UserApp";
 	        }
 	        userInfoVO = userAppService.selectDetailUserInfoByUserId(userInfoVO.getUser_id());
-	        if ("중지".equals(userInfoVO.getUser_status()) || "가입거절".equals(userInfoVO.getUser_status())) {
+	        if ("중지".equals(userInfoVO.getUser_status()) || "가입거절".equals(userInfoVO.getUser_status()) || "가입대기".equals(userInfoVO.getUser_status())) {
 	        	redirect.addFlashAttribute("loginError", "유효하지 않은 아이디입니다.");
 	            return "redirect:/UserApp";
 	        }
