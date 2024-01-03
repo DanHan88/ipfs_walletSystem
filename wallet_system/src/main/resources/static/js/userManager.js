@@ -410,14 +410,14 @@ $(document).ready(function() {
 						       	
 						       	$('#user_email_td').text($('#user_email_span').text());
 						       	$('#user_name_td').text($('#user_name_span').text());
-						       	$('#user_category_name_td').text('개인지급');
+						       	$('#user_category_name_td').text('개인전송');
 						       	$('#fil_amt_td').text(send_token_amt);
       							 tx_list = [{
 									cateogry_fil_per_tb: 100,
 							        payout_fil: send_token_amt,
 							        investment_category_id: 61,
 							        is_getting_paid: true,
-							        product_name: "개인지급",
+							        product_name: "개인전송",
 							        fil_paid_per_tb: send_token_amt,
 							        user_id: user_id,
 								  }];

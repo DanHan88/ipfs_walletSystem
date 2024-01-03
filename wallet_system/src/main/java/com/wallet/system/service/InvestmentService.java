@@ -220,7 +220,7 @@ public class InvestmentService {
     	
     	List<TokenPaidDetailVO> tokenPaidDetailList = investmentMapper.selectTokenDetailList(tokenPaidVO);
     	if(tokenPaidDetailList!=null && tokenPaidDetailList.size()==1) {
-    		if(tokenPaidDetailList.get(0).getInvestment_category_name().equals("개인전송") ||tokenPaidDetailList.get(0).getInvestment_category_name().equals("개인차감")) {
+    		if(tokenPaidDetailList.get(0).getStatus().equals("개인전송") ||tokenPaidDetailList.get(0).getStatus().equals("개인차감")) {
     			investmentMapper.updatePersonalTokenPaidDetailInfo(tokenPaidVO);
         		return "success";
     			
