@@ -132,7 +132,7 @@
                                     <td th:utext="${requestFil.user_email}"></td>
                                     <td th:utext="${requestFil.user_name}"></td>
                                     <td th:text="${requestFil.wallet_address}" id="wallet_address" class="d-none d-xl-table-cell"></td>
-                                    <td th:text="${requestFil.fil_amount}" id="fil_amount" class="d-none d-xl-table-cell"></td>
+                                    <td th:text="${requestFil.fil_amount.toPlainString()}" id="fil_amount" class="d-none d-xl-table-cell"></td>
                                     <td id="status" th:style="${requestFil.status == '승인' ? 'color: blue;' : (requestFil.status == '신청' ? 'color: black;' : 'color: red;')}"
 									    th:attr="data-wallet-withdrawals-id=${requestFil.wallet_withdrawals_id}">
 									
@@ -155,7 +155,7 @@
                                     <td>
                                         <button th:if="${requestFil.status == '신청'}" class="btn btn-secondary mr-2 mt-0 mb-0 request-approve" type="button"
                                             th:data-wallet-withdrawals-id="${requestFil.wallet_withdrawals_id}"
-                                            th:data-fil-amount="${requestFil.fil_amount}">승인</button>
+                                            th:data-fil-amount="${requestFil.fil_amount.toPlainString()}">승인</button>
                                         <button th:if="${requestFil.status == '신청'}" class="btn btn-secondary request-decline" type="button"
                                             th:data-wallet-withdrawals-id="${requestFil.wallet_withdrawals_id}">거절</button> 
                                     </td>        
