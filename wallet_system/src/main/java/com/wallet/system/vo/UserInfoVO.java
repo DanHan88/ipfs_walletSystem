@@ -31,9 +31,20 @@ public class UserInfoVO {
 	private BigDecimal available_balance;
 	private BigDecimal total_balance;
 	private long total_tb;
+	private BigDecimal total_fil;
 	
-	
-    
+	public BigDecimal getTotal_fil() {
+		if (total_fil != null) {
+			 return total_fil.stripTrailingZeros();
+	           }
+		return new BigDecimal("0").stripTrailingZeros();
+	}
+	public void setTotal_fil(BigDecimal total_fil) {
+		if (total_fil != null) {
+			this.total_fil = total_fil.stripTrailingZeros();
+	           }
+		this.total_fil = total_fil;
+	}
 	public long getTotal_tb() {
 		return total_tb;
 	}

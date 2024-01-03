@@ -97,7 +97,8 @@
 			u.user_email,u.user_status,
 			u.user_phone,
 			u.profile_picture_url,
-			(SELECT COALESCE(SUM(ii.purchase_size), 0) from Investment_Info ii inner join Investment_Category ic on ii.investment_category_id = investment_category_index  where ii.user_id=u.user_id AND ii.status = 'active' AND ic.status='사용') as total_tb 
+			(SELECT COALESCE(SUM(ii.purchase_size), 0) from Investment_Info ii inner join Investment_Category ic on ii.investment_category_id = investment_category_index  where ii.user_id=u.user_id AND ii.status = 'active' AND ic.status='사용') as total_tb,
+			(SELECT COALESCE(SUM(ii.fil_invested), 0) from Investment_Info ii inner join Investment_Category ic on ii.investment_category_id = investment_category_index  where ii.user_id=u.user_id AND ii.status = 'active' AND ic.status='사용') as total_fil
 		 from User_Info u	
 		 where user_id=#{user_id}
 		 GROUP BY u.user_email
