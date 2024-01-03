@@ -418,6 +418,7 @@ $(document).ready(function() {
 							        investment_category_id: 61,
 							        is_getting_paid: true,
 							        product_name: "개인지급",
+							        fil_paid_per_tb: send_token_amt,
 							        user_id: user_id,
 								  }];
 								var fil_per_tb = $('#payout_fil_amount').val();
@@ -472,6 +473,7 @@ $(document).ready(function() {
 							        payout_fil: minus_token_amt2,
 							        investment_category_id: 62,
 							        is_getting_paid: true,
+							        fil_paid_per_tb: minus_token_amt2,
 							        product_name: "개인차감",
 							        user_id: user_id,
 								  }];

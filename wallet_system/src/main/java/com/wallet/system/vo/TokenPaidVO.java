@@ -51,7 +51,7 @@ public class TokenPaidVO {
 		if (total_paid != null) {
 			this.total_paid = total_paid.stripTrailingZeros();
 	           }
-		this.total_paid = fil_paid_ratio_change;
+		this.total_paid = total_paid;
 	}
 	private List<TokenPaidDetailVO> tokenPaidDetailVOList;
 	

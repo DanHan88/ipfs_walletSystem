@@ -62,6 +62,10 @@ public interface InvestmentMapper {
     
     public void updateTokenPaidDetailInfo(TokenPaidVO tokenPaidVO);
     
+    public void updatePersonalTokenPaidDetailInfo(TokenPaidVO tokenPaidVO);
+    
+    public String getCategoryNameByTokenPaidVO(TokenPaidVO tokenPaidVO);
+    
     public void addNewTokenPaidDetailInfo(TokenPaidDetailVO tokenPaidDetailVO);
     
     public double selectLastTokenPaidInfo();
