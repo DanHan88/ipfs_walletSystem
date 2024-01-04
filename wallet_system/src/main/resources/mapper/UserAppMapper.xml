@@ -77,10 +77,13 @@
 	</select>
 	
 	<select id="selectAnnouncementEventByUser" parameterType="integer" resultType="com.wallet.system.vo.EventsAnnouncementVO">
-		SELECT ea.id, reg_date, title, body, admin, event_or_announcement,eauvr.read_date 
-			FROM ipfskdcw.events_announcements ea LEFT JOIN events_announcement_user_view_record eauvr ON ea.id = eauvr.events_announcements_id
-			ORDER BY reg_date DESC
+	    SELECT ea.id, reg_date, title, body, admin, event_or_announcement, eauvr.read_date 
+	    FROM ipfskdcw.events_announcements ea 
+	    LEFT JOIN events_announcement_user_view_record eauvr ON ea.id = eauvr.events_announcements_id
+	    WHERE ea.event_or_announcement != '삭제된항목' OR ea.event_or_announcement IS NULL
+	    ORDER BY reg_date DESC
 	</select>
+
 	
 	<select id="selectDetailUserInfoByUserId"  parameterType="integer" resultType="com.wallet.system.vo.UserInfoVO">
 		select 
