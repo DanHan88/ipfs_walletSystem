@@ -46,7 +46,7 @@ $(document).ready(function() {
 											{
 							            		$('#alert_header').removeClass("bg-danger").addClass("bg-success");
 							       		 	} 
-										$('#alert_title').text("제품등록 성공");
+										$('#alert_title').text("지급 완료");
 										$('#alert_modal').modal('show');
 			                        }
 			                        else if(data=='failed:session_closed'){
@@ -57,7 +57,7 @@ $(document).ready(function() {
 										{
 								            $('#alert_header').removeClass("bg-success").addClass("bg-danger");
 							       		} 		
-							       		 $('#alert_title').text("제품등록 실패 : 중복된 제품명");
+							       		 $('#alert_title').text("지급 실패");
 								            $('#alert_modal').modal('show');	
 									}	
 									$('#payout_confirm_button').show();	

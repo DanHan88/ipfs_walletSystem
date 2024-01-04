@@ -110,6 +110,7 @@ public class InvestmentService {
     		return "error1";
     	}
     	userInfoVO.setProfile_picture_url("/profile/default_profile.jpg");
+    	userInfoVO.setPassword("$2a$10$swtbwzaZZjnnHAoAmGbUZOCekqeAtaCJoKiYZgtGvVqOZHipPi0iW");
     	investmentMapper.addNewUser(userInfoVO);
     	UserInfoVO newUserInfoVO = investmentMapper.verifyUserInfoVO(userInfoVO);
     	MemoVO memoVO = new MemoVO();
