@@ -305,6 +305,17 @@ public class InvestmentController {
     	return investmentService.insert_Events_or_Announcement(eventsAnnouncementVO);
     }
     @ResponseBody
+    @PostMapping(value={"/uploadEvents"})
+    public String upload_Events(@RequestBody EventsAnnouncementVO eventsAnnouncementVO, HttpServletRequest request) {
+    	if(!investmentService.checkSession(request,true)) {
+    		return "failed:session_closed";
+    	}
+    	HttpSession session = request.getSession();
+    	LoginVO loginVO = (LoginVO)session.getAttribute("user");
+    	eventsAnnouncementVO.setAdmin(loginVO.getId());
+    	return investmentService.insert_Events_or_Announcement(eventsAnnouncementVO);
+    }
+    @ResponseBody
     @PostMapping(value={"/updateAnnouncements"})
     public String update_announcement(@RequestBody EventsAnnouncementVO eventsAnnouncementVO, HttpServletRequest request) {
     	if(!investmentService.checkSession(request,true)) {
@@ -315,7 +326,6 @@ public class InvestmentController {
     	eventsAnnouncementVO.setAdmin(loginVO.getId());
     	return investmentService.update_Events_or_Announcement(eventsAnnouncementVO);
     }
-    
     
     @ResponseBody
     @PostMapping(value={"/updateEvents"})
