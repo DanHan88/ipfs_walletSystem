@@ -7,6 +7,7 @@
 package com.wallet.system.vo;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.springframework.stereotype.Repository;
@@ -35,13 +36,13 @@ public class UserInfoVO {
 	
 	public BigDecimal getTotal_fil() {
 		if (total_fil != null) {
-			 return total_fil.stripTrailingZeros();
+			 return total_fil.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros();
 	           }
 		return new BigDecimal("0").stripTrailingZeros();
 	}
 	public void setTotal_fil(BigDecimal total_fil) {
 		if (total_fil != null) {
-			this.total_fil = total_fil.stripTrailingZeros();
+			this.total_fil = total_fil.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros();
 	           }
 		this.total_fil = total_fil;
 	}
@@ -59,19 +60,19 @@ public class UserInfoVO {
 	}
 	public BigDecimal getAvailable_balance() {
 		if (available_balance != null) {
-			 return available_balance.stripTrailingZeros();
+			 return available_balance.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros();
 	           }
 		return new BigDecimal("0").stripTrailingZeros();
 	}
 	public void setAvailable_balance(BigDecimal available_balance) {
 		if (available_balance != null) {
-			this.available_balance = available_balance.stripTrailingZeros();
+			this.available_balance = available_balance.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros();
 	           }
 		this.available_balance = available_balance;
 	}
 	public BigDecimal getTotal_balance() {
 		if (total_balance != null) {
-			 return total_balance.stripTrailingZeros();
+			 return total_balance.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros();
 	           }
 		return new BigDecimal("0").stripTrailingZeros();
 	}

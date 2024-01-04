@@ -7,6 +7,7 @@
 package com.wallet.system.vo;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import org.springframework.stereotype.Repository;
 
@@ -62,13 +63,13 @@ public class WalletWithdrawalVO {
 	public BigDecimal getFil_amount() {
 		
 		if (fil_amount != null) {
-            return fil_amount.stripTrailingZeros();
+            return fil_amount.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros();
         } 
 		return new BigDecimal("0").stripTrailingZeros();
 	}
 	public void setFil_amount(BigDecimal fil_amount) {
 		if (fil_amount != null) {
-			this.fil_amount = fil_amount.stripTrailingZeros();
+			this.fil_amount = fil_amount.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros();
         } 
 		this.fil_amount= fil_amount;
 	}

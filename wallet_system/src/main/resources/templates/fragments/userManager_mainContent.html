@@ -669,7 +669,7 @@
 									            <!-- "상세" 버튼 -->
 									            <button th:if="${userInfo.user_status == '정상' || userInfo.user_status == '중지'}"
 									                    class="btn btn-secondary mr-2 mt-0 mb-0 detail_user" type="button" id="button-addon2"
-									                    th:attr="data-filAmount=${userInfo.fil_amount.toPlainString()}" th:value="${userInfo.user_id}">상세
+									                    th:attr="data-filAmount=${#numbers.formatDecimal(userInfo.fil_amount, 0, 'COMMA', userInfo.fil_amount.scale(), 'POINT')}" th:value="${userInfo.user_id}">상세
 									            </button>
 									            <!-- "승인" 버튼 -->
 									            <button th:if="${userInfo.user_status == '가입대기'}" class="btn btn-success mr-2 mt-0 mb-0 approve_user"

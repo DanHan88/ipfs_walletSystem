@@ -7,6 +7,7 @@
 package com.wallet.system.vo;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import org.springframework.stereotype.Repository;
 
@@ -49,37 +50,37 @@ public class RequestFilVO{
 	}
 	public BigDecimal getRequest_amount() {
 		if (request_amount != null) {
-			 return request_amount.stripTrailingZeros();
+			 return request_amount.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros();
 	           }
 		return new BigDecimal("0").stripTrailingZeros();
 	}
 	public void setRequest_amount(BigDecimal request_amount) {
 		if (request_amount != null) {
-			this.request_amount = request_amount.stripTrailingZeros();
+			this.request_amount = request_amount.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros();
 	           }
 		this.request_amount = request_amount;
 	}
 	public BigDecimal getGas_fee() {
 		if (gas_fee != null) {
-			 return gas_fee.stripTrailingZeros();
+			 return gas_fee.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros();
 	           }
 		return new BigDecimal("0").stripTrailingZeros();
 	}
 	public void setGas_fee(BigDecimal gas_fee) {
 		if (gas_fee != null) {
-			this.gas_fee = gas_fee.stripTrailingZeros();
+			this.gas_fee = gas_fee.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros();
 	           }
 		this.gas_fee = gas_fee;
 	}
 	public BigDecimal getTotal_amount() {
 		if (total_amount != null) {
-			 return total_amount.stripTrailingZeros();
+			 return total_amount.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros();
 	           }
 		return new BigDecimal("0").stripTrailingZeros();
 	}
 	public void setTotal_amount(BigDecimal total_amount) {
 		if (total_amount != null) {
-			this.total_amount = total_amount.stripTrailingZeros();
+			this.total_amount = total_amount.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros();
 	           }
 		this.total_amount = total_amount;
 	}

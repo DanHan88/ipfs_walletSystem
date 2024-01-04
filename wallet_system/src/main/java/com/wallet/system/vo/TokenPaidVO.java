@@ -1,6 +1,7 @@
 package com.wallet.system.vo;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -31,25 +32,25 @@ public class TokenPaidVO {
 	}
 	public BigDecimal getFil_paid_ratio_change() {
 		if (fil_paid_ratio_change != null) {
-			 return fil_paid_ratio_change.stripTrailingZeros();
+			 return fil_paid_ratio_change.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros();
 	           }
 		return new BigDecimal("0").stripTrailingZeros();
 	}
 	public void setFil_paid_ratio_change(BigDecimal fil_paid_ratio_change) {
 		if (fil_paid_ratio_change != null) {
-			this.fil_paid_ratio_change = fil_paid_ratio_change.stripTrailingZeros();
+			this.fil_paid_ratio_change = fil_paid_ratio_change.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros();
 	           }
 		this.fil_paid_ratio_change = fil_paid_ratio_change;
 	}
 	public BigDecimal getTotal_paid() {
 		if (total_paid != null) {
-			 return total_paid.stripTrailingZeros();
+			 return total_paid.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros();
 	           }
 		return new BigDecimal("0").stripTrailingZeros();
 	}
 	public void setTotal_paid(BigDecimal total_paid) {
 		if (total_paid != null) {
-			this.total_paid = total_paid.stripTrailingZeros();
+			this.total_paid = total_paid.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros();
 	           }
 		this.total_paid = total_paid;
 	}
@@ -81,13 +82,13 @@ public class TokenPaidVO {
 	}
 	public BigDecimal getFil_paid_per_tb() {
 		if (fil_paid_per_tb != null) {
-			 return fil_paid_per_tb.stripTrailingZeros();
+			 return fil_paid_per_tb.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros();
 	           }
 		return new BigDecimal("0").stripTrailingZeros();
 	}
 	public void setFil_paid_per_tb(BigDecimal fil_paid_per_tb) {
 		if (fil_paid_per_tb != null) {
-			this.fil_paid_per_tb = fil_paid_per_tb.stripTrailingZeros();
+			this.fil_paid_per_tb = fil_paid_per_tb.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros();
 	           }
 		this.fil_paid_per_tb = fil_paid_per_tb;
 	}

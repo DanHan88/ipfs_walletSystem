@@ -1,6 +1,7 @@
 package com.wallet.system.vo;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 
 public class TokenPaidDetailVO {
@@ -69,7 +70,7 @@ public class TokenPaidDetailVO {
 	}
 	public BigDecimal getPaid_fil() {
 		if (paid_fil != null) {
-			 return paid_fil.stripTrailingZeros();
+			 return paid_fil.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros();
 	           }
 		return new BigDecimal("0").stripTrailingZeros();
 	}
