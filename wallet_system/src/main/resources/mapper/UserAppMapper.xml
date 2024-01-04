@@ -22,18 +22,21 @@
 		 ORDER BY A.purchase_date DESC
 	</select>
 	<select id="getTokenPaidDetailListByUser" parameterType="com.wallet.system.vo.UserInfoVO" resultType="com.wallet.system.vo.TokenPaidDetailVO">
-		select 
-			tpdi.paid_fil,
-			ic.investment_category_name, 
-			tpi.status,
-			tpi.paid_date
-		from TokenPaid_detail_info tpdi  
-		inner join Investment_Category ic 
-		ON tpdi.investment_category_index = ic.investment_category_index
-		inner join TokenPaid_Info tpi
-		ON tpdi.token_paid_id = tpdi.token_paid_id
-		where tpdi.user_id = #{user_id}
-		ORDER BY tpi.paid_date DESC
+		SELECT 
+		    tpdi.paid_fil,
+		    ic.investment_category_name, 
+		    tpi.status,
+		    tpi.paid_date
+		FROM 
+		    TokenPaid_detail_info tpdi  
+		LEFT JOIN 
+		    Investment_Category ic ON tpdi.investment_category_index = ic.investment_category_index
+		LEFT JOIN 
+		    TokenPaid_Info tpi ON tpdi.token_paid_id = tpi.token_paid_id
+		WHERE 
+		    tpdi.user_id = #{user_id}
+		ORDER BY 
+		    tpi.paid_date DESC
 	</select>
 	
 	<insert id="addWalletWithdrawal" parameterType="com.wallet.system.vo.WalletWithdrawalVO">
@@ -76,6 +79,7 @@
 		where user_id=#{user_id}
 	</select>
 	
+<<<<<<< HEAD
 	<select id="selectAnnouncementEventByUser" parameterType="integer" resultType="com.wallet.system.vo.EventsAnnouncementVO">
 	    SELECT ea.id, reg_date, title, body, admin, event_or_announcement, eauvr.read_date 
 	    FROM ipfskdcw.events_announcements ea 
@@ -84,6 +88,15 @@
 	    ORDER BY reg_date DESC
 	</select>
 
+=======
+		<select id="selectAnnouncementEventByUser" parameterType="integer" resultType="com.wallet.system.vo.EventsAnnouncementVO">
+       SELECT ea.id, reg_date, title, body, admin, event_or_announcement, eauvr.read_date 
+       FROM ipfskdcw.events_announcements ea 
+       LEFT JOIN events_announcement_user_view_record eauvr ON ea.id = eauvr.events_announcements_id
+       WHERE ea.event_or_announcement != '삭제된항목' OR ea.event_or_announcement IS NULL
+       ORDER BY reg_date DESC
+   </select>
+>>>>>>> branch 'master' of https://github.com/DanHan88/ipfs_walletSystem.git
 	
 	<select id="selectDetailUserInfoByUserId"  parameterType="integer" resultType="com.wallet.system.vo.UserInfoVO">
 		select 
