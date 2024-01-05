@@ -90,7 +90,7 @@
                                     </thead>
                                     <tbody>
                                        <tr th:each="event : ${eventList}" class="eventBodyBtn" style="cursor: pointer;" th:attr="data-event-id=${event.id},data-event-dody=${event.body}, data-event-title=${event.title}">
-											<td th:text="${#dates.format(event.reg_date, 'yyyy-MM-dd hh:mm:ss')}" ></td>
+											<td th:text="${#dates.format(event.reg_date, 'yyyy-MM-dd HH:mm:ss')}" ></td>
                                             <td th:text="${event.title}"></td>
                                             <td th:text="${event.admin}"></td>
 										</tr>

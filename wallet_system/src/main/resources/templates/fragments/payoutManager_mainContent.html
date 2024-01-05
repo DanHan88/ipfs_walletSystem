@@ -137,31 +137,40 @@
 						</div>
                             <div class="table-responsive" >
                                 <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
+                                    <colgroup>
+                                    	<col width="15%">
+										<col width="15%">
+										<col width="15%">
+										<col width="20%">	
+										<col width="15%">
+										<col width="20%">			
+										</colgroup>
+                                    
                                     <thead>
                                         <tr>
-                                            <th class="d-none d-lg-table-cell" scope="col-xl">배분날짜</th>
+                                            <th scope="col">배분날짜</th>
                                             <th scope="col">FIL/TB</th>
                                             <th scope="col">FIL총배분</th>
                                             <th scope="col">지급상품</th>
-                                            <th class="d-none d-lg-table-cell" scope="col-xl">상태</th>
+                                            <th scope="col">상태</th>
                                             <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th class="d-none d-lg-table-cell">배분날짜</th>
+                                            <th>배분날짜</th>
                                             <th>FIL/TB</th>
                                             <th>FIL총배분</th>
                                             <th>지급상품</th>
-                                            <th class="d-none d-lg-table-cell">상태</th>
+                                            <th>상태</th>
                                              <th></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <tr th:each="tokenPaid : ${tokenPaidVOList}">
-                                            <td th:text="${#dates.format(tokenPaid.paid_date, 'yyyy-MM-dd hh:mm:ss')}" class="d-none d-lg-table-cell"></td>
+                                            <td th:text="${#dates.format(tokenPaid.paid_date, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                             <td id="paid_per_tb_td" th:text="${tokenPaid.fil_paid_per_tb.toPlainString()}"></td>
-                                            <td th:text="${#numbers.formatDecimal(tokenPaid.total_paid, 0, 'COMMA', tokenPaid.total_paid.scale(), 'POINT')}" class="d-none d-lg-table-cell"></td>
+                                            <td th:text="${#numbers.formatDecimal(tokenPaid.total_paid, 0, 'COMMA', tokenPaid.total_paid.scale(), 'POINT')}"></td>
                                             <td th:text="${tokenPaid.payout_category_name}"></td>
                                             <td id="status_td" th:text="${tokenPaid.status}" th:style="${tokenPaid.status == '정상' ? 'color: green;' : 'color: red;'}"></td>
                                             <td class="m-1 p-1"><button class="btn btn-secondary mr-2 mt-0 mb-0 payout_detail" type="button" id="button-addon2" th:value="${tokenPaid.token_paid_id}">상세</button>

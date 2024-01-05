@@ -128,7 +128,7 @@
                             </tfoot>
                             <tbody>
                                 <tr th:each="requestFil : ${requestFilList}">
-                                    <td th:text="${#dates.format(requestFil.request_date, 'yyyy-MM-dd hh:mm:ss')}" class="d-none d-lg-table-cell"></td>
+                                    <td th:text="${#dates.format(requestFil.request_date, 'yyyy-MM-dd HH:mm:ss')}" class="d-none d-lg-table-cell"></td>
                                     <td th:utext="${requestFil.user_email}"></td>
                                     <td th:utext="${requestFil.user_name}"></td>
                                     <td th:text="${requestFil.wallet_address}" id="wallet_address" class="d-none d-xl-table-cell"></td>

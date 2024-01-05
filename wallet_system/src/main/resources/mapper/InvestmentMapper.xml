@@ -103,7 +103,8 @@
 		SELECT 
 		    u.user_id,
 		    u.user_reg_date,
-		    u.fil_amount + (SELECT SUM(tpdi.paid_fil) FROM TokenPaid_detail_info tpdi INNER JOIN TokenPaid_Info tpi ON tpi.token_paid_id = tpdi.token_paid_id WHERE tpi.status = '정상' AND u.user_id = tpdi.user_id) AS fil_amount,
+		    (SELECT COALESCE(SUM(tpdi.paid_fil), 0) from TokenPaid_detail_info tpdi inner join TokenPaid_Info tpi ON tpi.token_paid_id =tpdi.token_paid_id WHERE tpi.status='정상' AND u.user_id =tpdi.user_id) 
+			- (SELECT COALESCE(SUM(fil_amount), 0) from Wallet_Withdrawals ww WHERE ww.user_id = u.user_id AND ww.status ='승인') AS fil_amount,
 		    u.user_name,
 		    u.user_email,
 		    u.user_status,
