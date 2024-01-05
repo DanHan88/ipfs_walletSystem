@@ -98,7 +98,7 @@
 			- (SELECT COALESCE(SUM(fil_amount), 0) from Wallet_Withdrawals ww WHERE ww.user_id = u.user_id AND ww.status ='승인') 
 			AS total_balance,
 			(SELECT COALESCE(SUM(tpdi.paid_fil), 0) from TokenPaid_detail_info tpdi inner join TokenPaid_Info tpi ON tpi.token_paid_id =tpdi.token_paid_id WHERE tpi.status='정상' AND u.user_id =tpdi.user_id) 
-			- (SELECT COALESCE(SUM(fil_amount), 0) from Wallet_Withdrawals ww WHERE ww.user_id = u.user_id AND ww.status !='거부') 
+			- (SELECT COALESCE(SUM(fil_amount), 0) from Wallet_Withdrawals ww WHERE ww.user_id = u.user_id AND ww.status !='거절') 
 			AS available_balance,
 			u.user_name,
 			u.user_email,u.user_status,

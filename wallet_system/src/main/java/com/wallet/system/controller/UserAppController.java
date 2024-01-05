@@ -119,7 +119,8 @@ public class UserAppController {
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
 	        
 	        List<TokenPaidDetailVO> tokenPaidDetailList = userAppService.getTokenPaidDetailListByUser(loginVO.getUserInfoVO());
-	        
+	        loginVO.setUserInfoVO(userAppService.selectDetailUserInfoByUserId(loginVO.getUserInfoVO().getUser_id()));
+	        session.setAttribute("user", (Object)loginVO);
 	        
 	        mav.addObject("sb", sb);
 	        mav.addObject("tokenPaidDetailList", tokenPaidDetailList);
@@ -137,6 +138,8 @@ public class UserAppController {
 	        }
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
 	        List<InvestmentVO> listInvestment = userAppService.getInvestmentListByUser(loginVO.getUserInfoVO());
+	        loginVO.setUserInfoVO(userAppService.selectDetailUserInfoByUserId(loginVO.getUserInfoVO().getUser_id()));
+	        session.setAttribute("user", (Object)loginVO);
 	        
 	        mav.addObject("listInvestment" , listInvestment);
 	        mav.addObject("sb", sb);
@@ -154,7 +157,8 @@ public class UserAppController {
 	        }
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user"); 
 	        List<WalletWithdrawalVO> walletWithdrawalList = userAppService.selectWalletWithdrawal(loginVO.getUserInfoVO());
-	        
+	        loginVO.setUserInfoVO(userAppService.selectDetailUserInfoByUserId(loginVO.getUserInfoVO().getUser_id()));
+	        session.setAttribute("user", (Object)loginVO);
 	        mav.addObject("walletWithdrawalList", walletWithdrawalList);
 	        mav.addObject("sb", sb);
 	        mav.addObject("loginVO", loginVO);
@@ -170,6 +174,9 @@ public class UserAppController {
 	            return mav;
 	        }
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
+	        loginVO.setUserInfoVO(userAppService.selectDetailUserInfoByUserId(loginVO.getUserInfoVO().getUser_id()));
+	        session.setAttribute("user", (Object)loginVO);
+	        
 	        mav.addObject("sb", sb);
 	        mav.addObject("loginVO", loginVO);
 	        mav.setViewName("views/userApp_userInfo");
@@ -184,6 +191,8 @@ public class UserAppController {
 	            return mav;
 	        }
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
+	        loginVO.setUserInfoVO(userAppService.selectDetailUserInfoByUserId(loginVO.getUserInfoVO().getUser_id()));
+	        session.setAttribute("user", (Object)loginVO);
 	        List<EventsAnnouncementVO> announcementEventList = userAppService.selectAnnouncementEventByUser(loginVO.getUserInfoVO().getUser_id());
 	        mav.addObject("announcementEventList", announcementEventList);
 	        mav.addObject("sb", sb);
@@ -201,6 +210,8 @@ public class UserAppController {
 	        }
 	        LoginVO loginVO = (LoginVO)session.getAttribute("user");
 	        UserInfoVO userInfoVO = userAppService.selectDetailUserInfoByUserId(loginVO.getUserInfoVO().getUser_id());
+	        loginVO.setUserInfoVO(userInfoVO);
+	        session.setAttribute("user", (Object)loginVO);
 	        
 	        mav.addObject("userInfoVO",userInfoVO);
 	        mav.addObject("sb", sb);
