@@ -30,9 +30,10 @@
 		    A.update_date,
 		    COUNT(DISTINCT s.investment_category_index) AS unique_category_count,
 		    CASE
-		        WHEN COUNT(DISTINCT s.investment_category_index) > 2 THEN '다중지급'
-		        ELSE GROUP_CONCAT(DISTINCT ic.investment_category_name, '(', CONVERT(ui.user_name, CHAR), ')')
-		    END AS payout_category_name,
+  			WHEN COUNT(DISTINCT s.investment_category_index) > 2 THEN '다중지급'
+  			WHEN ic.status IN ('개인전송', '개인차감') THEN GROUP_CONCAT(DISTINCT ic.investment_category_name, '(', CONVERT(ui.user_name, CHAR), ')')
+ 			 ELSE GROUP_CONCAT(DISTINCT ic.investment_category_name)
+			END AS payout_category_name,
 		    (SELECT SUM(B.paid_fil) FROM TokenPaid_detail_info B WHERE B.token_paid_id = A.token_paid_id) AS total_paid
 		FROM 
 		    TokenPaid_Info A
