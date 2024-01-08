@@ -52,7 +52,8 @@
 			message,
 			wallet_address,
 			request_date,
-			complete_date
+			complete_date,
+			memo
 		from Wallet_Withdrawals   
 		where user_id = #{user_id}
 		ORDER BY request_date DESC

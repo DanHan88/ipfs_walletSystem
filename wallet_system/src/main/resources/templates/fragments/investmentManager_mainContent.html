@@ -255,27 +255,27 @@
                                     <thead>
                                         <tr>
 											<th scope="col"></th>
-                                            <th class="d-none d-lg-table-cell" scope="col-xl">이메일</th>
+                                            <th scope="col">이메일</th>
                                             <th scope="col">회원명</th>
-                                            <th class="d-none d-lg-table-cell" scope="col-xl">투자상품명</th>
+                                            <th scope="col">투자상품명</th>
                                             <th scope="col">용량(TiB)</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
 											<th></th>
-                                            <th class="d-none d-lg-table-cell">이메일</th>
+                                            <th>이메일</th>
                                             <th>회원명</th>
-                                            <th class="d-none d-lg-table-cell">투자상품명</th>
+                                            <th>투자상품명</th>
                                             <th>용량(TiB)</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <tr th:each="investment : ${listInvestment}">
 											<td class="text-center"><input class="form-check-input p-0 m-0 payout_box" type="checkbox" th:value="${investment.investment_id}" checked></td>
-                                            <td th:text="${investment.user_email}" class="d-none d-lg-table-cell"></td>
+                                            <td th:text="${investment.user_email}"></td>
                                             <td th:text="${investment.user_name}"></td>
-                                            <td th:text="${investment.product_name}" class="d-none d-lg-table-cell"></td>
+                                            <td th:text="${investment.product_name}"></td>
                                             <td th:text="${investment.purchase_size}"></td>
                                         </tr>
                               

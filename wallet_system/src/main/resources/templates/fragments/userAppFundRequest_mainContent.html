@@ -15,7 +15,15 @@
                                             <p class="text-dark text-uppercase mb-1" th:text="${walletWithdrawal.fil_amount.toPlainString()} + ' FIL'">
                                                 </p>
                                         </div>
+                                        
                                     </div>
+                                    <div th:if="${walletWithdrawal.status == '거절'}" class="row">
+										<div class="col mr-2">
+										<div>
+											    <p th:text="${walletWithdrawal.memo}"></p>
+											</div> 
+										</div>
+										</div>
                                     <div class="row">
                                         <div class="col mr-2 text-right" >
                                             <b th:text="${walletWithdrawal.status}" th:class="'text-xs  text-secondary text-uppercase mb-1 ' + 
@@ -23,6 +31,7 @@
       											walletWithdrawal.status == '승인' ? 'text-success' : 
       											walletWithdrawal.status == '거절' ? 'text-danger' : 'text-warning'}">
                                                 </b>
+                                             
                                         </div>
                                     </div>
                                 </div>

@@ -635,34 +635,34 @@
                                 <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-											<th class="d-none d-xl-table-cell" scope="col-xl">가입일시</th>
+											<th scope="col">가입일시</th>
 										    <th scope="col">회원명</th>
-										    <th class="d-none d-lg-table-cell" scope="col-xl">이메일</th>
-										    <th class="d-none d-xl-table-cell" scope="col-xl">휴대폰번호</th>
-										    <th class="d-none d-xl-table-cell" scope="col-xl">투자상품</th>
-										    <th class="d-none d-lg-table-cell" scope="col-lg">상태</th>
+										    <th scope="col">이메일</th>
+										    <th scope="col">휴대폰번호</th>
+										    <th scope="col">투자상품</th>
+										    <th scope="col">상태</th>
 										    <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-											<th class="d-none d-xl-table-cell">가입일시</th>
+											<th>가입일시</th>
                                             <th>회원명</th>
-                                            <th class="d-none d-lg-table-cell">이메일</th>
-                                            <th class="d-none d-xl-table-cell"> 휴대폰번호</th>
-                                            <th class="d-none d-xl-table-cell">투자상품</th>
-                                            <th class="d-none d-lg-table-cell">상태</th>
+                                            <th>이메일</th>
+                                            <th> 휴대폰번호</th>
+                                            <th>투자상품</th>
+                                            <th>상태</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
 									    <tr th:each="userInfo : ${userInfoList}" th:attr="data-picture=${userInfo.profile_picture_url}">
-									        <td th:text="${#dates.format(userInfo.user_reg_date, 'yyyy-MM-dd HH:mm:ss')}" class="user_reg_date d-none d-xl-table-cell"></td>
+									        <td th:text="${#dates.format(userInfo.user_reg_date, 'yyyy-MM-dd HH:mm:ss')}" class="user_reg_date"></td>
 									        <td th:text="${userInfo.user_name}" class="user_name"></td>
-									        <td th:text="${userInfo.user_email}" class="user_email d-none d-lg-table-cell"></td>
-									        <td th:text="${userInfo.user_phone}" class="user_phone d-none d-xl-table-cell"></td>
-									        <td th:text="${userInfo.investment_count}" class='d-none d-xl-table-cell'></td>
-									        <td th:text="${userInfo.user_status}" class="user_status d-none d-lg-table-cell"
+									        <td th:text="${userInfo.user_email}" class="user_email"></td>
+									        <td th:text="${userInfo.user_phone}" class="user_phone"></td>
+									        <td th:text="${userInfo.investment_count}"></td>
+									        <td th:text="${userInfo.user_status}" class="user_status"
 									            th:style="${userInfo.user_status == '정상' ? 'color: green;' : 'color: red;'}"
 									            th:attr="data-user-id=${userInfo.user_id}"></td>
 									        <td class="m-1 p-1">

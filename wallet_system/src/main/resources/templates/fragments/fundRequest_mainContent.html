@@ -106,33 +106,33 @@
                         <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th class="d-none d-lg-table-cell" scope="col-xl">요청일시</th>
-                                    <th scope="d-none d-xl-table-cell">이메일</th>
+                                    <th scope="col">요청일시</th>
+                                    <th scope="col">이메일</th>
                                     <th scope="col">회원명</th>
-                                    <th class="d-none d-xl-table-cell" scope="col-xl">주소</th>
-                                    <th class="d-none d-lg-table-cell" scope="col">요청금액/차감금액(FIL)</th>
-                                    <th scope="col-1">상태</th>
+                                    <th scope="col">주소</th>
+                                    <th scope="col">요청금액/차감금액(FIL)</th>
+                                    <th scope="col">상태</th>
                                     <th scope="col" style="width:120px;"></th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th class="d-none d-lg-table-cell">요청일시</th>
+                                    <th>요청일시</th>
                                     <th>이메일</th>
                                     <th>회원명</th>
-                                    <th class="d-none d-lg-table-cell">주소</th>
-                                    <th class="d-none d-lg-table-cell">요청금액/차감금액(FIL)</th>
+                                    <th>주소</th>
+                                    <th>요청금액/차감금액(FIL)</th>
                                     <th>상태</th>
                                     <th style="width:120px;"></th>
                                 </tr>
                             </tfoot>
                             <tbody>
                                 <tr th:each="requestFil : ${requestFilList}">
-                                    <td th:text="${#dates.format(requestFil.request_date, 'yyyy-MM-dd HH:mm:ss')}" class="d-none d-lg-table-cell"></td>
+                                    <td th:text="${#dates.format(requestFil.request_date, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                     <td th:utext="${requestFil.user_email}"></td>
                                     <td th:utext="${requestFil.user_name}"></td>
-                                    <td th:text="${requestFil.wallet_address}" id="wallet_address" class="d-none d-xl-table-cell"></td>
-                                    <td th:text="${requestFil.fil_amount.toPlainString()}" id="fil_amount" class="d-none d-xl-table-cell"></td>
+                                    <td th:text="${requestFil.wallet_address}" id="wallet_address"></td>
+                                    <td th:text="${requestFil.fil_amount.toPlainString()}" id="fil_amount"></td>
                                     <td id="status" th:style="${requestFil.status == '승인' ? 'color: blue;' : (requestFil.status == '신청' ? 'color: black;' : 'color: red;')}"
 									    th:attr="data-wallet-withdrawals-id=${requestFil.wallet_withdrawals_id}">
 									
