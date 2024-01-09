@@ -52,6 +52,7 @@ $(document).ready(function() {
     });
      // 모달 내 '확인' 버튼 클릭 처리
         $('#confirmModal').off('click').on('click', function() {
+			 $('#approvalModal').modal('hide');
             if (userStatus === '신청') {
                 $.ajax({
                     type: 'POST',
@@ -71,7 +72,6 @@ $(document).ready(function() {
                                     $('#success_title_fundRequest').text("승인 되었습니다");
                                     $('#confirmSuccessModal').modal('show'); 
                                     // 승인 완료 모달 표시
-                      
                                 } else if (data === 'failed:session_closed') {
                                     // 세션 종료 시 다른 처리
                                     $('#session_alert_user').modal('show');

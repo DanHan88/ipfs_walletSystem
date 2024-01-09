@@ -32,6 +32,19 @@ $(document).ready(function() {
 							 let fil_amount= $('#payout_fil_amount').val();
 							 let user_id = $('#payout_fil_request').val();
 							 let wallet_address = $('#payout_fil_address').val(); 
+							 
+							 let available_fil = $('#available_fil').data('available-fil');
+							 $('#payout_request_modal').modal('hide');
+							 
+							 if(available_fil<fil_amount){
+								 if ($('#alert_header').hasClass("bg-success")) 
+										{
+								            $('#alert_header').removeClass("bg-success").addClass("bg-danger");
+							       		} 		
+							       		 $('#alert_title').text("잔고가 부족합니다.");
+								            $('#alert_modal').modal('show');
+								 return;
+							 }
 					       $.ajax({
 			                    type: "POST",
 			                    url: "/addWalletWithdrawal",
